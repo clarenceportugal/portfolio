@@ -539,6 +539,17 @@ section {
   font-weight: 500;
   transition: all 0.2s;
   border: 1px solid #e5e5e5;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.skill-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: #4b5563;
+  transition: all 0.2s;
 }
 
 .skill-item:hover {
@@ -547,6 +558,10 @@ section {
   color: #ffffff;
   border-color: #2563eb;
   box-shadow: 0 4px 8px rgba(37, 99, 235, 0.2);
+}
+
+.skill-item:hover .skill-icon {
+  color: #ffffff;
 }
 
 /* Certificates Section */
@@ -1474,6 +1489,14 @@ section {
   background: #2563eb;
   color: #ffffff;
   border-color: #2563eb;
+}
+
+.portfolio.dark-mode .skill-icon {
+  color: #a0a0a0;
+}
+
+.portfolio.dark-mode .skill-item:hover .skill-icon {
+  color: #ffffff;
 }
 
 .portfolio.dark-mode .certificates {
