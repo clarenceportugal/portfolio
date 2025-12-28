@@ -319,6 +319,7 @@ body.menu-open {
 /* Section Styles */
 section {
   padding: 6rem 0;
+  scroll-margin-top: 80px;
 }
 
 .section-title {
@@ -1043,6 +1044,7 @@ section {
 
   section {
     padding: 4rem 0;
+    scroll-margin-top: 80px;
   }
 
   .container {
@@ -1173,6 +1175,7 @@ section {
 
   section {
     padding: 3rem 0;
+    scroll-margin-top: 80px;
   }
 
   .about-text p {
@@ -1299,6 +1302,7 @@ section {
 
   section {
     padding: 2.5rem 0;
+    scroll-margin-top: 80px;
   }
 
   .project-info {
