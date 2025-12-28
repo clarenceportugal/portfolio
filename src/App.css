@@ -363,13 +363,14 @@ section {
 .filter-btn {
   padding: 0.75rem 1.5rem;
   background: #ffffff;
-  border: 2px solid #e5e5e5;
+  border: 2px solid #d1d5db;
   border-radius: 8px;
   color: #6b7280;
   font-size: 0.95rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .filter-btn:hover {
@@ -400,14 +401,15 @@ section {
   border-radius: 12px;
   overflow: hidden;
   transition: all 0.3s ease;
-  border: 1px solid #e5e5e5;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  border: 2px solid #d1d5db;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .project-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
-  border-color: #d1d5db;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+  border-color: #2563eb;
+  border-width: 2px;
 }
 
 .project-image {
@@ -479,6 +481,7 @@ section {
   border-radius: 6px;
   font-size: 0.8rem;
   font-weight: 500;
+  border: 1px solid #d1d5db;
 }
 
 .project-links {
@@ -514,7 +517,8 @@ section {
   background: #f8f9fa;
   padding: 2rem;
   border-radius: 12px;
-  border: 1px solid #e5e5e5;
+  border: 2px solid #d1d5db;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .skill-category h3 {
@@ -538,7 +542,7 @@ section {
   font-size: 0.9rem;
   font-weight: 500;
   transition: all 0.2s;
-  border: 1px solid #e5e5e5;
+  border: 1.5px solid #d1d5db;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -583,7 +587,8 @@ section {
   border-radius: 12px;
   overflow: hidden;
   transition: all 0.3s ease;
-  border: 1px solid #e5e5e5;
+  border: 2px solid #d1d5db;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -593,8 +598,9 @@ section {
 
 .certificate-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
-  border-color: #d1d5db;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+  border-color: #2563eb;
+  border-width: 2px;
 }
 
 .certificate-preview {
@@ -894,7 +900,7 @@ section {
   .nav-container {
     padding: 0 1.5rem;
     position: relative;
-  }
+}
 
   .nav-right {
     gap: 1rem;
@@ -1050,7 +1056,7 @@ section {
 
   .project-card {
     width: 100%;
-  }
+}
 
   .skills-grid {
     grid-template-columns: 1fr;
@@ -1404,8 +1410,10 @@ section {
 
 .portfolio.dark-mode .filter-btn {
   background: #1a1a1a;
-  border-color: #2a2a2a;
+  border-color: #3a3a3a;
+  border-width: 2px;
   color: #a0a0a0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .portfolio.dark-mode .filter-btn:hover {
@@ -1427,13 +1435,15 @@ section {
 
 .portfolio.dark-mode .project-card {
   background: #1a1a1a;
-  border-color: #2a2a2a;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  border-color: #3a3a3a;
+  border-width: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
 .portfolio.dark-mode .project-card:hover {
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
-  border-color: #3a3a3a;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.6);
+  border-color: #60a5fa;
+  border-width: 2px;
 }
 
 .portfolio.dark-mode .project-image {
@@ -1455,7 +1465,7 @@ section {
 .portfolio.dark-mode .project-tags span {
   background: #2a2a2a;
   color: #a0a0a0;
-  border: 1px solid #3a3a3a;
+  border: 1.5px solid #4a4a4a;
 }
 
 .portfolio.dark-mode .project-link {
@@ -1472,7 +1482,9 @@ section {
 
 .portfolio.dark-mode .skill-category {
   background: #0f0f0f;
-  border-color: #2a2a2a;
+  border-color: #3a3a3a;
+  border-width: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
 .portfolio.dark-mode .skill-category h3 {
@@ -1482,7 +1494,8 @@ section {
 .portfolio.dark-mode .skill-item {
   background: #1a1a1a;
   color: #a0a0a0;
-  border-color: #2a2a2a;
+  border-color: #3a3a3a;
+  border-width: 1.5px;
 }
 
 .portfolio.dark-mode .skill-item:hover {
@@ -1501,16 +1514,18 @@ section {
 
 .portfolio.dark-mode .certificates {
   background: #1a1a1a;
-}
+  }
 
 .portfolio.dark-mode .certificate-card {
   background: #1a1a1a;
-  border-color: #2a2a2a;
+  border-color: #3a3a3a;
+  border-width: 2px;
 }
 
 .portfolio.dark-mode .certificate-card:hover {
-  border-color: #3a3a3a;
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
+  border-color: #60a5fa;
+  border-width: 2px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.6);
 }
 
 .portfolio.dark-mode .certificate-preview {
