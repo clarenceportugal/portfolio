@@ -11,6 +11,7 @@ import likhainImage from './assets/images/likhain_logo.png'
 import eduvisionImage from './assets/images/eduvision_logo.png'
 import trinovaImage from './assets/images/Trinova.jpg'
 import motowashImage from './assets/images/motrorwash_logo.jpg'
+import rccarImage from './assets/images/rccar_logo.jpg'
 
 // Set up PDF.js worker - use local worker file
 pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs'
@@ -414,8 +415,16 @@ function App() {
                 image: motowashImage,
                 title: 'Motowash 360',
                 description: 'A radically innovative solution for automating motor cleaning, aiming to streamline the work process and promote sustainability. An IoT-enabled system using Arduino Uno with L298N Motor Driver, DC water pump motor, and Ultrasonic Sensor for detection. Features a React Native mobile application for remote control and monitoring, with Firebase as the database for data collection and real-time synchronization. The system really shines through careful setup, programming for data collection and control, and extensive testing for reliability.',
-                tags: ['Arduino', 'IoT', 'React Native', 'Firebase', 'Sensors', 'Mobile App', 'Automation'],
+                tags: ['Arduino', 'IoT', 'React Native', 'Firebase', 'Sensors', 'Mobile App', 'Automation', 'Robotics'],
                 category: ['app', 'iot']
+              },
+              {
+                id: 'rccar',
+                image: rccarImage,
+                title: 'RC Car Robot',
+                description: 'An Arduino-based robotics project featuring a remote-controlled car with advanced autonomous capabilities. The robot can be controlled remotely via Bluetooth communication and includes line tracing/following functionality using infrared sensors. Equipped with obstacle avoidance system using ultrasonic sensors, the robot can navigate autonomously while avoiding obstacles in its path. Built with Arduino Uno, L298N Motor Driver, HC-05 Bluetooth module, and various sensors for a complete robotics experience.',
+                tags: ['Arduino', 'Robotics', 'IoT', 'Bluetooth', 'Sensors', 'Line Following', 'Obstacle Avoidance', 'C++'],
+                category: 'iot'
               }
             ]
               .filter(project => {
