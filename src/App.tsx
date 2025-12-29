@@ -424,15 +424,15 @@ function App() {
                 image: rccarImage,
                 title: 'RC Car Robot',
                 description: 'An Arduino-based robotics project featuring a remote-controlled car with advanced autonomous capabilities. The robot can be controlled remotely via Bluetooth communication and includes line tracing/following functionality using infrared sensors. Equipped with obstacle avoidance system using ultrasonic sensors and light sensors for environmental detection, the robot can navigate autonomously while avoiding obstacles in its path. Built with Arduino Uno, L298N Motor Driver, HC-05 Bluetooth module, and various sensors (ultrasonic, infrared, and light sensors) for a complete robotics experience.',
-                tags: ['Arduino', 'Robotics', 'IoT', 'Bluetooth', 'Sensors', 'Line Following', 'Obstacle Avoidance', 'C++'],
+                tags: ['Arduino', 'Robotics', 'IoT', 'Bluetooth', 'Sensors', 'Line Following', 'Obstacle Avoidance', 'Automation', 'C++'],
                 category: 'iot'
               },
               {
                 id: 'ancestralhouse',
                 image: ancestralhouseImage,
                 title: 'Rufino Pabico Ancestral House',
-                description: 'An IoT smart home automation system for the Rufino Pabico Ancestral House model. Features a React Native mobile application that allows remote control and monitoring of various house features including fountain control, lighting systems, motion sensors, and light sensors. The system enables automated and manual control of house elements, providing a complete smart home experience through mobile app interface. Built with Arduino, IoT sensors, and React Native for seamless mobile control.',
-                tags: ['Arduino', 'IoT', 'React Native', 'Sensors', 'Motion Sensor', 'Light Sensor', 'Smart Home', 'Mobile App', 'Automation'],
+                description: 'An IoT smart home automation system for the Rufino Pabico Ancestral House model. Features a React Native mobile application that allows remote control and monitoring of various house features including fountain control, lighting systems, motion sensors, and light sensors. The system enables automated and manual control of house elements, providing a complete smart home experience through mobile app interface. Built with Arduino, IoT sensors, React Native, and Firebase for seamless mobile control and data management.',
+                tags: ['Arduino', 'IoT', 'React Native', 'Firebase', 'Sensors', 'Motion Sensor', 'Light Sensor', 'Smart Home', 'Mobile App', 'Automation'],
                 category: ['app', 'iot']
               }
             ]
