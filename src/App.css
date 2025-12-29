@@ -288,11 +288,11 @@ body.menu-open {
 }
 
 .btn {
-  padding: 0.875rem 2rem;
+  padding: 0.875rem 1.5rem;
   border-radius: 8px;
   text-decoration: none;
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   transition: all 0.2s ease;
   display: inline-flex;
   align-items: center;
@@ -301,6 +301,7 @@ body.menu-open {
   cursor: pointer;
   min-height: 44px;
   box-sizing: border-box;
+  white-space: nowrap;
 }
 
 .btn-primary {
@@ -1009,31 +1010,17 @@ section {
   font-size: 0.9rem;
 }
 
-/* Tablet and desktop mode on mobile (landscape) */
+/* Tablet and desktop mode on mobile (landscape) - smaller buttons */
 @media (min-width: 769px) and (max-width: 1024px) {
   .hero-buttons {
     justify-content: flex-start;
-    align-items: stretch;
+    flex-wrap: nowrap;
   }
 
   .btn {
-    flex: 1 1 0;
-    min-width: 0;
-    width: 100%;
-    max-width: 200px;
-  }
-}
-
-/* Desktop mode - equal width buttons */
-@media (min-width: 769px) {
-  .hero-buttons {
-    justify-content: flex-start;
-  }
-
-  .btn {
-    flex: 1 1 0;
-    min-width: 0;
-    max-width: 200px;
+    padding: 0.75rem 1.25rem;
+    font-size: 0.9rem;
+    white-space: nowrap;
   }
 }
 
