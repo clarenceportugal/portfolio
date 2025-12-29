@@ -399,7 +399,7 @@ function App() {
                 id: 'quizme',
                 image: quizmeImage,
                 title: 'QuizMe',
-                description: 'A mobile quiz application that allows users to test their knowledge and challenge friends. Features a modern UI with vibrant colors and intuitive design for an engaging quiz experience.',
+                description: 'A comprehensive mobile quiz application designed to make learning and knowledge testing fun and interactive. QuizMe allows users to test their knowledge across various topics and challenge friends in competitive quiz sessions. The app features a modern, user-friendly interface with vibrant colors and intuitive design that creates an engaging and enjoyable quiz experience. Built with Flutter and Dart, the application provides smooth performance and cross-platform compatibility. The app utilizes MongoDB as the database for storing quiz questions, user data, and game statistics. With its focus on UI/UX design, QuizMe delivers an immersive experience that encourages users to learn while having fun through gamified quiz challenges.',
                 tags: ['Flutter', 'Dart', 'VS Code', 'MongoDB', 'Mobile App', 'UI/UX'],
                 category: 'app'
               },
