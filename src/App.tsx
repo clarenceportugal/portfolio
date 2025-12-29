@@ -31,7 +31,10 @@ function App() {
   const [selectedCertificate, setSelectedCertificate] = useState<string | null>(null)
   const [projectFilter, setProjectFilter] = useState<string>('all')
   const [expandedProjects, setExpandedProjects] = useState<Set<string>>(new Set())
+  const [projectSearch, setProjectSearch] = useState<string>('')
+  const [showBackToTop, setShowBackToTop] = useState(false)
   const canvasContainerRef = useRef<HTMLDivElement>(null)
+  const sectionRefs = useRef<{ [key: string]: HTMLElement | null }>({})
 
   useEffect(() => {
     localStorage.setItem('darkMode', darkMode.toString())
@@ -52,6 +55,42 @@ function App() {
       document.body.classList.remove('menu-open')
     }
   }, [mobileMenuOpen])
+
+  // Back to top button visibility
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowBackToTop(window.scrollY > 300)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  // Scroll animations with Intersection Observer
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('fade-in-visible')
+        }
+      })
+    }, observerOptions)
+
+    const elementsToObserve = document.querySelectorAll('.fade-in')
+    elementsToObserve.forEach(el => observer.observe(el))
+
+    return () => {
+      elementsToObserve.forEach(el => observer.unobserve(el))
+    }
+  }, [projectFilter, projectSearch])
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode)
@@ -252,12 +291,16 @@ function App() {
 
   return (
     <div className={`portfolio ${darkMode ? 'dark-mode' : ''}`}>
+      {/* Skip to main content for accessibility */}
+      <a href="#home" className="skip-to-main" aria-label="Skip to main content">
+        Skip to main content
+      </a>
       {/* Navigation */}
       <nav className="navbar">
         <div className="nav-container">
-          <div className="logo">Portfolio</div>
+          <div className="logo" role="banner">Portfolio</div>
           <div className="nav-right">
-            <ul className={`nav-menu ${mobileMenuOpen ? 'active' : ''}`}>
+            <ul className={`nav-menu ${mobileMenuOpen ? 'active' : ''}`} role="navigation" aria-label="Main navigation">
               <div className="mobile-menu-header">
                 <button className="theme-toggle theme-toggle-mobile" onClick={toggleDarkMode} aria-label="Toggle dark mode">
                   {darkMode ? '☀️' : '🌙'}
@@ -285,11 +328,17 @@ function App() {
       </nav>
 
       {/* Hero Section */}
-      <section id="home" className="hero">
+      <section id="home" className="hero fade-in" aria-label="Home section">
         <div className="hero-content">
           <div className="hero-image">
             <div className="image-placeholder">
-              <img src={profileImage} alt="Clarence Portugal" className="profile-img" />
+              <img 
+                src={profileImage} 
+                alt="Clarence Portugal" 
+                className="profile-img" 
+                loading="lazy"
+                decoding="async"
+              />
             </div>
           </div>
           <div className="hero-text">
@@ -299,15 +348,23 @@ function App() {
               Creating mobile applications, web platforms, and IoT systems using modern technologies and innovative solutions
             </p>
             <div className="hero-buttons">
-              <a href="#projects" className="btn btn-primary">View My Work</a>
-              <a href="#contact" className="btn btn-secondary">Get In Touch</a>
+              <a href="#projects" className="btn btn-primary" aria-label="View my projects">View My Work</a>
+              <a href="#contact" className="btn btn-secondary" aria-label="Get in touch">Get In Touch</a>
+              <a href="/resume.pdf" download className="btn btn-outline" aria-label="Download resume">
+                <svg className="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                Download Resume
+              </a>
             </div>
           </div>
         </div>
       </section>
 
       {/* About Section */}
-      <section id="about" className="about">
+      <section id="about" className="about fade-in" aria-label="About section">
         <div className="container">
           <h2 className="section-title">About Me</h2>
           <div className="about-content">
@@ -334,31 +391,53 @@ function App() {
       </section>
 
       {/* Projects Section */}
-      <section id="projects" className="projects">
+      <section id="projects" className="projects fade-in" aria-label="Projects section">
         <div className="container">
           <h2 className="section-title">My Projects</h2>
-          <div className="project-filters">
+          <div className="project-search-container">
+            <input
+              type="text"
+              className="project-search"
+              placeholder="Search projects by name or technology..."
+              value={projectSearch}
+              onChange={(e) => setProjectSearch(e.target.value)}
+              aria-label="Search projects"
+            />
+          </div>
+          <div className="project-filters" role="tablist" aria-label="Project filters">
             <button 
               className={`filter-btn ${projectFilter === 'all' ? 'active' : ''}`}
               onClick={() => setProjectFilter('all')}
+              aria-label="Show all projects"
+              role="tab"
+              aria-selected={projectFilter === 'all'}
             >
               All
             </button>
             <button 
               className={`filter-btn ${projectFilter === 'app' ? 'active' : ''}`}
               onClick={() => setProjectFilter('app')}
+              aria-label="Show mobile app projects"
+              role="tab"
+              aria-selected={projectFilter === 'app'}
             >
               Mobile App
             </button>
             <button 
               className={`filter-btn ${projectFilter === 'iot' ? 'active' : ''}`}
               onClick={() => setProjectFilter('iot')}
+              aria-label="Show IoT and robotics projects"
+              role="tab"
+              aria-selected={projectFilter === 'iot'}
             >
               IOT/Robotics
             </button>
             <button 
               className={`filter-btn ${projectFilter === 'website' ? 'active' : ''}`}
               onClick={() => setProjectFilter('website')}
+              aria-label="Show website projects"
+              role="tab"
+              aria-selected={projectFilter === 'website'}
             >
               Website
             </button>
@@ -455,12 +534,24 @@ function App() {
               }
             ]
               .filter(project => {
-                if (projectFilter === 'all') return true
-                // Handle both single category string and array of categories
-                if (Array.isArray(project.category)) {
-                  return project.category.includes(projectFilter)
+                // Filter by category
+                let categoryMatch = true
+                if (projectFilter !== 'all') {
+                  if (Array.isArray(project.category)) {
+                    categoryMatch = project.category.includes(projectFilter)
+                  } else {
+                    categoryMatch = project.category === projectFilter
+                  }
                 }
-                return project.category === projectFilter
+                
+                // Filter by search
+                const searchLower = projectSearch.toLowerCase()
+                const searchMatch = !projectSearch || 
+                  project.title.toLowerCase().includes(searchLower) ||
+                  project.description.toLowerCase().includes(searchLower) ||
+                  project.tags.some(tag => tag.toLowerCase().includes(searchLower))
+                
+                return categoryMatch && searchMatch
               })
               .map(project => {
                 const isExpanded = expandedProjects.has(project.id)
@@ -470,30 +561,34 @@ function App() {
                   : truncateDescription(project.description, 150)
                 
                 return (
-                  <div key={project.id} className="project-card">
+                  <article key={project.id} className="project-card fade-in" aria-label={`${project.title} project`}>
                     <div className="project-image">
-                      <img src={project.image} alt={`${project.title} App`} className="project-img" />
+                      <img 
+                        src={project.image} 
+                        alt={`${project.title} project screenshot`} 
+                        className="project-img" 
+                        loading="lazy"
+                        decoding="async"
+                      />
                     </div>
                     <div className="project-info">
                       <h3>{project.title}</h3>
-                      <p>
-                        {displayDescription}
-                        {shouldTruncate && (
-                          <button 
-                            className="see-more-btn"
-                            onClick={() => toggleProjectDescription(project.id)}
-                          >
-                            {isExpanded ? ' See less' : ' See more'}
-                          </button>
-                        )}
-                      </p>
+                      <p>{displayDescription}</p>
+                      {shouldTruncate && (
+                        <button 
+                          className="see-more-btn"
+                          onClick={() => toggleProjectDescription(project.id)}
+                        >
+                          {isExpanded ? 'See less' : 'See more'}
+                        </button>
+                      )}
                       <div className="project-tags">
                         {project.tags.map((tag, index) => (
                           <span key={index}>{tag}</span>
                         ))}
                       </div>
                     </div>
-                  </div>
+                  </article>
                 )
               })}
           </div>
@@ -501,7 +596,7 @@ function App() {
       </section>
 
       {/* Skills Section */}
-      <section id="skills" className="skills">
+      <section id="skills" className="skills fade-in" aria-label="Skills section">
         <div className="container">
           <h2 className="section-title">Skills</h2>
           <div className="skills-grid">
@@ -702,7 +797,7 @@ function App() {
       </section>
 
       {/* Certificates Section */}
-      <section id="certificates" className="certificates">
+      <section id="certificates" className="certificates fade-in" aria-label="Certificates section">
         <div className="container">
           <h2 className="section-title">Certificates</h2>
           <div className="certificates-grid">
@@ -755,7 +850,7 @@ function App() {
       )}
 
       {/* Contact Section */}
-      <section id="contact" className="contact">
+      <section id="contact" className="contact fade-in" aria-label="Contact section">
         <div className="container">
           <h2 className="section-title">Get In Touch</h2>
           <div className="contact-content">
@@ -790,8 +885,20 @@ function App() {
         </div>
       </section>
 
+      {/* Back to Top Button */}
+      <button 
+        className={`back-to-top ${showBackToTop ? 'show' : ''}`}
+        onClick={scrollToTop}
+        aria-label="Scroll to top"
+        title="Back to top"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M18 15l-6-6-6 6"/>
+        </svg>
+      </button>
+
       {/* Footer */}
-      <footer className="footer">
+      <footer className="footer fade-in" aria-label="Footer">
         <div className="container">
           <p>&copy; 2025 Portfolio. All rights reserved.</p>
         </div>

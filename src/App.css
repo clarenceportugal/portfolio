@@ -1,4 +1,8 @@
 /* Portfolio Styles - Minimalist Modern Design */
+html {
+  scroll-behavior: smooth;
+}
+
 .portfolio {
   min-height: 100vh;
   background: #fafafa;
@@ -316,6 +320,37 @@ body.menu-open {
   transform: translateY(-2px);
 }
 
+.btn-outline {
+  background: transparent;
+  color: #1a1a1a;
+  border: 2px solid #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-outline:hover {
+  background: #1a1a1a;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.btn-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.portfolio.dark-mode .btn-outline {
+  color: #ffffff;
+  border-color: #ffffff;
+}
+
+.portfolio.dark-mode .btn-outline:hover {
+  background: #ffffff;
+  color: #1a1a1a;
+}
+
 /* Section Styles */
 section {
   padding: 6rem 0;
@@ -351,6 +386,49 @@ section {
 /* Projects Section */
 .projects {
   background: #f8f9fa;
+}
+
+.project-search-container {
+  margin-bottom: 2rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.project-search {
+  width: 100%;
+  padding: 0.875rem 1.25rem;
+  border: 1.5px solid #e5e5e5;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  background: #ffffff;
+  color: #1a1a1a;
+  transition: all 0.2s;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.project-search:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.project-search::placeholder {
+  color: #9ca3af;
+}
+
+.portfolio.dark-mode .project-search {
+  background: #1a1a1a;
+  border-color: #2a2a2a;
+  color: #ffffff;
+}
+
+.portfolio.dark-mode .project-search:focus {
+  border-color: #2563eb;
+}
+
+.portfolio.dark-mode .project-search::placeholder {
+  color: #6b7280;
 }
 
 .project-filters {
@@ -1677,5 +1755,223 @@ section {
     width: 30px;
     height: 30px;
     font-size: 0.9rem;
+  }
+}
+
+/* Fade-in Animations */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Back to Top Button */
+.back-to-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 50px;
+  height: 50px;
+  background: #2563eb;
+  color: #ffffff;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+  transition: all 0.3s ease;
+  z-index: 999;
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+}
+
+.back-to-top.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+.back-to-top:hover {
+  background: #1d4ed8;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+}
+
+.back-to-top:active {
+  transform: translateY(-1px);
+}
+
+.back-to-top svg {
+  width: 24px;
+  height: 24px;
+}
+
+.portfolio.dark-mode .back-to-top {
+  background: #2563eb;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+}
+
+.portfolio.dark-mode .back-to-top:hover {
+  background: #1d4ed8;
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.5);
+}
+
+/* Dark Mode Improvements */
+.portfolio.dark-mode {
+  background: #0a0a0a;
+  color: #e5e5e5;
+}
+
+.portfolio.dark-mode .hero {
+  background: linear-gradient(to bottom, #0f0f0f 0%, #0a0a0a 100%);
+}
+
+.portfolio.dark-mode .hero-name {
+  color: #ffffff;
+}
+
+.portfolio.dark-mode .hero-title {
+  color: #d1d5db;
+}
+
+.portfolio.dark-mode .hero-description {
+  color: #9ca3af;
+}
+
+.portfolio.dark-mode .about {
+  background: #0f0f0f;
+}
+
+.portfolio.dark-mode .about-text p {
+  color: #d1d5db;
+}
+
+.portfolio.dark-mode .projects {
+  background: #0f0f0f;
+}
+
+.portfolio.dark-mode .project-card {
+  background: #1a1a1a;
+  border-color: #2a2a2a;
+}
+
+.portfolio.dark-mode .project-card:hover {
+  border-color: #2563eb;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.portfolio.dark-mode .project-info h3 {
+  color: #ffffff;
+}
+
+.portfolio.dark-mode .project-info p {
+  color: #d1d5db;
+}
+
+.portfolio.dark-mode .project-tags span {
+  background: #2a2a2a;
+  color: #d1d5db;
+}
+
+.portfolio.dark-mode .skills {
+  background: #0f0f0f;
+}
+
+.portfolio.dark-mode .skill-category h3 {
+  color: #ffffff;
+}
+
+.portfolio.dark-mode .skill-item {
+  background: #1a1a1a;
+  color: #e5e5e5;
+  border-color: #2a2a2a;
+}
+
+.portfolio.dark-mode .skill-item:hover {
+  background: #2a2a2a;
+  border-color: #2563eb;
+}
+
+.portfolio.dark-mode .filter-btn {
+  background: #1a1a1a;
+  border-color: #2a2a2a;
+  color: #d1d5db;
+}
+
+.portfolio.dark-mode .filter-btn:hover {
+  border-color: #2563eb;
+  color: #60a5fa;
+  background: #1a1a1a;
+}
+
+.portfolio.dark-mode .filter-btn.active {
+  background: #2563eb;
+  color: #ffffff;
+  border-color: #2563eb;
+}
+
+/* Accessibility Improvements */
+*:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+/* Skip to main content for screen readers */
+.skip-to-main {
+  position: absolute;
+  left: -9999px;
+  z-index: 9999;
+}
+
+.skip-to-main:focus {
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 1rem 2rem;
+  background: #2563eb;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+/* Responsive adjustments for back to top */
+@media (max-width: 768px) {
+  .back-to-top {
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 45px;
+    height: 45px;
+  }
+
+  .back-to-top svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .back-to-top {
+    bottom: 1rem;
+    right: 1rem;
+    width: 40px;
+    height: 40px;
+  }
+
+  .back-to-top svg {
+    width: 18px;
+    height: 18px;
   }
 }
