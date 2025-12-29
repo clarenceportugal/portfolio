@@ -13,6 +13,7 @@ import trinovaImage from './assets/images/Trinova.jpg'
 import motowashImage from './assets/images/motrorwash_logo.jpg'
 import rccarImage from './assets/images/rccar_logo.jpg'
 import ancestralhouseImage from './assets/images/ancestralhouse_logo.jpg'
+import chessImage from './assets/images/chess_logo.jpg'
 
 // Set up PDF.js worker - use local worker file
 pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs'
