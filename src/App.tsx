@@ -422,7 +422,7 @@ function App() {
                 id: 'rccar',
                 image: rccarImage,
                 title: 'RC Car Robot',
-                description: 'An Arduino-based robotics project featuring a remote-controlled car with advanced autonomous capabilities. The robot can be controlled remotely via Bluetooth communication and includes line tracing/following functionality using infrared sensors. Equipped with obstacle avoidance system using ultrasonic sensors, the robot can navigate autonomously while avoiding obstacles in its path. Built with Arduino Uno, L298N Motor Driver, HC-05 Bluetooth module, and various sensors for a complete robotics experience.',
+                description: 'An Arduino-based robotics project featuring a remote-controlled car with advanced autonomous capabilities. The robot can be controlled remotely via Bluetooth communication and includes line tracing/following functionality using infrared sensors. Equipped with obstacle avoidance system using ultrasonic sensors and light sensors for environmental detection, the robot can navigate autonomously while avoiding obstacles in its path. Built with Arduino Uno, L298N Motor Driver, HC-05 Bluetooth module, and various sensors (ultrasonic, infrared, and light sensors) for a complete robotics experience.',
                 tags: ['Arduino', 'Robotics', 'IoT', 'Bluetooth', 'Sensors', 'Line Following', 'Obstacle Avoidance', 'C++'],
                 category: 'iot'
               }
