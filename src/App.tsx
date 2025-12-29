@@ -351,7 +351,7 @@ function App() {
                 id: 'arice',
                 image: ariceImage,
                 title: 'ARICE',
-                description: 'Digital Automated Rice Dispenser and Sealing with AI-Assistance and Smart Storage Notification. An IoT-enabled mobile application that allows users to make online payments for rice purchases. After payment confirmation, the app controls IoT devices to automatically dispense rice, providing a seamless and automated purchasing experience.',
+                description: 'Digital Automated Rice Dispenser and Sealing with AI-Assistance and Smart Storage Notification. ARICE is a comprehensive IoT-enabled mobile application that revolutionizes rice purchasing through automation and smart technology. The system allows users to make secure online payments for rice purchases directly through the mobile app. After payment confirmation, the application seamlessly controls IoT devices including Arduino-based dispensers to automatically dispense the exact amount of rice purchased. The system features AI assistance for intelligent inventory management and smart storage notifications that alert users and administrators about stock levels, ensuring continuous availability. Built with Flutter and Dart, the app integrates with MongoDB for robust data management and Arduino for hardware control, creating a complete end-to-end automated solution that streamlines the rice purchasing process from payment to delivery.',
                 tags: ['Flutter', 'Dart', 'VS Code', 'MongoDB', 'Arduino', 'IoT', 'Mobile App', 'Payment Integration'],
                 category: ['app', 'iot']
               },
@@ -359,7 +359,7 @@ function App() {
                 id: 'caci',
                 image: caciImage,
                 title: 'CACI',
-                description: 'A quiz game application designed specifically for grade 10 students to test their knowledge. Features engaging gameplay with statistics tracking, daily goals, level progression, and a gamified learning experience to make studying fun and interactive.',
+                description: 'CACI is a comprehensive quiz game application designed specifically for grade 10 students to test their knowledge across various subjects. The app features engaging gameplay mechanics that transform traditional studying into an interactive and enjoyable experience. Students can track their progress through detailed statistics that show their performance over time, helping them identify areas for improvement. The application includes daily goals that encourage consistent learning habits and level progression systems that reward students as they advance. With its gamified learning approach, CACI makes studying fun and interactive through achievements, badges, and competitive elements. Built with Flutter and Dart, the app provides a smooth, responsive user experience that keeps students motivated and engaged in their educational journey.',
                 tags: ['Flutter', 'Dart', 'VS Code', 'Mobile App', 'Educational'],
                 category: 'app'
               },
@@ -375,7 +375,7 @@ function App() {
                 id: 'emuklat',
                 image: emuklatImage,
                 title: 'E-Muklat',
-                description: 'A mobile application for uploading videos and stories about places, specifically designed for Labo, Camarines Norte. Features user authentication, content sharing, and a warm, welcoming interface for showcasing local stories and experiences.',
+                description: 'E-Muklat is a mobile application designed to celebrate and preserve the local culture and stories of Labo, Camarines Norte. The app serves as a digital platform where users can upload videos and stories about places, creating a rich repository of local experiences and narratives. Built with Java and XML using Android Studio, E-Muklat features secure user authentication that allows community members to create accounts and share their content. The application includes comprehensive content sharing capabilities, enabling users to discover and explore stories about their hometown. With Firebase as the backend, the app ensures reliable data storage and real-time synchronization. The interface is designed with a warm, welcoming aesthetic that reflects the local culture, making it easy and enjoyable for users to showcase their stories and connect with their community through shared experiences.',
                 tags: ['Java', 'XML', 'Android Studio', 'Firebase', 'Mobile App'],
                 category: 'app'
               },
@@ -383,7 +383,7 @@ function App() {
                 id: 'gama',
                 image: gamaImage,
                 title: 'GAMA',
-                description: 'Geometry and Algebra Adventures - An educational mobile app that makes learning math fun and interactive. Features engaging UI with colorful geometric shapes and mathematical symbols for an immersive learning experience.',
+                description: 'Geometry and Algebra Adventures (GAMA) is an innovative educational mobile application that transforms mathematics learning into an exciting adventure. The app makes learning geometry and algebra concepts fun and interactive through engaging gameplay and visual learning techniques. GAMA features a vibrant, colorful user interface with dynamic geometric shapes and mathematical symbols that create an immersive and visually appealing learning environment. Students can explore various mathematical concepts through interactive exercises, puzzles, and challenges that adapt to their learning pace. Built with Flutter and Dart, the application provides smooth performance and cross-platform compatibility. With Firebase integration, GAMA offers cloud-based progress tracking and personalized learning experiences. The app combines educational content with gamification elements, making complex mathematical concepts more accessible and enjoyable for students of all levels.',
                 tags: ['Flutter', 'Dart', 'VS Code', 'Firebase', 'Mobile App'],
                 category: 'app'
               },
@@ -407,7 +407,7 @@ function App() {
                 id: 'trinova',
                 image: trinovaImage,
                 title: 'Trinova',
-                description: 'An educational device designed to help students learn mathematical functions and topics, particularly trigonometry. Features an interactive keypad interface and LCD display that displays various mathematical topics including trigonometric functions (sine, cosine, tangent), laws of sines and cosines, and SOH CAH TOA. The device provides an engaging, hands-on learning experience for students studying mathematics.',
+                description: 'Trinova is an innovative educational device designed to help students learn mathematical functions and topics, with a special focus on trigonometry. This Arduino-based IoT device features an interactive keypad interface that allows students to input mathematical queries and navigate through different topics. The LCD display provides clear, readable output showing various mathematical concepts including trigonometric functions (sine, cosine, tangent), laws of sines and cosines, and the fundamental SOH CAH TOA mnemonic. The device offers a hands-on, tactile learning experience that helps students understand complex mathematical relationships through direct interaction. Built with Arduino and programmed in C++, Trinova combines hardware and software to create an engaging educational tool that makes abstract mathematical concepts more tangible and easier to grasp. The device serves as a portable learning companion that students can use to practice and explore trigonometry concepts at their own pace, making it an invaluable tool for mathematics education.',
                 tags: ['Arduino', 'IoT', 'Educational', 'Embedded System', 'C++'],
                 category: 'iot'
               },
