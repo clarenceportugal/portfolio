@@ -1009,6 +1009,19 @@ section {
   font-size: 0.9rem;
 }
 
+/* Tablet and desktop mode on mobile (landscape) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .hero-buttons {
+    justify-content: flex-start;
+    align-items: stretch;
+  }
+
+  .btn {
+    flex: 0 1 auto;
+    min-width: fit-content;
+  }
+}
+
 /* Responsive Design - Mobile First */
 @media (max-width: 768px) {
   .nav-container {
