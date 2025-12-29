@@ -572,15 +572,17 @@ function App() {
                     </div>
                     <div className="project-info">
                       <h3>{project.title}</h3>
-                      <p>{displayDescription}</p>
-                      {shouldTruncate && (
-                        <button 
-                          className="see-more-btn"
-                          onClick={() => toggleProjectDescription(project.id)}
-                        >
-                          {isExpanded ? 'See less' : 'See more'}
-                        </button>
-                      )}
+                      <p>
+                        {displayDescription}
+                        {shouldTruncate && (
+                          <button 
+                            className="see-more-btn"
+                            onClick={() => toggleProjectDescription(project.id)}
+                          >
+                            {isExpanded ? ' See less' : ' See more'}
+                          </button>
+                        )}
+                      </p>
                       <div className="project-tags">
                         {project.tags.map((tag, index) => (
                           <span key={index}>{tag}</span>
