@@ -30,6 +30,7 @@ function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [selectedCertificate, setSelectedCertificate] = useState<string | null>(null)
   const [projectFilter, setProjectFilter] = useState<string>('all')
+  const [expandedProjects, setExpandedProjects] = useState<Set<string>>(new Set())
   const canvasContainerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -230,6 +231,23 @@ function App() {
     if (canvasContainerRef.current) {
       canvasContainerRef.current.innerHTML = ''
     }
+  }
+
+  const toggleProjectDescription = (projectId: string) => {
+    setExpandedProjects(prev => {
+      const newSet = new Set(prev)
+      if (newSet.has(projectId)) {
+        newSet.delete(projectId)
+      } else {
+        newSet.add(projectId)
+      }
+      return newSet
+    })
+  }
+
+  const truncateDescription = (text: string, maxLength: number = 150): string => {
+    if (text.length <= maxLength) return text
+    return text.substring(0, maxLength).trim() + '...'
   }
 
   return (
@@ -444,22 +462,40 @@ function App() {
                 }
                 return project.category === projectFilter
               })
-              .map(project => (
-                <div key={project.id} className="project-card">
-                  <div className="project-image">
-                    <img src={project.image} alt={`${project.title} App`} className="project-img" />
-                  </div>
-                  <div className="project-info">
-                    <h3>{project.title}</h3>
-                    <p>{project.description}</p>
-                    <div className="project-tags">
-                      {project.tags.map((tag, index) => (
-                        <span key={index}>{tag}</span>
-                      ))}
+              .map(project => {
+                const isExpanded = expandedProjects.has(project.id)
+                const shouldTruncate = project.description.length > 150
+                const displayDescription = isExpanded || !shouldTruncate 
+                  ? project.description 
+                  : truncateDescription(project.description, 150)
+                
+                return (
+                  <div key={project.id} className="project-card">
+                    <div className="project-image">
+                      <img src={project.image} alt={`${project.title} App`} className="project-img" />
+                    </div>
+                    <div className="project-info">
+                      <h3>{project.title}</h3>
+                      <p>
+                        {displayDescription}
+                        {shouldTruncate && (
+                          <button 
+                            className="see-more-btn"
+                            onClick={() => toggleProjectDescription(project.id)}
+                          >
+                            {isExpanded ? ' See less' : ' See more'}
+                          </button>
+                        )}
+                      </p>
+                      <div className="project-tags">
+                        {project.tags.map((tag, index) => (
+                          <span key={index}>{tag}</span>
+                        ))}
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                )
+              })}
           </div>
         </div>
       </section>
