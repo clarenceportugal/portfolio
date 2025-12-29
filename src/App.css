@@ -1013,7 +1013,7 @@ section {
 /* Tablet and desktop mode on mobile (landscape) - smaller buttons */
 @media (min-width: 769px) and (max-width: 1024px) {
   .hero-name {
-    font-size: 2.75rem;
+    font-size: 3.5rem;
   }
 
   .hero-buttons {
