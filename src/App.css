@@ -1017,8 +1017,23 @@ section {
   }
 
   .btn {
-    flex: 0 1 auto;
-    min-width: fit-content;
+    flex: 1 1 0;
+    min-width: 0;
+    width: 100%;
+    max-width: 200px;
+  }
+}
+
+/* Desktop mode - equal width buttons */
+@media (min-width: 769px) {
+  .hero-buttons {
+    justify-content: flex-start;
+  }
+
+  .btn {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: 200px;
   }
 }
 
