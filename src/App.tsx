@@ -336,7 +336,7 @@ function App() {
               className={`filter-btn ${projectFilter === 'iot' ? 'active' : ''}`}
               onClick={() => setProjectFilter('iot')}
             >
-              IoT
+              IOT/Robotics
             </button>
             <button 
               className={`filter-btn ${projectFilter === 'website' ? 'active' : ''}`}
@@ -391,7 +391,7 @@ function App() {
                 id: 'likhain',
                 image: likhainImage,
                 title: 'Likhain',
-                description: 'A creative platform designed for poem writers to express their thoughts, emotions, and creativity through poetry. Writers can share their poems, discover inspiring works from others, and connect with fellow poets in a supportive community. Features include poem publishing, commenting, and real-time communication between writers.',
+                description: 'Likhain is a comprehensive creative platform designed specifically for poem writers to express their thoughts, emotions, and creativity through poetry. The platform serves as a digital sanctuary where writers can share their original poems, discover inspiring works from fellow poets, and connect with a supportive community of creative individuals. Built with React and TypeScript, Likhain provides a modern, responsive web experience that works seamlessly across all devices. The platform features robust poem publishing capabilities that allow writers to format and present their work beautifully. Writers can engage with the community through commenting features that enable meaningful discussions and feedback on poems. The application includes real-time communication features powered by Firebase, allowing instant interactions between writers. With its intuitive interface and focus on fostering creativity, Likhain creates a welcoming space where poets can showcase their talent, find inspiration, and build connections within the poetry community.',
                 tags: ['React', 'TypeScript', 'Firebase', 'Website', 'VS Code'],
                 category: 'website'
               },
