@@ -531,6 +531,14 @@ function App() {
                 description: 'An IoT smart home automation system for the Rufino Pabico Ancestral House model. Features a React Native mobile application that allows remote control and monitoring of various house features including fountain control, lighting systems, motion sensors, and light sensors. The system enables automated and manual control of house elements, providing a complete smart home experience through mobile app interface. Built with Arduino, IoT sensors, React Native, and Firebase for seamless mobile control and data management.',
                 tags: ['Arduino', 'IoT', 'React Native', 'Firebase', 'Sensors', 'Motion Sensor', 'Light Sensor', 'Smart Home', 'Mobile App', 'Automation'],
                 category: ['app', 'iot']
+              },
+              {
+                id: 'chess',
+                image: chessImage,
+                title: 'Learn with Heinz Chess Beginners Guide',
+                description: 'A comprehensive mobile application designed to teach chess fundamentals to beginners. The app provides an interactive learning experience with step-by-step guides, tutorials, and practice exercises to help users master the basics of chess. Features include detailed explanations of chess pieces, movement rules, basic strategies, and common opening patterns. Built with Android Studio using Java and XML, the app offers an intuitive user interface that makes learning chess accessible and enjoyable for users of all ages.',
+                tags: ['Java', 'XML', 'Android Studio', 'Mobile App', 'Educational'],
+                category: 'app'
               }
             ]
               .filter(project => {
