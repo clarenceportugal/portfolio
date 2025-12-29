@@ -284,6 +284,7 @@ body.menu-open {
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
+  align-items: center;
 }
 
 .btn {
@@ -293,9 +294,13 @@ body.menu-open {
   font-weight: 600;
   font-size: 0.95rem;
   transition: all 0.2s ease;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border: none;
   cursor: pointer;
+  min-height: 44px;
+  box-sizing: border-box;
 }
 
 .btn-primary {
