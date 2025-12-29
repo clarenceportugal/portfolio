@@ -10,6 +10,7 @@ import caciImage from './assets/images/caci_logo.jpg'
 import likhainImage from './assets/images/likhain_logo.png'
 import eduvisionImage from './assets/images/eduvision_logo.png'
 import trinovaImage from './assets/images/Trinova.jpg'
+import motowashImage from './assets/images/motrorwash_logo.jpg'
 
 // Set up PDF.js worker - use local worker file
 pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs'
@@ -407,6 +408,14 @@ function App() {
                 description: 'An educational device designed to help students learn mathematical functions and topics, particularly trigonometry. Features an interactive keypad interface and LCD display that displays various mathematical topics including trigonometric functions (sine, cosine, tangent), laws of sines and cosines, and SOH CAH TOA. The device provides an engaging, hands-on learning experience for students studying mathematics.',
                 tags: ['Arduino', 'IoT', 'Educational', 'Embedded System', 'C++'],
                 category: 'iot'
+              },
+              {
+                id: 'motowash',
+                image: motowashImage,
+                title: 'Motowash 360',
+                description: 'A radically innovative solution for automating motor cleaning, aiming to streamline the work process and promote sustainability. An IoT-enabled system using Arduino Uno with L298N Motor Driver, DC water pump motor, and Ultrasonic Sensor for detection. Features a React Native mobile application for remote control and monitoring, with Firebase as the database for data collection and real-time synchronization. The system really shines through careful setup, programming for data collection and control, and extensive testing for reliability.',
+                tags: ['Arduino', 'IoT', 'React Native', 'Firebase', 'Sensors', 'Mobile App', 'Automation'],
+                category: ['app', 'iot']
               }
             ]
               .filter(project => {
