@@ -34,7 +34,6 @@ function App() {
   const [projectSearch, setProjectSearch] = useState<string>('')
   const [showBackToTop, setShowBackToTop] = useState(false)
   const canvasContainerRef = useRef<HTMLDivElement>(null)
-  const sectionRefs = useRef<{ [key: string]: HTMLElement | null }>({})
 
   useEffect(() => {
     localStorage.setItem('darkMode', darkMode.toString())
