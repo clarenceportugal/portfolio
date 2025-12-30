@@ -14,6 +14,7 @@ import motowashImage from './assets/images/motrorwash_logo.jpg'
 import rccarImage from './assets/images/rccar_logo.jpg'
 import ancestralhouseImage from './assets/images/ancestralhouse_logo.jpg'
 import chessImage from './assets/images/chess_logo.jpg'
+import tesdaImage from './assets/images/tesda.jpg'
 
 // Set up PDF.js worker - use local worker file
 pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs'
@@ -833,6 +834,25 @@ function App() {
                 <h3>TOPCIT Certificate</h3>
                 <p>Institute for Information & Communications Technology Promotion (IITP)</p>
                 <p className="certificate-date">Date: June 2025</p>
+              </div>
+            </div>
+            <div className="certificate-card" onClick={() => openCertificate(tesdaImage)}>
+              <div className="certificate-preview">
+                <img 
+                  src={tesdaImage} 
+                  alt="TESDA Certificate Preview" 
+                  className="certificate-preview-image"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div className="certificate-overlay">
+                  <span className="certificate-view-text">Click to view full size</span>
+                </div>
+              </div>
+              <div className="certificate-info">
+                <h3>Computer Systems Servicing NC II</h3>
+                <p>St. Claire Institute of Arts and Technology Inc. - TESDA</p>
+                <p className="certificate-date">Date: September 5, 2025</p>
               </div>
             </div>
           </div>
