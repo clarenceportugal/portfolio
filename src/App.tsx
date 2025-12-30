@@ -952,7 +952,7 @@ function App() {
                 </svg>
                 <span>Facebook</span>
               </a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="contact-item">
+              <a href="https://www.linkedin.com/in/clarence-portugal-0984643a1?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" rel="noopener noreferrer" className="contact-item">
                 <svg className="contact-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
                   <rect x="2" y="9" width="4" height="12"></rect>
