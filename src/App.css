@@ -932,12 +932,22 @@ section::before {
   text-decoration: none;
   font-weight: 600;
   font-size: 0.9rem;
-  transition: color 0.2s;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
 }
 
 .project-link:hover {
   color: #0d9488;
   text-decoration: underline;
+}
+
+.project-link-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
 }
 
 /* Skills Section */

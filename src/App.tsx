@@ -478,7 +478,8 @@ function App() {
                 title: 'ARICE',
                 description: 'Digital Automated Rice Dispenser and Sealing with AI-Assistance and Smart Storage Notification. ARICE is a comprehensive IoT-enabled mobile application that revolutionizes rice purchasing through automation and smart technology. The system allows users to make secure online payments for rice purchases directly through the mobile app. After payment confirmation, the application seamlessly controls IoT devices including Arduino-based dispensers to automatically dispense the exact amount of rice purchased. The system features AI assistance for intelligent inventory management and smart storage notifications that alert users and administrators about stock levels, ensuring continuous availability. Built with Flutter and Dart, the app integrates with MongoDB for robust data management and Arduino for hardware control, creating a complete end-to-end automated solution that streamlines the rice purchasing process from payment to delivery.',
                 tags: ['Flutter', 'Dart', 'VS Code', 'MongoDB', 'Arduino', 'IoT', 'Mobile App', 'Payment Integration'],
-                category: ['app', 'iot']
+                category: ['app', 'iot'],
+                github: 'https://github.com/clarenceportugal/Arice'
               },
               {
                 id: 'caci',
@@ -486,7 +487,8 @@ function App() {
                 title: 'CACI',
                 description: 'CACI is a comprehensive quiz game application designed specifically for grade 10 students to test their knowledge across various subjects. The app features engaging gameplay mechanics that transform traditional studying into an interactive and enjoyable experience. Students can track their progress through detailed statistics that show their performance over time, helping them identify areas for improvement. The application includes daily goals that encourage consistent learning habits and level progression systems that reward students as they advance. With its gamified learning approach, CACI makes studying fun and interactive through achievements, badges, and competitive elements. Built with Flutter and Dart, the app provides a smooth, responsive user experience that keeps students motivated and engaged in their educational journey.',
                 tags: ['Flutter', 'Dart', 'VS Code', 'Mobile App', 'Educational'],
-                category: 'app'
+                category: 'app',
+                github: 'https://github.com/clarenceportugal/CACI'
               },
               {
                 id: 'eduvision',
@@ -494,7 +496,8 @@ function App() {
                 title: 'EduVision',
                 description: 'An AI-powered facial recognition attendance system for the College of Computing and Multimedia Studies (CCMS) at CNSC. Utilizes IoT-based smart cameras and cloud-based database to automate faculty attendance tracking. Features contactless verification, real-time monitoring, and secure record-keeping through web and mobile applications. Solves issues with manual attendance methods by eliminating time-consuming processes, reducing errors, and preventing proxy attendance.',
                 tags: ['Python', 'React', 'TypeScript', 'C++', 'Cython', 'IoT', 'Website', 'System', 'AI', 'Facial Recognition'],
-                category: 'website'
+                category: 'website',
+                github: 'https://github.com/clarenceportugal/facerecog'
               },
               {
                 id: 'emuklat',
@@ -502,7 +505,8 @@ function App() {
                 title: 'E-Muklat',
                 description: 'E-Muklat is a mobile application designed to celebrate and preserve the local culture and stories of Labo, Camarines Norte. The app serves as a digital platform where users can upload videos and stories about places, creating a rich repository of local experiences and narratives. Built with Java and XML using Android Studio, E-Muklat features secure user authentication that allows community members to create accounts and share their content. The application includes comprehensive content sharing capabilities, enabling users to discover and explore stories about their hometown. With Firebase as the backend, the app ensures reliable data storage and real-time synchronization. The interface is designed with a warm, welcoming aesthetic that reflects the local culture, making it easy and enjoyable for users to showcase their stories and connect with their community through shared experiences.',
                 tags: ['Java', 'XML', 'Android Studio', 'Firebase', 'Mobile App'],
-                category: 'app'
+                category: 'app',
+                github: 'https://github.com/clarenceportugal/e-muklat'
               },
               {
                 id: 'gama',
@@ -510,7 +514,8 @@ function App() {
                 title: 'GAMA',
                 description: 'Geometry and Algebra Adventures (GAMA) is an innovative educational mobile application that transforms mathematics learning into an exciting adventure. The app makes learning geometry and algebra concepts fun and interactive through engaging gameplay and visual learning techniques. GAMA features a vibrant, colorful user interface with dynamic geometric shapes and mathematical symbols that create an immersive and visually appealing learning environment. Students can explore various mathematical concepts through interactive exercises, puzzles, and challenges that adapt to their learning pace. Built with Flutter and Dart, the application provides smooth performance and cross-platform compatibility. With Firebase integration, GAMA offers cloud-based progress tracking and personalized learning experiences. The app combines educational content with gamification elements, making complex mathematical concepts more accessible and enjoyable for students of all levels.',
                 tags: ['Flutter', 'Dart', 'VS Code', 'Firebase', 'Mobile App'],
-                category: 'app'
+                category: 'app',
+                github: 'https://github.com/clarenceportugal/GAMA'
               },
               {
                 id: 'likhain',
@@ -518,7 +523,8 @@ function App() {
                 title: 'Likhain',
                 description: 'Likhain is a comprehensive creative platform designed specifically for poem writers to express their thoughts, emotions, and creativity through poetry. The platform serves as a digital sanctuary where writers can share their original poems, discover inspiring works from fellow poets, and connect with a supportive community of creative individuals. Built with React and TypeScript, Likhain provides a modern, responsive web experience that works seamlessly across all devices. The platform features robust poem publishing capabilities that allow writers to format and present their work beautifully. Writers can engage with the community through commenting features that enable meaningful discussions and feedback on poems. The application includes real-time communication features powered by Firebase, allowing instant interactions between writers. With its intuitive interface and focus on fostering creativity, Likhain creates a welcoming space where poets can showcase their talent, find inspiration, and build connections within the poetry community.',
                 tags: ['React', 'TypeScript', 'Firebase', 'Website', 'VS Code'],
-                category: 'website'
+                category: 'website',
+                github: 'https://github.com/clarenceportugal/Likhain'
               },
               {
                 id: 'quizme',
@@ -526,7 +532,8 @@ function App() {
                 title: 'QuizMe',
                 description: 'A comprehensive mobile quiz application designed to make learning and knowledge testing fun and interactive. QuizMe allows users to test their knowledge across various topics and challenge friends in competitive quiz sessions. The app features a modern, user-friendly interface with vibrant colors and intuitive design that creates an engaging and enjoyable quiz experience. Built with Flutter and Dart, the application provides smooth performance and cross-platform compatibility. The app utilizes MongoDB as the database for storing quiz questions, user data, and game statistics. With its focus on UI/UX design, QuizMe delivers an immersive experience that encourages users to learn while having fun through gamified quiz challenges.',
                 tags: ['Flutter', 'Dart', 'VS Code', 'MongoDB', 'Mobile App', 'UI/UX'],
-                category: 'app'
+                category: 'app',
+                github: 'https://github.com/clarenceportugal/QuizMe'
               },
               {
                 id: 'trinova',
@@ -625,6 +632,22 @@ function App() {
                           <span key={index}>{tag}</span>
                         ))}
                       </div>
+                      {project.github && (
+                        <div className="project-links">
+                          <a 
+                            href={project.github} 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="project-link"
+                            aria-label={`View ${project.title} on GitHub`}
+                          >
+                            <svg className="project-link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                            </svg>
+                            View on GitHub
+                          </a>
+                        </div>
+                      )}
                     </div>
                   </article>
                 )
