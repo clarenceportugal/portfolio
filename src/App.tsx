@@ -39,7 +39,6 @@ function App() {
   const [typewriterName, setTypewriterName] = useState('')
   const [typewriterTitle, setTypewriterTitle] = useState('')
   const [typewriterDescription, setTypewriterDescription] = useState('')
-  const [currentlyTyping, setCurrentlyTyping] = useState<'name' | 'title' | 'description' | null>('name')
   const typewriterIndexRef = useRef(0)
   const currentTextRef = useRef<'name' | 'title' | 'description'>('name')
   const typewriterFullName = 'Hi, I am Clarence Portugal'
@@ -129,8 +128,7 @@ function App() {
   useEffect(() => {
     typewriterIndexRef.current = 0
     currentTextRef.current = 'name'
-    setCurrentlyTyping('name')
-    let timeoutId: NodeJS.Timeout
+    let timeoutId: ReturnType<typeof setTimeout>
     const typingSpeed = 50 // milliseconds per character
     const delayBetweenTexts = 500 // Delay after completing one text before starting next
     
@@ -166,24 +164,16 @@ function App() {
     }
     
     const moveToNextText = () => {
-      // Hide cursor when current text is complete
-      setCurrentlyTyping(null)
-      
       // Wait a bit after completing current text, then move to next
       setTimeout(() => {
         if (currentTextRef.current === 'name') {
           currentTextRef.current = 'title'
           typewriterIndexRef.current = 0
-          setCurrentlyTyping('title')
           typeNextChar()
         } else if (currentTextRef.current === 'title') {
           currentTextRef.current = 'description'
           typewriterIndexRef.current = 0
-          setCurrentlyTyping('description')
           typeNextChar()
-        } else {
-          // All texts are complete
-          setCurrentlyTyping(null)
         }
       }, delayBetweenTexts)
     }
