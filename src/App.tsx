@@ -36,6 +36,15 @@ function App() {
   const [projectSearch, setProjectSearch] = useState<string>('')
   const [showBackToTop, setShowBackToTop] = useState(false)
   const canvasContainerRef = useRef<HTMLDivElement>(null)
+  const [typewriterName, setTypewriterName] = useState('')
+  const [typewriterTitle, setTypewriterTitle] = useState('')
+  const [typewriterDescription, setTypewriterDescription] = useState('')
+  const [currentlyTyping, setCurrentlyTyping] = useState<'name' | 'title' | 'description' | null>('name')
+  const typewriterIndexRef = useRef(0)
+  const currentTextRef = useRef<'name' | 'title' | 'description'>('name')
+  const typewriterFullName = 'Hi, I am Clarence Portugal'
+  const typewriterFullTitle = 'Junior Full-Stack & IoT Developer'
+  const typewriterFullDescription = 'Creating mobile applications, web platforms, and IoT systems using modern technologies and innovative solutions'
 
   useEffect(() => {
     localStorage.setItem('darkMode', darkMode.toString())
@@ -115,6 +124,97 @@ function App() {
       elementsToObserve.forEach(el => observer.unobserve(el))
     }
   }, [projectFilter, projectSearch])
+
+  // Typewriter effect for name, title, and description
+  useEffect(() => {
+    typewriterIndexRef.current = 0
+    currentTextRef.current = 'name'
+    setCurrentlyTyping('name')
+    let timeoutId: NodeJS.Timeout
+    const typingSpeed = 50 // milliseconds per character
+    const delayBetweenTexts = 500 // Delay after completing one text before starting next
+    
+    const getCurrentText = () => {
+      switch (currentTextRef.current) {
+        case 'name':
+          return typewriterFullName
+        case 'title':
+          return typewriterFullTitle
+        case 'description':
+          return typewriterFullDescription
+        default:
+          return ''
+      }
+    }
+    
+    const getCurrentSetter = () => {
+      switch (currentTextRef.current) {
+        case 'name':
+          return setTypewriterName
+        case 'title':
+          return setTypewriterTitle
+        case 'description':
+          return setTypewriterDescription
+        default:
+          return () => {}
+      }
+    }
+    
+    const isCurrentTextComplete = () => {
+      const currentText = getCurrentText()
+      return typewriterIndexRef.current >= currentText.length
+    }
+    
+    const moveToNextText = () => {
+      // Hide cursor when current text is complete
+      setCurrentlyTyping(null)
+      
+      // Wait a bit after completing current text, then move to next
+      setTimeout(() => {
+        if (currentTextRef.current === 'name') {
+          currentTextRef.current = 'title'
+          typewriterIndexRef.current = 0
+          setCurrentlyTyping('title')
+          typeNextChar()
+        } else if (currentTextRef.current === 'title') {
+          currentTextRef.current = 'description'
+          typewriterIndexRef.current = 0
+          setCurrentlyTyping('description')
+          typeNextChar()
+        } else {
+          // All texts are complete
+          setCurrentlyTyping(null)
+        }
+      }, delayBetweenTexts)
+    }
+    
+    const typeNextChar = () => {
+      const currentText = getCurrentText()
+      const currentSetter = getCurrentSetter()
+      
+      // Check if current text is complete
+      if (isCurrentTextComplete()) {
+        // Current text is fully complete, move to next
+        moveToNextText()
+        return
+      }
+      
+      // Continue typing current character
+      currentSetter(currentText.substring(0, typewriterIndexRef.current + 1))
+      typewriterIndexRef.current++
+      timeoutId = setTimeout(typeNextChar, typingSpeed)
+    }
+    
+    // Start typing after a shorter delay
+    const startTimer = setTimeout(() => {
+      typeNextChar()
+    }, 300)
+    
+    return () => {
+      clearTimeout(startTimer)
+      if (timeoutId) clearTimeout(timeoutId)
+    }
+  }, [])
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -370,10 +470,14 @@ function App() {
             </div>
           </div>
           <div className="hero-text">
-            <h1 className="hero-name">Portugal, Clarence A.</h1>
-            <p className="hero-title">Junior Full-Stack & IoT Developer</p>
+            <h1 className="hero-name">
+              {typewriterName}
+            </h1>
+            <p className="hero-title">
+              {typewriterTitle}
+            </p>
             <p className="hero-description">
-              Creating mobile applications, web platforms, and IoT systems using modern technologies and innovative solutions
+              {typewriterDescription}
             </p>
             <div className="hero-buttons">
               <a href="#projects" className="btn btn-primary" aria-label="View my projects">View My Work</a>
