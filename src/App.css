@@ -1450,6 +1450,10 @@ section::before {
   background: linear-gradient(90deg, transparent, rgba(20, 184, 166, 0.3), transparent);
 }
 
+.portfolio.dark-mode .footer::before {
+  background: linear-gradient(90deg, transparent, rgba(148, 163, 184, 0.3), transparent);
+}
+
 /* Tablet and desktop mode on mobile (landscape) - smaller buttons */
 @media (min-width: 769px) and (max-width: 1024px) {
   .hero-name {

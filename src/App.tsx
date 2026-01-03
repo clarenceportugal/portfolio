@@ -371,7 +371,7 @@ function App() {
           </div>
           <div className="hero-text">
             <h1 className="hero-name">Portugal, Clarence A.</h1>
-            <p className="hero-title">Full-Stack Developer & IoT Engineer</p>
+            <p className="hero-title">Junior Full-Stack & IoT Developer</p>
             <p className="hero-description">
               Creating mobile applications, web platforms, and IoT systems using modern technologies and innovative solutions
             </p>
