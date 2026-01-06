@@ -129,7 +129,7 @@ function App() {
     typewriterIndexRef.current = 0
     currentTextRef.current = 'name'
     let timeoutId: ReturnType<typeof setTimeout>
-    const typingSpeed = 50 // milliseconds per character
+    const typingSpeed = 25 // milliseconds per character
     const delayBetweenTexts = 500 // Delay after completing one text before starting next
     
     const getCurrentText = () => {
