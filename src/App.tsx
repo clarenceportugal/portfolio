@@ -680,7 +680,9 @@ function App() {
                 tags: ['Flutter', 'Dart', 'VS Code', 'MongoDB', 'Arduino', 'IoT', 'Mobile App', 'Payment Integration'],
                 category: ['app', 'iot'],
                 github: 'https://github.com/clarenceportugal/Arice',
-                screenshots: [ariceScreenshot]
+                screenshots: [ariceScreenshot],
+                startDate: 'November 2024',
+                endDate: 'November 2025'
               },
               {
                 id: 'caci',
@@ -690,7 +692,9 @@ function App() {
                 tags: ['Flutter', 'Dart', 'VS Code', 'Mobile App', 'Educational'],
                 category: 'app',
                 github: 'https://github.com/clarenceportugal/CACI',
-                screenshots: [caciScreenshot]
+                screenshots: [caciScreenshot],
+                startDate: 'November 2025',
+                endDate: 'December 2025'
               },
               {
                 id: 'eduvision',
@@ -699,7 +703,9 @@ function App() {
                 description: 'An AI-powered facial recognition attendance system for the College of Computing and Multimedia Studies (CCMS) at CNSC. Utilizes IoT-based smart cameras and cloud-based database to automate faculty attendance tracking. Features contactless verification, real-time monitoring, and secure record-keeping through web and mobile applications. Solves issues with manual attendance methods by eliminating time-consuming processes, reducing errors, and preventing proxy attendance.',
                 tags: ['Python', 'React', 'TypeScript', 'C++', 'Cython', 'IoT', 'Website', 'System', 'AI', 'Facial Recognition'],
                 category: 'website',
-                github: 'https://github.com/clarenceportugal/facerecog'
+                github: 'https://github.com/clarenceportugal/facerecog',
+                startDate: 'April 2025',
+                endDate: 'December 2025'
               },
               {
                 id: 'emuklat',
@@ -709,7 +715,9 @@ function App() {
                 tags: ['Java', 'XML', 'Android Studio', 'Firebase', 'Mobile App'],
                 category: 'app',
                 github: 'https://github.com/clarenceportugal/e-muklat',
-                screenshots: [emuklatScreenshot]
+                screenshots: [emuklatScreenshot],
+                startDate: 'April 2025',
+                endDate: 'March 2025'
               },
               {
                 id: 'gama',
@@ -719,7 +727,9 @@ function App() {
                 tags: ['Flutter', 'Dart', 'VS Code', 'Firebase', 'Mobile App'],
                 category: 'app',
                 github: 'https://github.com/clarenceportugal/GAMA',
-                screenshots: [gamaScreenshot]
+                screenshots: [gamaScreenshot],
+                startDate: 'March 2025',
+                endDate: 'May 2025'
               },
               {
                 id: 'likhain',
@@ -728,7 +738,9 @@ function App() {
                 description: 'Likhain is a comprehensive creative platform designed specifically for poem writers to express their thoughts, emotions, and creativity through poetry. The platform serves as a digital sanctuary where writers can share their original poems, discover inspiring works from fellow poets, and connect with a supportive community of creative individuals. Built with React and TypeScript, Likhain provides a modern, responsive web experience that works seamlessly across all devices. The platform features robust poem publishing capabilities that allow writers to format and present their work beautifully. Writers can engage with the community through commenting features that enable meaningful discussions and feedback on poems. The application includes real-time communication features powered by Firebase, allowing instant interactions between writers. With its intuitive interface and focus on fostering creativity, Likhain creates a welcoming space where poets can showcase their talent, find inspiration, and build connections within the poetry community.',
                 tags: ['React', 'TypeScript', 'Firebase', 'Website', 'VS Code'],
                 category: 'website',
-                github: 'https://github.com/clarenceportugal/Likhain'
+                github: 'https://github.com/clarenceportugal/Likhain',
+                startDate: 'December 2025',
+                endDate: 'Present'
               },
               {
                 id: 'quizme',
@@ -738,7 +750,9 @@ function App() {
                 tags: ['Flutter', 'Dart', 'VS Code', 'MongoDB', 'Mobile App', 'UI/UX'],
                 category: 'app',
                 github: 'https://github.com/clarenceportugal/QuizMe',
-                screenshots: [quizmeScreenshot]
+                screenshots: [quizmeScreenshot],
+                startDate: 'June 2025',
+                endDate: 'July 2025'
               },
               {
                 id: 'trinova',
@@ -746,7 +760,9 @@ function App() {
                 title: 'Trinova',
                 description: 'Trinova is an innovative educational device designed to help students learn mathematical functions and topics, with a special focus on trigonometry. This Arduino-based IoT device features an interactive keypad interface that allows students to input mathematical queries and navigate through different topics. The LCD display provides clear, readable output showing various mathematical concepts including trigonometric functions (sine, cosine, tangent), laws of sines and cosines, and the fundamental SOH CAH TOA mnemonic. The device offers a hands-on, tactile learning experience that helps students understand complex mathematical relationships through direct interaction. Built with Arduino and programmed in C++, Trinova combines hardware and software to create an engaging educational tool that makes abstract mathematical concepts more tangible and easier to grasp. The device serves as a portable learning companion that students can use to practice and explore trigonometry concepts at their own pace, making it an invaluable tool for mathematics education.',
                 tags: ['Arduino', 'IoT', 'Educational', 'Embedded System', 'C++'],
-                category: 'iot'
+                category: 'iot',
+                startDate: 'November 1, 2025',
+                endDate: 'November 3, 2025'
               },
               {
                 id: 'motowash',
@@ -754,7 +770,9 @@ function App() {
                 title: 'Motowash 360',
                 description: 'Motowash 360 is a radically innovative vendo machine solution for automating motor cleaning, aiming to streamline the work process and promote sustainability. This IoT-enabled vending machine system uses Arduino Uno with L298N Motor Driver, DC water pump motor, and Ultrasonic Sensor for vehicle detection and automated cleaning operations. The vendo machine operates as a self-service station where users can initiate motor cleaning services through a coin-operated or mobile payment system. Features a React Native mobile application that provides remote control and monitoring capabilities, allowing users to start cleaning sessions, track usage, and manage payments directly from their smartphones. Firebase serves as the database for data collection, real-time synchronization, and transaction management. The system integrates coin slot mechanisms for traditional payment methods while also supporting digital payment options through the mobile app. The vendo machine really shines through careful setup, programming for data collection and control, and extensive testing for reliability, providing a complete automated motor cleaning experience that combines hardware automation with modern mobile technology.',
                 tags: ['Arduino', 'IoT', 'React Native', 'Firebase', 'Sensors', 'Mobile App', 'Automation', 'Robotics'],
-                category: ['app', 'iot']
+                category: ['app', 'iot'],
+                startDate: 'March 2024',
+                endDate: 'July 2024'
               },
               {
                 id: 'rccar',
@@ -762,7 +780,9 @@ function App() {
                 title: 'RC Car Robot',
                 description: 'An Arduino-based robotics project featuring a remote-controlled car with advanced autonomous capabilities. The robot can be controlled remotely via Bluetooth communication and includes line tracing/following functionality using infrared sensors. Equipped with obstacle avoidance system using ultrasonic sensors and light sensors for environmental detection, the robot can navigate autonomously while avoiding obstacles in its path. Built with Arduino Uno, L298N Motor Driver, HC-05 Bluetooth module, and various sensors (ultrasonic, infrared, and light sensors) for a complete robotics experience.',
                 tags: ['Arduino', 'Robotics', 'IoT', 'Bluetooth', 'Sensors', 'Line Following', 'Obstacle Avoidance', 'Automation', 'C++'],
-                category: 'iot'
+                category: 'iot',
+                startDate: 'March 13, 2024',
+                endDate: 'March 13, 2024'
               },
               {
                 id: 'ancestralhouse',
@@ -770,7 +790,9 @@ function App() {
                 title: 'Rufino Pabico Ancestral House',
                 description: 'An IoT smart home automation system for the Rufino Pabico Ancestral House model. Features a React Native mobile application that allows remote control and monitoring of various house features including fountain control, lighting systems, motion sensors, and light sensors. The system enables automated and manual control of house elements, providing a complete smart home experience through mobile app interface. Built with Arduino, IoT sensors, React Native, and Firebase for seamless mobile control and data management.',
                 tags: ['Arduino', 'IoT', 'React Native', 'Firebase', 'Sensors', 'Motion Sensor', 'Light Sensor', 'Smart Home', 'Mobile App', 'Automation'],
-                category: ['app', 'iot']
+                category: ['app', 'iot'],
+                startDate: 'September 2024',
+                endDate: 'October 2024'
               },
               {
                 id: 'chess',
@@ -778,7 +800,9 @@ function App() {
                 title: 'Learn with Heinz Chess Beginners Guide',
                 description: 'A comprehensive mobile application designed to teach chess fundamentals to beginners. The app provides an interactive learning experience with step-by-step guides, tutorials, and practice exercises to help users master the basics of chess. Features include detailed explanations of chess pieces, movement rules, basic strategies, and common opening patterns. Built with Android Studio using Java and XML, the app offers an intuitive user interface that makes learning chess accessible and enjoyable for users of all ages.',
                 tags: ['Java', 'XML', 'Android Studio', 'Mobile App', 'Educational'],
-                category: 'app'
+                category: 'app',
+                startDate: 'October 2023',
+                endDate: 'November 2023'
               }
             ]
               .filter(project => {
@@ -839,6 +863,17 @@ function App() {
                     </div>
                     <div className="project-info">
                       <h3>{project.title}</h3>
+                      {project.startDate && project.endDate && (
+                        <div className="project-date">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                          </svg>
+                          <span>{project.startDate} - {project.endDate}</span>
+                        </div>
+                      )}
                       <p>
                         {displayDescription}
                         {shouldTruncate && (

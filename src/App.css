@@ -897,6 +897,31 @@ section::before {
   line-height: 1.3;
 }
 
+.project-date {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  color: #64748b;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.project-date svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: #14b8a6;
+}
+
+.portfolio.dark-mode .project-date {
+  color: #94a3b8;
+}
+
+.portfolio.dark-mode .project-date svg {
+  color: #14b8a6;
+}
+
 .project-info p {
   color: #475569;
   line-height: 1.7;
