@@ -21,6 +21,7 @@ import rccarImage from './assets/images/rccar_logo.jpg'
 import ancestralhouseImage from './assets/images/ancestralhouse_logo.jpg'
 import chessImage from './assets/images/chess_logo.jpg'
 import tesdaImage from './assets/images/tesda.jpg'
+import jannaProfileImage from './assets/images/clients/emuklat/janna_profile.png'
 
 // Set up PDF.js worker - use local worker file
 pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs'
@@ -45,6 +46,7 @@ function App() {
   const [expandedProjects, setExpandedProjects] = useState<Set<string>>(new Set())
   const [projectSearch, setProjectSearch] = useState<string>('')
   const [showBackToTop, setShowBackToTop] = useState(false)
+  const [enlargedImage, setEnlargedImage] = useState<{ url: string; name: string } | null>(null)
   const canvasContainerRef = useRef<HTMLDivElement>(null)
   const hasViewedScreenshotsRef = useRef(false)
   const [typewriterName, setTypewriterName] = useState('')
@@ -137,21 +139,21 @@ function App() {
       
       // Use more lenient observer options, especially for mobile
       const isMobile = window.innerWidth <= 768
-      const observerOptions = {
+    const observerOptions = {
         threshold: isMobile ? 0.05 : 0.1, // Lower threshold for mobile
         rootMargin: isMobile ? '50px 0px 50px 0px' : '0px 0px -50px 0px' // More margin on mobile
-      }
+    }
 
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('fade-in-visible')
-          }
-        })
-      }, observerOptions)
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('fade-in-visible')
+        }
+      })
+    }, observerOptions)
 
-      const elementsToObserve = document.querySelectorAll('.fade-in')
-      elementsToObserve.forEach(el => observer.observe(el))
+    const elementsToObserve = document.querySelectorAll('.fade-in')
+    elementsToObserve.forEach(el => observer.observe(el))
 
       // Also listen to scroll events on mobile for better detection
       const handleScroll = () => {
@@ -159,9 +161,9 @@ function App() {
       }
       window.addEventListener('scroll', handleScroll, { passive: true })
 
-      return () => {
+    return () => {
         clearTimeout(timer)
-        elementsToObserve.forEach(el => observer.unobserve(el))
+      elementsToObserve.forEach(el => observer.unobserve(el))
         window.removeEventListener('scroll', handleScroll)
       }
     }
@@ -483,6 +485,25 @@ function App() {
     }
   }
 
+  // Close enlarged image on ESC key
+  useEffect(() => {
+    const handleEsc = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && enlargedImage) {
+        setEnlargedImage(null)
+      }
+    }
+
+    if (enlargedImage) {
+      document.addEventListener('keydown', handleEsc)
+      document.body.style.overflow = 'hidden'
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEsc)
+      document.body.style.overflow = ''
+    }
+  }, [enlargedImage])
+
   const openProjectScreenshots = (screenshots: string[], title: string, projectId: string) => {
     setSelectedProjectScreenshots(screenshots)
     setSelectedProjectTitle(title)
@@ -537,7 +558,7 @@ function App() {
 
   // If viewing screenshots, show the screenshot page
   if (viewingScreenshots && selectedProjectScreenshots.length > 0) {
-    return (
+  return (
       <ProjectScreenshotsPage
         screenshots={selectedProjectScreenshots}
         title={selectedProjectTitle}
@@ -764,7 +785,11 @@ function App() {
                 endDate: 'March 2025',
                 collaborators: [
                   { name: 'Clarence Portugal', image: profileImage }
-                ]
+                ],
+                client: {
+                  name: 'Janna',
+                  image: jannaProfileImage
+                }
               },
               {
                 id: 'gama',
@@ -918,9 +943,15 @@ function App() {
                     className={`project-card fade-in ${hasScreenshots ? 'has-screenshots' : ''} ${isExpanded ? 'expanded' : ''}`}
                     aria-label={`${project.title} project`}
                     onClick={(e) => {
-                      // Don't trigger if clicking on buttons or links
+                      // Don't trigger if clicking on buttons, links, collaborators, or client
                       const target = e.target as HTMLElement
-                      if (target.closest('.see-more-btn') || target.closest('.project-link') || target.closest('a')) {
+                      if (target.closest('.see-more-btn') || 
+                          target.closest('.project-link') || 
+                          target.closest('a') ||
+                          target.closest('.collaborator-item') ||
+                          target.closest('.client-item') ||
+                          target.closest('.project-collaborators') ||
+                          target.closest('.project-client')) {
                         return
                       }
                       if (hasScreenshots) {
@@ -952,8 +983,8 @@ function App() {
                         </div>
                       )}
                       <div className="project-description-wrapper">
-                        <p>
-                          {displayDescription}
+                      <p>
+                        {displayDescription}
                         </p>
                         {shouldTruncate && (
                           <button 
@@ -978,7 +1009,16 @@ function App() {
                           <span className="collaborators-label">Collaborators:</span>
                           <div className="collaborators-list">
                             {(project as any).collaborators.map((collaborator: { name: string; image: string }, index: number) => (
-                              <div key={index} className="collaborator-item" title={collaborator.name}>
+                              <div 
+                                key={index} 
+                                className="collaborator-item" 
+                                title={collaborator.name}
+                                onClick={(e) => {
+                                  e.stopPropagation()
+                                  e.preventDefault()
+                                  setEnlargedImage({ url: collaborator.image, name: collaborator.name })
+                                }}
+                              >
                                 <img 
                                   src={collaborator.image} 
                                   alt={collaborator.name}
@@ -987,6 +1027,30 @@ function App() {
                                 />
                               </div>
                             ))}
+                          </div>
+                        </div>
+                      )}
+                      {(project as any).client && (
+                        <div className="project-client">
+                          <span className="client-label">Client:</span>
+                          <div className="client-info">
+                            <div 
+                              className="client-item" 
+                              title={(project as any).client.name}
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                e.preventDefault()
+                                setEnlargedImage({ url: (project as any).client.image, name: (project as any).client.name })
+                              }}
+                            >
+                              <img 
+                                src={(project as any).client.image} 
+                                alt={(project as any).client.name}
+                                className="client-image"
+                                loading="lazy"
+                              />
+                              <span className="client-name">{(project as any).client.name}</span>
+                            </div>
                           </div>
                         </div>
                       )}
@@ -1342,6 +1406,34 @@ function App() {
           <p>&copy; 2025 Clarence Portugal. All rights reserved.</p>
         </div>
       </footer>
+
+      {/* Enlarged Image Modal */}
+      {enlargedImage && (
+        <div 
+          className="image-modal-overlay" 
+          onClick={() => setEnlargedImage(null)}
+          aria-label="Close enlarged image"
+        >
+          <div className="image-modal-content" onClick={(e) => e.stopPropagation()}>
+            <button 
+              className="image-modal-close"
+              onClick={() => setEnlargedImage(null)}
+              aria-label="Close"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+            <img 
+              src={enlargedImage.url} 
+              alt={enlargedImage.name}
+              className="enlarged-image"
+            />
+            <p className="enlarged-image-name">{enlargedImage.name}</p>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
