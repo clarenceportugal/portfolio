@@ -40,11 +40,13 @@ function App() {
   const [viewingScreenshots, setViewingScreenshots] = useState(false)
   const [selectedProjectScreenshots, setSelectedProjectScreenshots] = useState<string[]>([])
   const [selectedProjectTitle, setSelectedProjectTitle] = useState<string>('')
+  const [selectedProjectId, setSelectedProjectId] = useState<string>('')
   const [projectFilter, setProjectFilter] = useState<string>('all')
   const [expandedProjects, setExpandedProjects] = useState<Set<string>>(new Set())
   const [projectSearch, setProjectSearch] = useState<string>('')
   const [showBackToTop, setShowBackToTop] = useState(false)
   const canvasContainerRef = useRef<HTMLDivElement>(null)
+  const hasViewedScreenshotsRef = useRef(false)
   const [typewriterName, setTypewriterName] = useState('')
   const [typewriterTitle, setTypewriterTitle] = useState('')
   const [typewriterDescription, setTypewriterDescription] = useState('')
@@ -149,10 +151,10 @@ function App() {
     }
   }, [projectFilter, projectSearch, viewingScreenshots])
 
-  // Ensure content is visible and scroll to projects section when returning from screenshots
+  // Ensure content is visible and scroll to specific project card when returning from screenshots
   useEffect(() => {
-    // Only run when we've just returned from screenshots (viewingScreenshots changed from true to false)
-    if (!viewingScreenshots && selectedProjectScreenshots.length === 0 && selectedProjectTitle === '') {
+    // Only run when we've just returned from screenshots (not on initial page load)
+    if (hasViewedScreenshotsRef.current && !viewingScreenshots && selectedProjectScreenshots.length === 0 && selectedProjectTitle === '' && selectedProjectId) {
       // Wait for DOM to be fully rendered
       const timer = setTimeout(() => {
         // Force ALL fade-in elements to be visible immediately (not just those in viewport)
@@ -161,27 +163,43 @@ function App() {
           el.classList.add('fade-in-visible')
         })
         
-        // Scroll directly to projects section where the user came from
-        const projectsSection = document.getElementById('projects')
-        if (projectsSection) {
+        // Scroll to the specific project card that was clicked
+        const projectCard = document.getElementById(`project-${selectedProjectId}`)
+        if (projectCard) {
           // Calculate position accounting for navbar
           const navbarHeight = 70
-          const elementPosition = projectsSection.getBoundingClientRect().top + window.pageYOffset
-          const offsetPosition = elementPosition - navbarHeight
+          const elementPosition = projectCard.getBoundingClientRect().top + window.pageYOffset
+          const offsetPosition = elementPosition - navbarHeight - 20 // Extra 20px for spacing
           
           window.scrollTo({
             top: offsetPosition,
             behavior: 'smooth'
           })
         } else {
-          // Fallback: scroll to top if projects section not found
-          window.scrollTo({ top: 0, behavior: 'smooth' })
+          // Fallback: scroll to projects section if specific card not found
+          const projectsSection = document.getElementById('projects')
+          if (projectsSection) {
+            const navbarHeight = 70
+            const elementPosition = projectsSection.getBoundingClientRect().top + window.pageYOffset
+            const offsetPosition = elementPosition - navbarHeight
+            
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            })
+          } else {
+            window.scrollTo({ top: 0, behavior: 'smooth' })
+          }
         }
+        
+        // Reset the flag and project ID after scrolling
+        hasViewedScreenshotsRef.current = false
+        setSelectedProjectId('')
       }, 150)
       
       return () => clearTimeout(timer)
     }
-  }, [viewingScreenshots, selectedProjectScreenshots.length, selectedProjectTitle])
+  }, [viewingScreenshots, selectedProjectScreenshots.length, selectedProjectTitle, selectedProjectId])
 
   // Typewriter effect for name, title, and description
   useEffect(() => {
@@ -449,10 +467,12 @@ function App() {
     }
   }
 
-  const openProjectScreenshots = (screenshots: string[], title: string) => {
+  const openProjectScreenshots = (screenshots: string[], title: string, projectId: string) => {
     setSelectedProjectScreenshots(screenshots)
     setSelectedProjectTitle(title)
+    setSelectedProjectId(projectId)
     setViewingScreenshots(true)
+    hasViewedScreenshotsRef.current = true
     window.scrollTo(0, 0)
   }
 
@@ -792,6 +812,7 @@ function App() {
                 
                 return (
                   <article 
+                    id={`project-${project.id}`}
                     key={project.id} 
                     className={`project-card fade-in ${hasScreenshots ? 'has-screenshots' : ''}`}
                     aria-label={`${project.title} project`}
@@ -802,7 +823,7 @@ function App() {
                         return
                       }
                       if (hasScreenshots) {
-                        openProjectScreenshots(project.screenshots!, project.title)
+                        openProjectScreenshots(project.screenshots!, project.title, project.id)
                       }
                     }}
                     style={{ cursor: hasScreenshots ? 'pointer' : 'default' }}
