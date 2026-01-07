@@ -116,21 +116,30 @@ function App() {
   useEffect(() => {
     // If we just returned from screenshots, make all elements visible immediately
     if (!viewingScreenshots) {
-      const timer = setTimeout(() => {
-        const fadeInElements = document.querySelectorAll('.fade-in')
+      // Immediately check and show elements already in viewport
+      const checkInitialVisibility = () => {
+        const fadeInElements = document.querySelectorAll('.fade-in:not(.fade-in-visible)')
         fadeInElements.forEach((el) => {
-          // Check if element is in viewport
           const rect = el.getBoundingClientRect()
-          const isInViewport = rect.top < window.innerHeight && rect.bottom > 0
+          // More lenient check - if any part is visible or close to viewport
+          const isInViewport = rect.top < window.innerHeight + 100 && rect.bottom > -100
           if (isInViewport) {
             el.classList.add('fade-in-visible')
           }
         })
-      }, 50)
+      }
       
+      // Check immediately
+      checkInitialVisibility()
+      
+      // Also check after a short delay to catch elements that load late
+      const timer = setTimeout(checkInitialVisibility, 100)
+      
+      // Use more lenient observer options, especially for mobile
+      const isMobile = window.innerWidth <= 768
       const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
+        threshold: isMobile ? 0.05 : 0.1, // Lower threshold for mobile
+        rootMargin: isMobile ? '50px 0px 50px 0px' : '0px 0px -50px 0px' // More margin on mobile
       }
 
       const observer = new IntersectionObserver((entries) => {
@@ -144,9 +153,16 @@ function App() {
       const elementsToObserve = document.querySelectorAll('.fade-in')
       elementsToObserve.forEach(el => observer.observe(el))
 
+      // Also listen to scroll events on mobile for better detection
+      const handleScroll = () => {
+        checkInitialVisibility()
+      }
+      window.addEventListener('scroll', handleScroll, { passive: true })
+
       return () => {
         clearTimeout(timer)
         elementsToObserve.forEach(el => observer.unobserve(el))
+        window.removeEventListener('scroll', handleScroll)
       }
     }
   }, [projectFilter, projectSearch, viewingScreenshots])
@@ -501,6 +517,15 @@ function App() {
         // Add it (expand)
         newSet.add(projectId)
       }
+      
+      // Ensure the expanded card is immediately visible (no fade)
+      setTimeout(() => {
+        const cardElement = document.getElementById(`project-${projectId}`)
+        if (cardElement) {
+          cardElement.classList.add('fade-in-visible')
+        }
+      }, 0)
+      
       return newSet
     })
   }
@@ -890,7 +915,7 @@ function App() {
                   <article 
                     id={`project-${project.id}`}
                     key={project.id} 
-                    className={`project-card fade-in ${hasScreenshots ? 'has-screenshots' : ''}`}
+                    className={`project-card fade-in ${hasScreenshots ? 'has-screenshots' : ''} ${isExpanded ? 'expanded' : ''}`}
                     aria-label={`${project.title} project`}
                     onClick={(e) => {
                       // Don't trigger if clicking on buttons or links
@@ -926,8 +951,10 @@ function App() {
                           <span>{project.startDate} - {project.endDate}</span>
                         </div>
                       )}
-                      <p>
-                        {displayDescription}
+                      <div className="project-description-wrapper">
+                        <p>
+                          {displayDescription}
+                        </p>
                         {shouldTruncate && (
                           <button 
                             className="see-more-btn"
@@ -937,10 +964,10 @@ function App() {
                               toggleProjectDescription(projectId)
                             }}
                           >
-                            {isExpanded ? ' See less' : ' See more'}
+                            {isExpanded ? 'See less' : 'See more'}
                           </button>
                         )}
-                      </p>
+                      </div>
                       <div className="project-tags">
                         {project.tags.map((tag, index) => (
                           <span key={index}>{tag}</span>
