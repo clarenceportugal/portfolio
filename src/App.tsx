@@ -1,12 +1,18 @@
 import { useState, useEffect, useRef } from 'react'
 import * as pdfjsLib from 'pdfjs-dist'
 import './App.css'
+import ProjectScreenshotsPage from './ProjectScreenshotsPage'
 import profileImage from './assets/images/profile.jpg'
 import quizmeImage from './assets/images/quizme_logo.png'
+import quizmeScreenshot from './assets/images/quizme/quizme.jpg'
 import gamaImage from './assets/images/GAMA_logo.png'
+import gamaScreenshot from './assets/images/gama/GAMA.jpg'
 import emuklatImage from './assets/images/E-Muklat_logo.jpg'
+import emuklatScreenshot from './assets/images/emuklat/E-Muklat.jpg'
 import ariceImage from './assets/images/Arice_logo.png'
+import ariceScreenshot from './assets/images/arice/Arice.jpg'
 import caciImage from './assets/images/caci_logo.jpg'
+import caciScreenshot from './assets/images/caci/caci.jpg'
 import likhainImage from './assets/images/likhain_logo.png'
 import eduvisionImage from './assets/images/eduvision_logo.png'
 import trinovaImage from './assets/images/Trinova.jpg'
@@ -31,6 +37,9 @@ function App() {
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [selectedCertificate, setSelectedCertificate] = useState<string | null>(null)
+  const [viewingScreenshots, setViewingScreenshots] = useState(false)
+  const [selectedProjectScreenshots, setSelectedProjectScreenshots] = useState<string[]>([])
+  const [selectedProjectTitle, setSelectedProjectTitle] = useState<string>('')
   const [projectFilter, setProjectFilter] = useState<string>('all')
   const [expandedProjects, setExpandedProjects] = useState<Set<string>>(new Set())
   const [projectSearch, setProjectSearch] = useState<string>('')
@@ -103,26 +112,76 @@ function App() {
 
   // Scroll animations with Intersection Observer
   useEffect(() => {
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    }
+    // If we just returned from screenshots, make all elements visible immediately
+    if (!viewingScreenshots) {
+      const timer = setTimeout(() => {
+        const fadeInElements = document.querySelectorAll('.fade-in')
+        fadeInElements.forEach((el) => {
+          // Check if element is in viewport
+          const rect = el.getBoundingClientRect()
+          const isInViewport = rect.top < window.innerHeight && rect.bottom > 0
+          if (isInViewport) {
+            el.classList.add('fade-in-visible')
+          }
+        })
+      }, 50)
+      
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      }
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('fade-in-visible')
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('fade-in-visible')
+          }
+        })
+      }, observerOptions)
+
+      const elementsToObserve = document.querySelectorAll('.fade-in')
+      elementsToObserve.forEach(el => observer.observe(el))
+
+      return () => {
+        clearTimeout(timer)
+        elementsToObserve.forEach(el => observer.unobserve(el))
+      }
+    }
+  }, [projectFilter, projectSearch, viewingScreenshots])
+
+  // Ensure content is visible and scroll to projects section when returning from screenshots
+  useEffect(() => {
+    // Only run when we've just returned from screenshots (viewingScreenshots changed from true to false)
+    if (!viewingScreenshots && selectedProjectScreenshots.length === 0 && selectedProjectTitle === '') {
+      // Wait for DOM to be fully rendered
+      const timer = setTimeout(() => {
+        // Force ALL fade-in elements to be visible immediately (not just those in viewport)
+        const fadeInElements = document.querySelectorAll('.fade-in:not(.fade-in-visible)')
+        fadeInElements.forEach((el) => {
+          el.classList.add('fade-in-visible')
+        })
+        
+        // Scroll directly to projects section where the user came from
+        const projectsSection = document.getElementById('projects')
+        if (projectsSection) {
+          // Calculate position accounting for navbar
+          const navbarHeight = 70
+          const elementPosition = projectsSection.getBoundingClientRect().top + window.pageYOffset
+          const offsetPosition = elementPosition - navbarHeight
+          
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          })
+        } else {
+          // Fallback: scroll to top if projects section not found
+          window.scrollTo({ top: 0, behavior: 'smooth' })
         }
-      })
-    }, observerOptions)
-
-    const elementsToObserve = document.querySelectorAll('.fade-in')
-    elementsToObserve.forEach(el => observer.observe(el))
-
-    return () => {
-      elementsToObserve.forEach(el => observer.unobserve(el))
+      }, 150)
+      
+      return () => clearTimeout(timer)
     }
-  }, [projectFilter, projectSearch])
+  }, [viewingScreenshots, selectedProjectScreenshots.length, selectedProjectTitle])
 
   // Typewriter effect for name, title, and description
   useEffect(() => {
@@ -390,6 +449,20 @@ function App() {
     }
   }
 
+  const openProjectScreenshots = (screenshots: string[], title: string) => {
+    setSelectedProjectScreenshots(screenshots)
+    setSelectedProjectTitle(title)
+    setViewingScreenshots(true)
+    window.scrollTo(0, 0)
+  }
+
+  const closeProjectScreenshots = () => {
+    // Reset all state immediately - this will trigger re-render
+    setViewingScreenshots(false)
+    setSelectedProjectScreenshots([])
+    setSelectedProjectTitle('')
+  }
+
   const toggleProjectDescription = (projectId: string) => {
     setExpandedProjects(prev => {
       const newSet = new Set(prev)
@@ -407,8 +480,21 @@ function App() {
     return text.substring(0, maxLength).trim() + '...'
   }
 
+  // If viewing screenshots, show the screenshot page
+  if (viewingScreenshots && selectedProjectScreenshots.length > 0) {
+    return (
+      <ProjectScreenshotsPage
+        screenshots={selectedProjectScreenshots}
+        title={selectedProjectTitle}
+        onBack={closeProjectScreenshots}
+        darkMode={darkMode}
+      />
+    )
+  }
+
+  // Main portfolio page
   return (
-    <div className={`portfolio ${darkMode ? 'dark-mode' : ''}`}>
+    <div className={`portfolio ${darkMode ? 'dark-mode' : ''}`} key="main-portfolio">
       {/* Skip to main content for accessibility */}
       <a href="#home" className="skip-to-main" aria-label="Skip to main content">
         Skip to main content
@@ -573,7 +659,8 @@ function App() {
                 description: 'Digital Automated Rice Dispenser and Sealing with AI-Assistance and Smart Storage Notification. ARICE is a comprehensive IoT-enabled mobile application that revolutionizes rice purchasing through automation and smart technology. The system allows users to make secure online payments for rice purchases directly through the mobile app. After payment confirmation, the application seamlessly controls IoT devices including Arduino-based dispensers to automatically dispense the exact amount of rice purchased. The system features AI assistance for intelligent inventory management and smart storage notifications that alert users and administrators about stock levels, ensuring continuous availability. Built with Flutter and Dart, the app integrates with MongoDB for robust data management and Arduino for hardware control, creating a complete end-to-end automated solution that streamlines the rice purchasing process from payment to delivery.',
                 tags: ['Flutter', 'Dart', 'VS Code', 'MongoDB', 'Arduino', 'IoT', 'Mobile App', 'Payment Integration'],
                 category: ['app', 'iot'],
-                github: 'https://github.com/clarenceportugal/Arice'
+                github: 'https://github.com/clarenceportugal/Arice',
+                screenshots: [ariceScreenshot]
               },
               {
                 id: 'caci',
@@ -582,7 +669,8 @@ function App() {
                 description: 'CACI is a comprehensive quiz game application designed specifically for grade 10 students to test their knowledge across various subjects. The app features engaging gameplay mechanics that transform traditional studying into an interactive and enjoyable experience. Students can track their progress through detailed statistics that show their performance over time, helping them identify areas for improvement. The application includes daily goals that encourage consistent learning habits and level progression systems that reward students as they advance. With its gamified learning approach, CACI makes studying fun and interactive through achievements, badges, and competitive elements. Built with Flutter and Dart, the app provides a smooth, responsive user experience that keeps students motivated and engaged in their educational journey.',
                 tags: ['Flutter', 'Dart', 'VS Code', 'Mobile App', 'Educational'],
                 category: 'app',
-                github: 'https://github.com/clarenceportugal/CACI'
+                github: 'https://github.com/clarenceportugal/CACI',
+                screenshots: [caciScreenshot]
               },
               {
                 id: 'eduvision',
@@ -600,7 +688,8 @@ function App() {
                 description: 'E-Muklat is a mobile application designed to celebrate and preserve the local culture and stories of Labo, Camarines Norte. The app serves as a digital platform where users can upload videos and stories about places, creating a rich repository of local experiences and narratives. Built with Java and XML using Android Studio, E-Muklat features secure user authentication that allows community members to create accounts and share their content. The application includes comprehensive content sharing capabilities, enabling users to discover and explore stories about their hometown. With Firebase as the backend, the app ensures reliable data storage and real-time synchronization. The interface is designed with a warm, welcoming aesthetic that reflects the local culture, making it easy and enjoyable for users to showcase their stories and connect with their community through shared experiences.',
                 tags: ['Java', 'XML', 'Android Studio', 'Firebase', 'Mobile App'],
                 category: 'app',
-                github: 'https://github.com/clarenceportugal/e-muklat'
+                github: 'https://github.com/clarenceportugal/e-muklat',
+                screenshots: [emuklatScreenshot]
               },
               {
                 id: 'gama',
@@ -609,7 +698,8 @@ function App() {
                 description: 'Geometry and Algebra Adventures (GAMA) is an innovative educational mobile application that transforms mathematics learning into an exciting adventure. The app makes learning geometry and algebra concepts fun and interactive through engaging gameplay and visual learning techniques. GAMA features a vibrant, colorful user interface with dynamic geometric shapes and mathematical symbols that create an immersive and visually appealing learning environment. Students can explore various mathematical concepts through interactive exercises, puzzles, and challenges that adapt to their learning pace. Built with Flutter and Dart, the application provides smooth performance and cross-platform compatibility. With Firebase integration, GAMA offers cloud-based progress tracking and personalized learning experiences. The app combines educational content with gamification elements, making complex mathematical concepts more accessible and enjoyable for students of all levels.',
                 tags: ['Flutter', 'Dart', 'VS Code', 'Firebase', 'Mobile App'],
                 category: 'app',
-                github: 'https://github.com/clarenceportugal/GAMA'
+                github: 'https://github.com/clarenceportugal/GAMA',
+                screenshots: [gamaScreenshot]
               },
               {
                 id: 'likhain',
@@ -627,7 +717,8 @@ function App() {
                 description: 'A comprehensive mobile quiz application designed to make learning and knowledge testing fun and interactive. QuizMe allows users to test their knowledge across various topics and challenge friends in competitive quiz sessions. The app features a modern, user-friendly interface with vibrant colors and intuitive design that creates an engaging and enjoyable quiz experience. Built with Flutter and Dart, the application provides smooth performance and cross-platform compatibility. The app utilizes MongoDB as the database for storing quiz questions, user data, and game statistics. With its focus on UI/UX design, QuizMe delivers an immersive experience that encourages users to learn while having fun through gamified quiz challenges.',
                 tags: ['Flutter', 'Dart', 'VS Code', 'MongoDB', 'Mobile App', 'UI/UX'],
                 category: 'app',
-                github: 'https://github.com/clarenceportugal/QuizMe'
+                github: 'https://github.com/clarenceportugal/QuizMe',
+                screenshots: [quizmeScreenshot]
               },
               {
                 id: 'trinova',
@@ -697,8 +788,25 @@ function App() {
                   ? project.description 
                   : truncateDescription(project.description, 150)
                 
+                const hasScreenshots = project.screenshots && project.screenshots.length > 0
+                
                 return (
-                  <article key={project.id} className="project-card fade-in" aria-label={`${project.title} project`}>
+                  <article 
+                    key={project.id} 
+                    className={`project-card fade-in ${hasScreenshots ? 'has-screenshots' : ''}`}
+                    aria-label={`${project.title} project`}
+                    onClick={(e) => {
+                      // Don't trigger if clicking on buttons or links
+                      const target = e.target as HTMLElement
+                      if (target.closest('.see-more-btn') || target.closest('.project-link') || target.closest('a')) {
+                        return
+                      }
+                      if (hasScreenshots) {
+                        openProjectScreenshots(project.screenshots!, project.title)
+                      }
+                    }}
+                    style={{ cursor: hasScreenshots ? 'pointer' : 'default' }}
+                  >
                     <div className="project-image">
                       <img 
                         src={project.image} 
@@ -715,7 +823,10 @@ function App() {
                         {shouldTruncate && (
                           <button 
                             className="see-more-btn"
-                            onClick={() => toggleProjectDescription(project.id)}
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              toggleProjectDescription(project.id)
+                            }}
                           >
                             {isExpanded ? ' See less' : ' See more'}
                           </button>
@@ -734,6 +845,7 @@ function App() {
                             rel="noopener noreferrer" 
                             className="project-link"
                             aria-label={`View ${project.title} on GitHub`}
+                            onClick={(e) => e.stopPropagation()}
                           >
                             <svg className="project-link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                               <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>

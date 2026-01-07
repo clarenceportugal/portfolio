@@ -66,6 +66,18 @@ body.menu-open {
   transition: all 0.3s ease;
 }
 
+.logo[style*="pointer"] {
+  cursor: pointer;
+}
+
+.logo[style*="pointer"]:hover {
+  background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transform: translateX(-2px);
+}
+
 .nav-menu {
   display: flex;
   list-style: none;
@@ -280,6 +292,7 @@ body.menu-open {
   background: linear-gradient(135deg, rgba(20, 184, 166, 0.2), rgba(20, 184, 166, 0.05));
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask-composite: exclude;
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -804,6 +817,10 @@ section::before {
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   border: 1px solid #e5e7eb;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  position: relative;
+}
+
+.project-card.has-screenshots {
   position: relative;
 }
 
@@ -1363,6 +1380,217 @@ section::before {
   font-size: 1.1rem;
 }
 
+/* Project Screenshots Page */
+.project-screenshots-page {
+  min-height: 100vh;
+  padding: 8rem 0 4rem;
+  background: linear-gradient(135deg, #f0fdfa 0%, #ffffff 30%, #f0fdfa 60%, #ffffff 100%);
+  position: relative;
+}
+
+.project-screenshots-header {
+  text-align: center;
+  margin-bottom: 4rem;
+  position: relative;
+}
+
+.back-button-mobile {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 0.75rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.back-button-mobile:hover {
+  background: #f0fdfa;
+  border-color: #14b8a6;
+  transform: translateY(-50%) translateX(-2px);
+}
+
+.back-button-mobile svg {
+  width: 20px;
+  height: 20px;
+  color: #14b8a6;
+}
+
+.project-screenshots-page-title {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 0.5rem;
+  letter-spacing: -1.5px;
+  line-height: 1.2;
+  background: linear-gradient(135deg, #0f172a 0%, #14b8a6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.project-screenshots-subtitle {
+  font-size: 1.25rem;
+  color: #475569;
+  font-weight: 500;
+}
+
+.back-to-projects-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  color: #475569;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.back-to-projects-btn:hover {
+  background: #f0fdfa;
+  border-color: #14b8a6;
+  color: #14b8a6;
+  transform: translateX(-2px);
+}
+
+.back-to-projects-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.project-screenshots-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+/* Tablet and up - 2 columns */
+@media (min-width: 768px) {
+  .project-screenshots-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+}
+
+/* Desktop - 3 columns */
+@media (min-width: 1024px) {
+  .project-screenshots-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+  }
+}
+
+/* Large desktop - 4 columns */
+@media (min-width: 1440px) {
+  .project-screenshots-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2.5rem;
+  }
+}
+
+.project-screenshot-card {
+  position: relative;
+  background: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid #e5e7eb;
+}
+
+.project-screenshot-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12), 0 4px 16px rgba(20, 184, 166, 0.15);
+  border-color: #14b8a6;
+}
+
+.project-screenshot-full {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  background: #f8f9fa;
+}
+
+.project-screenshots-footer {
+  text-align: center;
+  padding-top: 2rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.project-screenshots-footer .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.project-screenshots-footer .btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Dark Mode Styles for Screenshots Page */
+.portfolio.dark-mode .project-screenshots-page {
+  background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 30%, #0f0f0f 60%, #1a1a1a 100%);
+}
+
+.portfolio.dark-mode .project-screenshots-page-title {
+  background: linear-gradient(135deg, #ffffff 0%, #14b8a6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.portfolio.dark-mode .project-screenshots-subtitle {
+  color: #94a3b8;
+}
+
+.portfolio.dark-mode .back-to-projects-btn {
+  background: #1a1a1a;
+  border-color: #2a2a2a;
+  color: #e5e5e5;
+}
+
+.portfolio.dark-mode .back-to-projects-btn:hover {
+  background: #2a2a2a;
+  border-color: #14b8a6;
+  color: #14b8a6;
+}
+
+.portfolio.dark-mode .back-button-mobile {
+  background: #1a1a1a;
+  border-color: #2a2a2a;
+}
+
+.portfolio.dark-mode .back-button-mobile:hover {
+  background: #2a2a2a;
+  border-color: #14b8a6;
+}
+
+.portfolio.dark-mode .project-screenshot-card {
+  background: #1a1a1a;
+  border-color: #2a2a2a;
+}
+
+.portfolio.dark-mode .project-screenshot-full {
+  background: #0f0f0f;
+}
+
+.portfolio.dark-mode .project-screenshots-footer {
+  border-top-color: #2a2a2a;
+}
+
 /* Contact Section */
 .contact {
   background: #f1f5f9;
@@ -1656,7 +1884,44 @@ section::before {
 
   .project-card {
     width: 100%;
-}
+  }
+
+  .project-screenshots-page {
+    padding: 6rem 0 3rem;
+  }
+
+  .project-screenshots-header {
+    margin-bottom: 2.5rem;
+    padding: 0 1rem;
+  }
+
+  .back-button-mobile {
+    display: flex;
+  }
+
+  .back-to-projects-btn {
+    display: none;
+  }
+
+  .project-screenshots-page-title {
+    font-size: 2rem;
+    padding-left: 3rem;
+  }
+
+  .project-screenshots-subtitle {
+    font-size: 1rem;
+    padding-left: 3rem;
+  }
+
+  .project-screenshots-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 0 1rem;
+  }
+
+  .project-screenshot-card {
+    border-radius: 12px;
+  }
 
   .skills-grid {
     grid-template-columns: 1fr;
