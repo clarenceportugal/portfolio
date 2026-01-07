@@ -485,10 +485,20 @@ function App() {
 
   const toggleProjectDescription = (projectId: string) => {
     setExpandedProjects(prev => {
-      const newSet = new Set(prev)
-      if (newSet.has(projectId)) {
-        newSet.delete(projectId)
+      // Create a completely new Set to ensure React detects the change
+      const newSet = new Set<string>()
+      // Copy all existing expanded projects (keep other projects' expanded state)
+      prev.forEach(id => {
+        if (id !== projectId) { // Only copy if it's NOT the project being toggled
+          newSet.add(id)
+        }
+      })
+      // Toggle only the specific project ID
+      if (prev.has(projectId)) {
+        // Remove it (collapse)
+        // Already not added above, so newSet doesn't have it
       } else {
+        // Add it (expand)
         newSet.add(projectId)
       }
       return newSet
@@ -681,8 +691,11 @@ function App() {
                 category: ['app', 'iot'],
                 github: 'https://github.com/clarenceportugal/Arice',
                 screenshots: [ariceScreenshot],
-                startDate: 'November 2024',
-                endDate: 'November 2025'
+                startDate: 'November 20, 2024',
+                endDate: 'November 27, 2024',
+                collaborators: [
+                  { name: 'Clarence Portugal', image: profileImage }
+                ]
               },
               {
                 id: 'caci',
@@ -694,7 +707,10 @@ function App() {
                 github: 'https://github.com/clarenceportugal/CACI',
                 screenshots: [caciScreenshot],
                 startDate: 'November 2025',
-                endDate: 'December 2025'
+                endDate: 'December 2025',
+                collaborators: [
+                  { name: 'Clarence Portugal', image: profileImage }
+                ]
               },
               {
                 id: 'eduvision',
@@ -705,7 +721,10 @@ function App() {
                 category: 'website',
                 github: 'https://github.com/clarenceportugal/facerecog',
                 startDate: 'April 2025',
-                endDate: 'December 2025'
+                endDate: 'December 2025',
+                collaborators: [
+                  { name: 'Clarence Portugal', image: profileImage }
+                ]
               },
               {
                 id: 'emuklat',
@@ -717,7 +736,10 @@ function App() {
                 github: 'https://github.com/clarenceportugal/e-muklat',
                 screenshots: [emuklatScreenshot],
                 startDate: 'April 2025',
-                endDate: 'March 2025'
+                endDate: 'March 2025',
+                collaborators: [
+                  { name: 'Clarence Portugal', image: profileImage }
+                ]
               },
               {
                 id: 'gama',
@@ -729,7 +751,10 @@ function App() {
                 github: 'https://github.com/clarenceportugal/GAMA',
                 screenshots: [gamaScreenshot],
                 startDate: 'March 2025',
-                endDate: 'May 2025'
+                endDate: 'May 2025',
+                collaborators: [
+                  { name: 'Clarence Portugal', image: profileImage }
+                ]
               },
               {
                 id: 'likhain',
@@ -740,7 +765,10 @@ function App() {
                 category: 'website',
                 github: 'https://github.com/clarenceportugal/Likhain',
                 startDate: 'December 2025',
-                endDate: 'Present'
+                endDate: 'Present',
+                collaborators: [
+                  { name: 'Clarence Portugal', image: profileImage }
+                ]
               },
               {
                 id: 'quizme',
@@ -752,7 +780,10 @@ function App() {
                 github: 'https://github.com/clarenceportugal/QuizMe',
                 screenshots: [quizmeScreenshot],
                 startDate: 'June 2025',
-                endDate: 'July 2025'
+                endDate: 'July 2025',
+                collaborators: [
+                  { name: 'Clarence Portugal', image: profileImage }
+                ]
               },
               {
                 id: 'trinova',
@@ -762,7 +793,10 @@ function App() {
                 tags: ['Arduino', 'IoT', 'Educational', 'Embedded System', 'C++'],
                 category: 'iot',
                 startDate: 'November 1, 2025',
-                endDate: 'November 3, 2025'
+                endDate: 'November 3, 2025',
+                collaborators: [
+                  { name: 'Clarence Portugal', image: profileImage }
+                ]
               },
               {
                 id: 'motowash',
@@ -772,7 +806,10 @@ function App() {
                 tags: ['Arduino', 'IoT', 'React Native', 'Firebase', 'Sensors', 'Mobile App', 'Automation', 'Robotics'],
                 category: ['app', 'iot'],
                 startDate: 'March 2024',
-                endDate: 'July 2024'
+                endDate: 'July 2024',
+                collaborators: [
+                  { name: 'Clarence Portugal', image: profileImage }
+                ]
               },
               {
                 id: 'rccar',
@@ -782,7 +819,10 @@ function App() {
                 tags: ['Arduino', 'Robotics', 'IoT', 'Bluetooth', 'Sensors', 'Line Following', 'Obstacle Avoidance', 'Automation', 'C++'],
                 category: 'iot',
                 startDate: 'March 13, 2024',
-                endDate: 'March 13, 2024'
+                endDate: 'March 13, 2024',
+                collaborators: [
+                  { name: 'Clarence Portugal', image: profileImage }
+                ]
               },
               {
                 id: 'ancestralhouse',
@@ -792,7 +832,10 @@ function App() {
                 tags: ['Arduino', 'IoT', 'React Native', 'Firebase', 'Sensors', 'Motion Sensor', 'Light Sensor', 'Smart Home', 'Mobile App', 'Automation'],
                 category: ['app', 'iot'],
                 startDate: 'September 2024',
-                endDate: 'October 2024'
+                endDate: 'October 2024',
+                collaborators: [
+                  { name: 'Clarence Portugal', image: profileImage }
+                ]
               },
               {
                 id: 'chess',
@@ -802,7 +845,10 @@ function App() {
                 tags: ['Java', 'XML', 'Android Studio', 'Mobile App', 'Educational'],
                 category: 'app',
                 startDate: 'October 2023',
-                endDate: 'November 2023'
+                endDate: 'November 2023',
+                collaborators: [
+                  { name: 'Clarence Portugal', image: profileImage }
+                ]
               }
             ]
               .filter(project => {
@@ -826,11 +872,17 @@ function App() {
                 return categoryMatch && searchMatch
               })
               .map(project => {
-                const isExpanded = expandedProjects.has(project.id)
-                const shouldTruncate = project.description.length > 150
-                const displayDescription = isExpanded || !shouldTruncate 
-                  ? project.description 
-                  : truncateDescription(project.description, 150)
+                // Ensure we have a valid project ID and description
+                const projectId = String(project.id) // Ensure it's a string
+                const description = String(project.description || '') // Ensure it's a string
+                const isExpanded = expandedProjects.has(projectId)
+                const shouldTruncate = description.length > 150
+                
+                // Only show truncated if it should be truncated AND is not expanded
+                // This ensures only the clicked project expands
+                const displayDescription = shouldTruncate && !isExpanded
+                  ? truncateDescription(description, 150)
+                  : description
                 
                 const hasScreenshots = project.screenshots && project.screenshots.length > 0
                 
@@ -881,7 +933,8 @@ function App() {
                             className="see-more-btn"
                             onClick={(e) => {
                               e.stopPropagation()
-                              toggleProjectDescription(project.id)
+                              e.preventDefault()
+                              toggleProjectDescription(projectId)
                             }}
                           >
                             {isExpanded ? ' See less' : ' See more'}
@@ -893,6 +946,23 @@ function App() {
                           <span key={index}>{tag}</span>
                         ))}
                       </div>
+                      {(project as any).collaborators && (project as any).collaborators.length > 0 && (
+                        <div className="project-collaborators">
+                          <span className="collaborators-label">Collaborators:</span>
+                          <div className="collaborators-list">
+                            {(project as any).collaborators.map((collaborator: { name: string; image: string }, index: number) => (
+                              <div key={index} className="collaborator-item" title={collaborator.name}>
+                                <img 
+                                  src={collaborator.image} 
+                                  alt={collaborator.name}
+                                  className="collaborator-image"
+                                  loading="lazy"
+                                />
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                       {project.github && (
                         <div className="project-links">
                           <a 
