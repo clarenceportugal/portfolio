@@ -33,7 +33,7 @@ function ProjectScreenshotsPage({ screenshots, title, onBack, darkMode }: Projec
             tabIndex={0}
             aria-label="Back to portfolio"
           >
-            Portfolio
+            Clarence Portugal
           </div>
           <div className="nav-right">
             <button 

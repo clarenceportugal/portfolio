@@ -557,7 +557,7 @@ function App() {
       {/* Navigation */}
       <nav className="navbar">
         <div className="nav-container">
-          <div className="logo" role="banner">Portfolio</div>
+          <div className="logo" role="banner">Clarence Portugal</div>
           <div className="nav-right">
             <ul className={`nav-menu ${mobileMenuOpen ? 'active' : ''}`} role="navigation" aria-label="Main navigation">
               <div className="mobile-menu-header">
@@ -1298,7 +1298,7 @@ function App() {
               to be part of your visions.
             </p>
             <div className="contact-info">
-              <a href="mailto:portugalclarence15@gmail.com?subject=Contact%20from%20Portfolio" className="contact-item">
+              <a href="mailto:portugalclarence15@gmail.com?subject=Contact%20from%20Clarence%20Portugal%20Portfolio" className="contact-item">
                 <svg className="contact-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2-2-2z"></path>
                   <polyline points="22,6 12,13 2,6"></polyline>
@@ -1339,7 +1339,7 @@ function App() {
       {/* Footer */}
       <footer className="footer fade-in" aria-label="Footer">
         <div className="container">
-          <p>&copy; 2025 Portfolio. All rights reserved.</p>
+          <p>&copy; 2025 Clarence Portugal. All rights reserved.</p>
         </div>
       </footer>
     </div>
