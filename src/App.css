@@ -1125,12 +1125,14 @@ section::before {
 }
 
 .client-image {
-  width: 40px;
-  height: 40px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   object-fit: cover;
+  object-position: center center;
   border: 2px solid #e5e7eb;
   display: block;
+  flex-shrink: 0;
 }
 
 .client-name {
@@ -1223,7 +1225,10 @@ section::before {
 .enlarged-image {
   max-width: 100%;
   max-height: 80vh;
+  width: auto;
+  height: auto;
   object-fit: contain;
+  object-position: center center;
   border-radius: 12px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
   animation: zoomIn 0.3s ease;

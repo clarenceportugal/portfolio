@@ -22,6 +22,20 @@ import ancestralhouseImage from './assets/images/ancestralhouse_logo.jpg'
 import chessImage from './assets/images/chess_logo.jpg'
 import tesdaImage from './assets/images/tesda.jpg'
 import jannaProfileImage from './assets/images/clients/emuklat/janna_profile.png'
+import lykaProfileImage from './assets/images/clients/emuklat/lyka_profile.png'
+// Collaborator images
+import quizmeJoe from './assets/images/collaborators/quizme/Joe.jpg'
+import quizmeJohnLoyd from './assets/images/collaborators/quizme/John Loyd.jpg'
+import quizmeJohnMichael from './assets/images/collaborators/quizme/John Michael.jpg'
+import motowashJoe from './assets/images/collaborators/motowash/Joe.jpg'
+import motowashJohnLoyd from './assets/images/collaborators/motowash/John Loyd.jpg'
+import motowashLeah from './assets/images/collaborators/motowash/Leah.jpg'
+import rccarJoe from './assets/images/collaborators/rccar/Joe.jpg'
+import rccarJohnLoyd from './assets/images/collaborators/rccar/John Loyd.jpg'
+import rccarLeah from './assets/images/collaborators/rccar/Leah.jpg'
+import ancestralhouseJoe from './assets/images/collaborators/ancestralhouse/Joe.jpg'
+import ancestralhouseJohnLoyd from './assets/images/collaborators/ancestralhouse/John Loyd.jpg'
+import ancestralhouseLeah from './assets/images/collaborators/ancestralhouse/Leah.jpg'
 
 // Set up PDF.js worker - use local worker file
 pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs'
@@ -786,10 +800,10 @@ function App() {
                 collaborators: [
                   { name: 'Clarence Portugal', image: profileImage }
                 ],
-                client: {
-                  name: 'Janna',
-                  image: jannaProfileImage
-                }
+                clients: [
+                  { name: 'Janna', image: jannaProfileImage },
+                  { name: 'Lyka', image: lykaProfileImage }
+                ]
               },
               {
                 id: 'gama',
@@ -832,7 +846,10 @@ function App() {
                 startDate: 'June 2025',
                 endDate: 'July 2025',
                 collaborators: [
-                  { name: 'Clarence Portugal', image: profileImage }
+                  { name: 'Clarence Portugal', image: profileImage },
+                  { name: 'Joe', image: quizmeJoe },
+                  { name: 'John Loyd', image: quizmeJohnLoyd },
+                  { name: 'John Michael', image: quizmeJohnMichael }
                 ]
               },
               {
@@ -858,7 +875,10 @@ function App() {
                 startDate: 'March 2024',
                 endDate: 'July 2024',
                 collaborators: [
-                  { name: 'Clarence Portugal', image: profileImage }
+                  { name: 'Clarence Portugal', image: profileImage },
+                  { name: 'Joe', image: motowashJoe },
+                  { name: 'John Loyd', image: motowashJohnLoyd },
+                  { name: 'Leah', image: motowashLeah }
                 ]
               },
               {
@@ -871,7 +891,10 @@ function App() {
                 startDate: 'March 13, 2024',
                 endDate: 'March 13, 2024',
                 collaborators: [
-                  { name: 'Clarence Portugal', image: profileImage }
+                  { name: 'Clarence Portugal', image: profileImage },
+                  { name: 'Joe', image: rccarJoe },
+                  { name: 'John Loyd', image: rccarJohnLoyd },
+                  { name: 'Leah', image: rccarLeah }
                 ]
               },
               {
@@ -884,7 +907,10 @@ function App() {
                 startDate: 'September 2024',
                 endDate: 'October 2024',
                 collaborators: [
-                  { name: 'Clarence Portugal', image: profileImage }
+                  { name: 'Clarence Portugal', image: profileImage },
+                  { name: 'Joe', image: ancestralhouseJoe },
+                  { name: 'John Loyd', image: ancestralhouseJohnLoyd },
+                  { name: 'Leah', image: ancestralhouseLeah }
                 ]
               },
               {
@@ -951,7 +977,8 @@ function App() {
                           target.closest('.collaborator-item') ||
                           target.closest('.client-item') ||
                           target.closest('.project-collaborators') ||
-                          target.closest('.project-client')) {
+                          target.closest('.project-client') ||
+                          target.closest('.clients-list')) {
                         return
                       }
                       if (hasScreenshots) {
@@ -1030,27 +1057,30 @@ function App() {
                           </div>
                         </div>
                       )}
-                      {(project as any).client && (
+                      {(project as any).clients && (project as any).clients.length > 0 && (
                         <div className="project-client">
-                          <span className="client-label">Client:</span>
+                          <span className="client-label">Clients:</span>
                           <div className="client-info">
-                            <div 
-                              className="client-item" 
-                              title={(project as any).client.name}
-                              onClick={(e) => {
-                                e.stopPropagation()
-                                e.preventDefault()
-                                setEnlargedImage({ url: (project as any).client.image, name: (project as any).client.name })
-                              }}
-                            >
-                              <img 
-                                src={(project as any).client.image} 
-                                alt={(project as any).client.name}
-                                className="client-image"
-                                loading="lazy"
-                              />
-                              <span className="client-name">{(project as any).client.name}</span>
-                            </div>
+                            {(project as any).clients.map((client: { name: string; image: string }, index: number) => (
+                              <div 
+                                key={index}
+                                className="client-item" 
+                                title={client.name}
+                                onClick={(e) => {
+                                  e.stopPropagation()
+                                  e.preventDefault()
+                                  setEnlargedImage({ url: client.image, name: client.name })
+                                }}
+                              >
+                                <img 
+                                  src={client.image} 
+                                  alt={client.name}
+                                  className="client-image"
+                                  loading="lazy"
+                                />
+                                <span className="client-name">{client.name}</span>
+                              </div>
+                            ))}
                           </div>
                         </div>
                       )}
