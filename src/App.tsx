@@ -470,17 +470,41 @@ function App() {
     }
   }, [enlargedImage, selectedProject])
 
+  // Handle browser back button for modal
+  useEffect(() => {
+    const handlePopState = () => {
+      // If modal is open and back button is pressed, close it
+      if (selectedProject) {
+        setSelectedProject(null)
+        setSelectedScreenshotIndex(0)
+        document.body.style.overflow = ''
+      }
+    }
+
+    window.addEventListener('popstate', handlePopState)
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState)
+    }
+  }, [selectedProject])
+
 
   const openProjectModal = (project: any) => {
     setSelectedProject(project)
     setSelectedScreenshotIndex(0)
     document.body.style.overflow = 'hidden'
+    // Add to browser history for back button support
+    window.history.pushState({ modalOpen: true, projectId: project.id }, '', `#project-${project.id}`)
   }
 
   const closeProjectModal = () => {
     setSelectedProject(null)
     setSelectedScreenshotIndex(0)
     document.body.style.overflow = ''
+    // Go back in history if we pushed a state
+    if (window.history.state && window.history.state.modalOpen) {
+      window.history.back()
+    }
   }
 
   const truncateDescription = (text: string, maxLength: number = 100): string => {
