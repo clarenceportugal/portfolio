@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import * as pdfjsLib from 'pdfjs-dist'
 import './App.css'
-import ProjectScreenshotsPage from './ProjectScreenshotsPage'
 import profileImage from './assets/images/profile.jpg'
 import quizmeImage from './assets/images/quizme_logo.png'
 import quizmeScreenshot from './assets/images/quizme/quizme.jpg'
@@ -12,7 +11,13 @@ import emuklatScreenshot from './assets/images/emuklat/E-Muklat.jpg'
 import ariceImage from './assets/images/Arice_logo.png'
 import ariceScreenshot from './assets/images/arice/Arice.jpg'
 import caciImage from './assets/images/caci_logo.jpg'
-import caciScreenshot from './assets/images/caci/caci.jpg'
+import caciDesign1 from './assets/images/design/caci/caci1.jpg'
+import caciDesign2 from './assets/images/design/caci/caci2.jpg'
+import caciDesign3 from './assets/images/design/caci/caci3.jpg'
+import caciDesign4 from './assets/images/design/caci/caci4.jpg'
+import caciDesign5 from './assets/images/design/caci/caci5.jpg'
+import caciDesign6 from './assets/images/design/caci/caci6.jpg'
+import caciDesign7 from './assets/images/design/caci/caci7.jpg'
 import likhainImage from './assets/images/likhain_logo.png'
 import eduvisionImage from './assets/images/eduvision_logo.png'
 import trinovaImage from './assets/images/Trinova.jpg'
@@ -52,17 +57,13 @@ function App() {
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [selectedCertificate, setSelectedCertificate] = useState<string | null>(null)
-  const [viewingScreenshots, setViewingScreenshots] = useState(false)
-  const [selectedProjectScreenshots, setSelectedProjectScreenshots] = useState<string[]>([])
-  const [selectedProjectTitle, setSelectedProjectTitle] = useState<string>('')
-  const [selectedProjectId, setSelectedProjectId] = useState<string>('')
   const [projectFilter, setProjectFilter] = useState<string>('all')
-  const [expandedProjects, setExpandedProjects] = useState<Set<string>>(new Set())
   const [projectSearch, setProjectSearch] = useState<string>('')
   const [showBackToTop, setShowBackToTop] = useState(false)
-  const [enlargedImage, setEnlargedImage] = useState<{ url: string; name: string } | null>(null)
+  const [enlargedImage, setEnlargedImage] = useState<{ url: string; project: any; index: number } | null>(null)
+  const [selectedProject, setSelectedProject] = useState<any>(null)
+  const [selectedScreenshotIndex, setSelectedScreenshotIndex] = useState<number>(0)
   const canvasContainerRef = useRef<HTMLDivElement>(null)
-  const hasViewedScreenshotsRef = useRef(false)
   const [typewriterName, setTypewriterName] = useState('')
   const [typewriterTitle, setTypewriterTitle] = useState('')
   const [typewriterDescription, setTypewriterDescription] = useState('')
@@ -130,32 +131,30 @@ function App() {
 
   // Scroll animations with Intersection Observer
   useEffect(() => {
-    // If we just returned from screenshots, make all elements visible immediately
-    if (!viewingScreenshots) {
-      // Immediately check and show elements already in viewport
-      const checkInitialVisibility = () => {
-        const fadeInElements = document.querySelectorAll('.fade-in:not(.fade-in-visible)')
-        fadeInElements.forEach((el) => {
-          const rect = el.getBoundingClientRect()
-          // More lenient check - if any part is visible or close to viewport
-          const isInViewport = rect.top < window.innerHeight + 100 && rect.bottom > -100
-          if (isInViewport) {
-            el.classList.add('fade-in-visible')
-          }
-        })
-      }
-      
-      // Check immediately
-      checkInitialVisibility()
-      
-      // Also check after a short delay to catch elements that load late
-      const timer = setTimeout(checkInitialVisibility, 100)
-      
-      // Use more lenient observer options, especially for mobile
-      const isMobile = window.innerWidth <= 768
+    // Immediately check and show elements already in viewport
+    const checkInitialVisibility = () => {
+      const fadeInElements = document.querySelectorAll('.fade-in:not(.fade-in-visible)')
+      fadeInElements.forEach((el) => {
+        const rect = el.getBoundingClientRect()
+        // More lenient check - if any part is visible or close to viewport
+        const isInViewport = rect.top < window.innerHeight + 100 && rect.bottom > -100
+        if (isInViewport) {
+          el.classList.add('fade-in-visible')
+        }
+      })
+    }
+    
+    // Check immediately
+    checkInitialVisibility()
+    
+    // Also check after a short delay to catch elements that load late
+    const timer = setTimeout(checkInitialVisibility, 100)
+    
+    // Use more lenient observer options, especially for mobile
+    const isMobile = window.innerWidth <= 768
     const observerOptions = {
-        threshold: isMobile ? 0.05 : 0.1, // Lower threshold for mobile
-        rootMargin: isMobile ? '50px 0px 50px 0px' : '0px 0px -50px 0px' // More margin on mobile
+      threshold: isMobile ? 0.05 : 0.1, // Lower threshold for mobile
+      rootMargin: isMobile ? '50px 0px 50px 0px' : '0px 0px -50px 0px' // More margin on mobile
     }
 
     const observer = new IntersectionObserver((entries) => {
@@ -169,69 +168,19 @@ function App() {
     const elementsToObserve = document.querySelectorAll('.fade-in')
     elementsToObserve.forEach(el => observer.observe(el))
 
-      // Also listen to scroll events on mobile for better detection
-      const handleScroll = () => {
-        checkInitialVisibility()
-      }
-      window.addEventListener('scroll', handleScroll, { passive: true })
+    // Also listen to scroll events on mobile for better detection
+    const handleScroll = () => {
+      checkInitialVisibility()
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
 
     return () => {
-        clearTimeout(timer)
+      clearTimeout(timer)
       elementsToObserve.forEach(el => observer.unobserve(el))
-        window.removeEventListener('scroll', handleScroll)
-      }
+      window.removeEventListener('scroll', handleScroll)
     }
-  }, [projectFilter, projectSearch, viewingScreenshots])
+  }, [projectFilter, projectSearch])
 
-  // Ensure content is visible and scroll to specific project card when returning from screenshots
-  useEffect(() => {
-    // Only run when we've just returned from screenshots (not on initial page load)
-    if (hasViewedScreenshotsRef.current && !viewingScreenshots && selectedProjectScreenshots.length === 0 && selectedProjectTitle === '' && selectedProjectId) {
-      // Wait for DOM to be fully rendered
-      const timer = setTimeout(() => {
-        // Force ALL fade-in elements to be visible immediately (not just those in viewport)
-        const fadeInElements = document.querySelectorAll('.fade-in:not(.fade-in-visible)')
-        fadeInElements.forEach((el) => {
-          el.classList.add('fade-in-visible')
-        })
-        
-        // Scroll to the specific project card that was clicked
-        const projectCard = document.getElementById(`project-${selectedProjectId}`)
-        if (projectCard) {
-          // Calculate position accounting for navbar
-          const navbarHeight = 70
-          const elementPosition = projectCard.getBoundingClientRect().top + window.pageYOffset
-          const offsetPosition = elementPosition - navbarHeight - 20 // Extra 20px for spacing
-          
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth'
-          })
-        } else {
-          // Fallback: scroll to projects section if specific card not found
-          const projectsSection = document.getElementById('projects')
-          if (projectsSection) {
-            const navbarHeight = 70
-            const elementPosition = projectsSection.getBoundingClientRect().top + window.pageYOffset
-            const offsetPosition = elementPosition - navbarHeight
-            
-            window.scrollTo({
-              top: offsetPosition,
-              behavior: 'smooth'
-            })
-          } else {
-            window.scrollTo({ top: 0, behavior: 'smooth' })
-          }
-        }
-        
-        // Reset the flag and project ID after scrolling
-        hasViewedScreenshotsRef.current = false
-        setSelectedProjectId('')
-      }, 150)
-      
-      return () => clearTimeout(timer)
-    }
-  }, [viewingScreenshots, selectedProjectScreenshots.length, selectedProjectTitle, selectedProjectId])
 
   // Typewriter effect for name, title, and description
   useEffect(() => {
@@ -502,84 +451,41 @@ function App() {
   // Close enlarged image on ESC key
   useEffect(() => {
     const handleEsc = (event: KeyboardEvent) => {
-      if (event.key === 'Escape' && enlargedImage) {
-        setEnlargedImage(null)
+      if (event.key === 'Escape') {
+        if (enlargedImage) {
+          setEnlargedImage(null)
+        }
+        if (selectedProject) {
+          closeProjectModal()
+        }
       }
     }
 
-    if (enlargedImage) {
+    if (enlargedImage || selectedProject) {
       document.addEventListener('keydown', handleEsc)
-      document.body.style.overflow = 'hidden'
     }
 
     return () => {
       document.removeEventListener('keydown', handleEsc)
-      document.body.style.overflow = ''
     }
-  }, [enlargedImage])
+  }, [enlargedImage, selectedProject])
 
-  const openProjectScreenshots = (screenshots: string[], title: string, projectId: string) => {
-    setSelectedProjectScreenshots(screenshots)
-    setSelectedProjectTitle(title)
-    setSelectedProjectId(projectId)
-    setViewingScreenshots(true)
-    hasViewedScreenshotsRef.current = true
-    window.scrollTo(0, 0)
+
+  const openProjectModal = (project: any) => {
+    setSelectedProject(project)
+    setSelectedScreenshotIndex(0)
+    document.body.style.overflow = 'hidden'
   }
 
-  const closeProjectScreenshots = () => {
-    // Reset all state immediately - this will trigger re-render
-    setViewingScreenshots(false)
-    setSelectedProjectScreenshots([])
-    setSelectedProjectTitle('')
+  const closeProjectModal = () => {
+    setSelectedProject(null)
+    setSelectedScreenshotIndex(0)
+    document.body.style.overflow = ''
   }
 
-  const toggleProjectDescription = (projectId: string) => {
-    setExpandedProjects(prev => {
-      // Create a completely new Set to ensure React detects the change
-      const newSet = new Set<string>()
-      // Copy all existing expanded projects (keep other projects' expanded state)
-      prev.forEach(id => {
-        if (id !== projectId) { // Only copy if it's NOT the project being toggled
-          newSet.add(id)
-        }
-      })
-      // Toggle only the specific project ID
-      if (prev.has(projectId)) {
-        // Remove it (collapse)
-        // Already not added above, so newSet doesn't have it
-      } else {
-        // Add it (expand)
-        newSet.add(projectId)
-      }
-      
-      // Ensure the expanded card is immediately visible (no fade)
-      setTimeout(() => {
-        const cardElement = document.getElementById(`project-${projectId}`)
-        if (cardElement) {
-          cardElement.classList.add('fade-in-visible')
-        }
-      }, 0)
-      
-      return newSet
-    })
-  }
-
-  const truncateDescription = (text: string, maxLength: number = 150): string => {
+  const truncateDescription = (text: string, maxLength: number = 100): string => {
     if (text.length <= maxLength) return text
     return text.substring(0, maxLength).trim() + '...'
-  }
-
-  // If viewing screenshots, show the screenshot page
-  if (viewingScreenshots && selectedProjectScreenshots.length > 0) {
-  return (
-      <ProjectScreenshotsPage
-        screenshots={selectedProjectScreenshots}
-        title={selectedProjectTitle}
-        onBack={closeProjectScreenshots}
-        darkMode={darkMode}
-      />
-    )
   }
 
   // Main portfolio page
@@ -746,7 +652,7 @@ function App() {
                 id: 'arice',
                 image: ariceImage,
                 title: 'ARICE',
-                description: 'Digital Automated Rice Dispenser and Sealing with AI-Assistance and Smart Storage Notification. ARICE is a comprehensive IoT-enabled mobile application that revolutionizes rice purchasing through automation and smart technology. The system allows users to make secure online payments for rice purchases directly through the mobile app. After payment confirmation, the application seamlessly controls IoT devices including Arduino-based dispensers to automatically dispense the exact amount of rice purchased. The system features AI assistance for intelligent inventory management and smart storage notifications that alert users and administrators about stock levels, ensuring continuous availability. Built with Flutter and Dart, the app integrates with MongoDB for robust data management and Arduino for hardware control, creating a complete end-to-end automated solution that streamlines the rice purchasing process from payment to delivery.',
+                description: 'Digital Automated Rice Dispenser and Sealing with AI-Assistance and Smart Storage Notification. ARICE is a comprehensive IoT-enabled mobile application that revolutionizes rice purchasing through automation. Users can make secure online payments through the mobile app, and after payment confirmation, the application controls Arduino-based dispensers to automatically dispense the exact amount purchased. Features AI assistance for intelligent inventory management and smart storage notifications. Built with Flutter, Dart, MongoDB, and Arduino.',
                 tags: ['Flutter', 'Dart', 'VS Code', 'MongoDB', 'Arduino', 'IoT', 'Mobile App', 'Payment Integration'],
                 category: ['app', 'iot'],
                 github: 'https://github.com/clarenceportugal/Arice',
@@ -761,11 +667,11 @@ function App() {
                 id: 'caci',
                 image: caciImage,
                 title: 'CACI',
-                description: 'CACI is a comprehensive quiz game application designed specifically for grade 10 students to test their knowledge across various subjects. The app features engaging gameplay mechanics that transform traditional studying into an interactive and enjoyable experience. Students can track their progress through detailed statistics that show their performance over time, helping them identify areas for improvement. The application includes daily goals that encourage consistent learning habits and level progression systems that reward students as they advance. With its gamified learning approach, CACI makes studying fun and interactive through achievements, badges, and competitive elements. Built with Flutter and Dart, the app provides a smooth, responsive user experience that keeps students motivated and engaged in their educational journey.',
+                description: 'CACI is a comprehensive quiz game application designed for grade 10 students to test their knowledge across various subjects. Features engaging gameplay mechanics, progress tracking with detailed statistics, daily goals, level progression, achievements, and competitive elements. The gamified learning approach makes studying fun and interactive. Built with Flutter and Dart.',
                 tags: ['Flutter', 'Dart', 'VS Code', 'Mobile App', 'Educational'],
                 category: 'app',
                 github: 'https://github.com/clarenceportugal/CACI',
-                screenshots: [caciScreenshot],
+                screenshots: [caciDesign1, caciDesign2, caciDesign3, caciDesign4, caciDesign5, caciDesign6, caciDesign7],
                 startDate: 'November 2025',
                 endDate: 'December 2025',
                 collaborators: [
@@ -776,7 +682,7 @@ function App() {
                 id: 'eduvision',
                 image: eduvisionImage,
                 title: 'EduVision',
-                description: 'An AI-powered facial recognition attendance system for the College of Computing and Multimedia Studies (CCMS) at CNSC. Utilizes IoT-based smart cameras and cloud-based database to automate faculty attendance tracking. Features contactless verification, real-time monitoring, and secure record-keeping through web and mobile applications. Solves issues with manual attendance methods by eliminating time-consuming processes, reducing errors, and preventing proxy attendance.',
+                description: 'An AI-powered facial recognition attendance system for the College of Computing and Multimedia Studies (CCMS) at CNSC. Utilizes IoT-based smart cameras and cloud-based database to automate faculty attendance tracking. Features contactless verification, real-time monitoring, and secure record-keeping through web and mobile applications. Built with Python, React, TypeScript, and C++.',
                 tags: ['Python', 'React', 'TypeScript', 'C++', 'Cython', 'IoT', 'Website', 'System', 'AI', 'Facial Recognition'],
                 category: 'website',
                 github: 'https://github.com/clarenceportugal/facerecog',
@@ -790,7 +696,7 @@ function App() {
                 id: 'emuklat',
                 image: emuklatImage,
                 title: 'E-Muklat',
-                description: 'E-Muklat is a mobile application designed to celebrate and preserve the local culture and stories of Labo, Camarines Norte. The app serves as a digital platform where users can upload videos and stories about places, creating a rich repository of local experiences and narratives. Built with Java and XML using Android Studio, E-Muklat features secure user authentication that allows community members to create accounts and share their content. The application includes comprehensive content sharing capabilities, enabling users to discover and explore stories about their hometown. With Firebase as the backend, the app ensures reliable data storage and real-time synchronization. The interface is designed with a warm, welcoming aesthetic that reflects the local culture, making it easy and enjoyable for users to showcase their stories and connect with their community through shared experiences.',
+                description: 'E-Muklat is a mobile application designed to celebrate and preserve the local culture and stories of Labo, Camarines Norte. The app serves as a digital platform where users can upload videos and stories about places, creating a rich repository of local experiences. Features secure user authentication, comprehensive content sharing, and community engagement. Built with Java, XML, Android Studio, and Firebase.',
                 tags: ['Java', 'XML', 'Android Studio', 'Firebase', 'Mobile App'],
                 category: 'app',
                 github: 'https://github.com/clarenceportugal/e-muklat',
@@ -809,7 +715,7 @@ function App() {
                 id: 'gama',
                 image: gamaImage,
                 title: 'GAMA',
-                description: 'Geometry and Algebra Adventures (GAMA) is an innovative educational mobile application that transforms mathematics learning into an exciting adventure. The app makes learning geometry and algebra concepts fun and interactive through engaging gameplay and visual learning techniques. GAMA features a vibrant, colorful user interface with dynamic geometric shapes and mathematical symbols that create an immersive and visually appealing learning environment. Students can explore various mathematical concepts through interactive exercises, puzzles, and challenges that adapt to their learning pace. Built with Flutter and Dart, the application provides smooth performance and cross-platform compatibility. With Firebase integration, GAMA offers cloud-based progress tracking and personalized learning experiences. The app combines educational content with gamification elements, making complex mathematical concepts more accessible and enjoyable for students of all levels.',
+                description: 'Geometry and Algebra Adventures (GAMA) is an innovative educational mobile application that transforms mathematics learning into an exciting adventure. The app makes learning geometry and algebra concepts fun through engaging gameplay and visual learning techniques. Features interactive exercises, puzzles, challenges, and cloud-based progress tracking. Built with Flutter, Dart, and Firebase.',
                 tags: ['Flutter', 'Dart', 'VS Code', 'Firebase', 'Mobile App'],
                 category: 'app',
                 github: 'https://github.com/clarenceportugal/GAMA',
@@ -824,7 +730,7 @@ function App() {
                 id: 'likhain',
                 image: likhainImage,
                 title: 'Likhain',
-                description: 'Likhain is a comprehensive creative platform designed specifically for poem writers to express their thoughts, emotions, and creativity through poetry. The platform serves as a digital sanctuary where writers can share their original poems, discover inspiring works from fellow poets, and connect with a supportive community of creative individuals. Built with React and TypeScript, Likhain provides a modern, responsive web experience that works seamlessly across all devices. The platform features robust poem publishing capabilities that allow writers to format and present their work beautifully. Writers can engage with the community through commenting features that enable meaningful discussions and feedback on poems. The application includes real-time communication features powered by Firebase, allowing instant interactions between writers. With its intuitive interface and focus on fostering creativity, Likhain creates a welcoming space where poets can showcase their talent, find inspiration, and build connections within the poetry community.',
+                description: 'Likhain is a comprehensive creative platform designed for poem writers to express their thoughts and creativity through poetry. The platform serves as a digital sanctuary where writers can share original poems, discover inspiring works, and connect with a supportive community. Features poem publishing, commenting, real-time interactions, and community engagement. Built with React, TypeScript, and Firebase.',
                 tags: ['React', 'TypeScript', 'Firebase', 'Website', 'VS Code'],
                 category: 'website',
                 github: 'https://github.com/clarenceportugal/Likhain',
@@ -838,7 +744,7 @@ function App() {
                 id: 'quizme',
                 image: quizmeImage,
                 title: 'QuizMe',
-                description: 'A comprehensive mobile quiz application designed to make learning and knowledge testing fun and interactive. QuizMe allows users to test their knowledge across various topics and challenge friends in competitive quiz sessions. The app features a modern, user-friendly interface with vibrant colors and intuitive design that creates an engaging and enjoyable quiz experience. Built with Flutter and Dart, the application provides smooth performance and cross-platform compatibility. The app utilizes MongoDB as the database for storing quiz questions, user data, and game statistics. With its focus on UI/UX design, QuizMe delivers an immersive experience that encourages users to learn while having fun through gamified quiz challenges.',
+                description: 'A comprehensive mobile quiz application designed to make learning and knowledge testing fun and interactive. QuizMe allows users to test their knowledge across various topics and challenge friends in competitive quiz sessions. Features modern UI, gamified learning, and cross-platform compatibility. Built with Flutter, Dart, and MongoDB.',
                 tags: ['Flutter', 'Dart', 'VS Code', 'MongoDB', 'Mobile App', 'UI/UX'],
                 category: 'app',
                 github: 'https://github.com/clarenceportugal/QuizMe',
@@ -856,9 +762,9 @@ function App() {
                 id: 'trinova',
                 image: trinovaImage,
                 title: 'Trinova',
-                description: 'Trinova is an innovative educational device designed to help students learn mathematical functions and topics, with a special focus on trigonometry. This Arduino-based IoT device features an interactive keypad interface that allows students to input mathematical queries and navigate through different topics. The LCD display provides clear, readable output showing various mathematical concepts including trigonometric functions (sine, cosine, tangent), laws of sines and cosines, and the fundamental SOH CAH TOA mnemonic. The device offers a hands-on, tactile learning experience that helps students understand complex mathematical relationships through direct interaction. Built with Arduino and programmed in C++, Trinova combines hardware and software to create an engaging educational tool that makes abstract mathematical concepts more tangible and easier to grasp. The device serves as a portable learning companion that students can use to practice and explore trigonometry concepts at their own pace, making it an invaluable tool for mathematics education.',
+                description: 'Trinova is an innovative educational device designed to help students learn mathematical functions and topics, with a special focus on trigonometry. This Arduino-based IoT device features an interactive keypad interface and LCD display showing trigonometric functions, laws of sines and cosines, and the SOH CAH TOA mnemonic. Offers hands-on, tactile learning experience. Built with Arduino and C++.',
                 tags: ['Arduino', 'IoT', 'Educational', 'Embedded System', 'C++'],
-                category: 'iot',
+                category: 'robotics',
                 startDate: 'November 1, 2025',
                 endDate: 'November 3, 2025',
                 collaborators: [
@@ -869,7 +775,7 @@ function App() {
                 id: 'motowash',
                 image: motowashImage,
                 title: 'Motowash 360',
-                description: 'Motowash 360 is a radically innovative vendo machine solution for automating motor cleaning, aiming to streamline the work process and promote sustainability. This IoT-enabled vending machine system uses Arduino Uno with L298N Motor Driver, DC water pump motor, and Ultrasonic Sensor for vehicle detection and automated cleaning operations. The vendo machine operates as a self-service station where users can initiate motor cleaning services through a coin-operated or mobile payment system. Features a React Native mobile application that provides remote control and monitoring capabilities, allowing users to start cleaning sessions, track usage, and manage payments directly from their smartphones. Firebase serves as the database for data collection, real-time synchronization, and transaction management. The system integrates coin slot mechanisms for traditional payment methods while also supporting digital payment options through the mobile app. The vendo machine really shines through careful setup, programming for data collection and control, and extensive testing for reliability, providing a complete automated motor cleaning experience that combines hardware automation with modern mobile technology.',
+                description: 'Motowash 360 is a radically innovative vendo machine solution for automating motor cleaning. This IoT-enabled system uses Arduino Uno with sensors and motors for vehicle detection and automated cleaning operations. Features coin-operated and mobile payment systems, React Native app for remote control and monitoring, and Firebase for data management. Combines hardware automation with modern mobile technology.',
                 tags: ['Arduino', 'IoT', 'React Native', 'Firebase', 'Sensors', 'Mobile App', 'Automation', 'Robotics'],
                 category: ['app', 'iot'],
                 startDate: 'March 2024',
@@ -885,7 +791,7 @@ function App() {
                 id: 'rccar',
                 image: rccarImage,
                 title: 'RC Car Robot',
-                description: 'An Arduino-based robotics project featuring a remote-controlled car with advanced autonomous capabilities. The robot can be controlled remotely via Bluetooth communication and includes line tracing/following functionality using infrared sensors. Equipped with obstacle avoidance system using ultrasonic sensors and light sensors for environmental detection, the robot can navigate autonomously while avoiding obstacles in its path. Built with Arduino Uno, L298N Motor Driver, HC-05 Bluetooth module, and various sensors (ultrasonic, infrared, and light sensors) for a complete robotics experience.',
+                description: 'An Arduino-based robotics project featuring a remote-controlled car with advanced autonomous capabilities. Can be controlled remotely via Bluetooth and includes line following with infrared sensors, obstacle avoidance with ultrasonic sensors, and environmental detection with light sensors. Built with Arduino Uno, L298N Motor Driver, HC-05 Bluetooth module, and various sensors.',
                 tags: ['Arduino', 'Robotics', 'IoT', 'Bluetooth', 'Sensors', 'Line Following', 'Obstacle Avoidance', 'Automation', 'C++'],
                 category: 'iot',
                 startDate: 'March 13, 2024',
@@ -901,9 +807,9 @@ function App() {
                 id: 'ancestralhouse',
                 image: ancestralhouseImage,
                 title: 'Rufino Pabico Ancestral House',
-                description: 'An IoT smart home automation system for the Rufino Pabico Ancestral House model. Features a React Native mobile application that allows remote control and monitoring of various house features including fountain control, lighting systems, motion sensors, and light sensors. The system enables automated and manual control of house elements, providing a complete smart home experience through mobile app interface. Built with Arduino, IoT sensors, React Native, and Firebase for seamless mobile control and data management.',
+                description: 'An IoT smart home automation system for the Rufino Pabico Ancestral House model. Features a React Native mobile application for remote control and monitoring of fountain, lighting systems, motion sensors, and light sensors. Enables automated and manual control through mobile app interface. Built with Arduino, IoT sensors, React Native, and Firebase.',
                 tags: ['Arduino', 'IoT', 'React Native', 'Firebase', 'Sensors', 'Motion Sensor', 'Light Sensor', 'Smart Home', 'Mobile App', 'Automation'],
-                category: ['app', 'iot'],
+                category: 'iot',
                 startDate: 'September 2024',
                 endDate: 'October 2024',
                 collaborators: [
@@ -917,7 +823,7 @@ function App() {
                 id: 'chess',
                 image: chessImage,
                 title: 'Learn with Heinz Chess Beginners Guide',
-                description: 'A comprehensive mobile application designed to teach chess fundamentals to beginners. The app provides an interactive learning experience with step-by-step guides, tutorials, and practice exercises to help users master the basics of chess. Features include detailed explanations of chess pieces, movement rules, basic strategies, and common opening patterns. Built with Android Studio using Java and XML, the app offers an intuitive user interface that makes learning chess accessible and enjoyable for users of all ages.',
+                description: 'Mobile application designed to teach chess fundamentals to beginners. Features step-by-step guides, tutorials, practice exercises, and detailed explanations of chess pieces and strategies. Built with Java, XML, and Android Studio.',
                 tags: ['Java', 'XML', 'Android Studio', 'Mobile App', 'Educational'],
                 category: 'app',
                 startDate: 'October 2023',
@@ -931,10 +837,19 @@ function App() {
                 // Filter by category
                 let categoryMatch = true
                 if (projectFilter !== 'all') {
-                  if (Array.isArray(project.category)) {
-                    categoryMatch = project.category.includes(projectFilter)
+                  if (projectFilter === 'iot') {
+                    // IOT/Robotics filter should show both iot and robotics
+                    if (Array.isArray(project.category)) {
+                      categoryMatch = project.category.includes('iot') || project.category.includes('robotics')
+                    } else {
+                      categoryMatch = project.category === 'iot' || project.category === 'robotics'
+                    }
                   } else {
-                    categoryMatch = project.category === projectFilter
+                    if (Array.isArray(project.category)) {
+                      categoryMatch = project.category.includes(projectFilter)
+                    } else {
+                      categoryMatch = project.category === projectFilter
+                    }
                   }
                 }
                 
@@ -948,31 +863,24 @@ function App() {
                 return categoryMatch && searchMatch
               })
               .map(project => {
-                // Ensure we have a valid project ID and description
-                const projectId = String(project.id) // Ensure it's a string
+                // Ensure we have a valid description
                 const description = String(project.description || '') // Ensure it's a string
-                const isExpanded = expandedProjects.has(projectId)
-                const shouldTruncate = description.length > 150
                 
-                // Only show truncated if it should be truncated AND is not expanded
-                // This ensures only the clicked project expands
-                const displayDescription = shouldTruncate && !isExpanded
-                  ? truncateDescription(description, 150)
-                  : description
-                
-                const hasScreenshots = project.screenshots && project.screenshots.length > 0
+                // Always show summarized description
+                // For chess project, truncate to end exactly at "Features" (78 characters)
+                const maxLength = project.id === 'chess' ? 78 : 100
+                const displayDescription = truncateDescription(description, maxLength)
                 
                 return (
                   <article 
                     id={`project-${project.id}`}
                     key={project.id} 
-                    className={`project-card fade-in ${hasScreenshots ? 'has-screenshots' : ''} ${isExpanded ? 'expanded' : ''}`}
+                    className="project-card fade-in"
                     aria-label={`${project.title} project`}
                     onClick={(e) => {
-                      // Don't trigger if clicking on buttons, links, collaborators, or client
+                      // Don't trigger if clicking on links, collaborators, or client
                       const target = e.target as HTMLElement
-                      if (target.closest('.see-more-btn') || 
-                          target.closest('.project-link') || 
+                      if (target.closest('.project-link') || 
                           target.closest('a') ||
                           target.closest('.collaborator-item') ||
                           target.closest('.client-item') ||
@@ -981,16 +889,14 @@ function App() {
                           target.closest('.clients-list')) {
                         return
                       }
-                      if (hasScreenshots) {
-                        openProjectScreenshots(project.screenshots!, project.title, project.id)
-                      }
+                      openProjectModal(project)
                     }}
-                    style={{ cursor: hasScreenshots ? 'pointer' : 'default' }}
+                    style={{ cursor: 'pointer' }}
                   >
                     <div className="project-image">
                       <img 
                         src={project.image} 
-                        alt={`${project.title} project screenshot`} 
+                        alt={`${project.title} logo`} 
                         className="project-img" 
                         loading="lazy"
                         decoding="async"
@@ -998,109 +904,17 @@ function App() {
                     </div>
                     <div className="project-info">
                       <h3>{project.title}</h3>
-                      {project.startDate && project.endDate && (
-                        <div className="project-date">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                            <line x1="16" y1="2" x2="16" y2="6"></line>
-                            <line x1="8" y1="2" x2="8" y2="6"></line>
-                            <line x1="3" y1="10" x2="21" y2="10"></line>
-                          </svg>
-                          <span>{project.startDate} - {project.endDate}</span>
-                        </div>
-                      )}
                       <div className="project-description-wrapper">
-                      <p>
-                        {displayDescription}
-                        </p>
-                        {shouldTruncate && (
-                          <button 
-                            className="see-more-btn"
-                            onClick={(e) => {
-                              e.stopPropagation()
-                              e.preventDefault()
-                              toggleProjectDescription(projectId)
-                            }}
-                          >
-                            {isExpanded ? 'See less' : 'See more'}
-                          </button>
-                        )}
+                        <p>{displayDescription}</p>
                       </div>
                       <div className="project-tags">
                         {project.tags.map((tag, index) => (
-                          <span key={index}>{tag}</span>
+                          <span key={index} className={index >= 3 ? 'project-tag-hidden-desktop' : ''}>{tag}</span>
                         ))}
+                        {project.tags.length > 3 && (
+                          <span className="project-tag-more project-tag-more-desktop">+{project.tags.length - 3}</span>
+                        )}
                       </div>
-                      {(project as any).collaborators && (project as any).collaborators.length > 0 && (
-                        <div className="project-collaborators">
-                          <span className="collaborators-label">Collaborators:</span>
-                          <div className="collaborators-list">
-                            {(project as any).collaborators.map((collaborator: { name: string; image: string }, index: number) => (
-                              <div 
-                                key={index} 
-                                className="collaborator-item" 
-                                title={collaborator.name}
-                                onClick={(e) => {
-                                  e.stopPropagation()
-                                  e.preventDefault()
-                                  setEnlargedImage({ url: collaborator.image, name: collaborator.name })
-                                }}
-                              >
-                                <img 
-                                  src={collaborator.image} 
-                                  alt={collaborator.name}
-                                  className="collaborator-image"
-                                  loading="lazy"
-                                />
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                      {(project as any).clients && (project as any).clients.length > 0 && (
-                        <div className="project-client">
-                          <span className="client-label">Clients:</span>
-                          <div className="client-info">
-                            {(project as any).clients.map((client: { name: string; image: string }, index: number) => (
-                              <div 
-                                key={index}
-                                className="client-item" 
-                                title={client.name}
-                                onClick={(e) => {
-                                  e.stopPropagation()
-                                  e.preventDefault()
-                                  setEnlargedImage({ url: client.image, name: client.name })
-                                }}
-                              >
-                                <img 
-                                  src={client.image} 
-                                  alt={client.name}
-                                  className="client-image"
-                                  loading="lazy"
-                                />
-                                <span className="client-name">{client.name}</span>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                      {project.github && (
-                        <div className="project-links">
-                          <a 
-                            href={project.github} 
-                            target="_blank" 
-                            rel="noopener noreferrer" 
-                            className="project-link"
-                            aria-label={`View ${project.title} on GitHub`}
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            <svg className="project-link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                              <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-                            </svg>
-                            View on GitHub
-                          </a>
-                        </div>
-                      )}
                     </div>
                   </article>
                 )
@@ -1437,6 +1251,161 @@ function App() {
         </div>
       </footer>
 
+      {/* Project Detail Modal */}
+      {selectedProject && (
+        <div 
+          className="project-modal-overlay" 
+          onClick={closeProjectModal}
+          aria-label="Close project details"
+        >
+          <div className="project-modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="project-modal-body">
+              {/* Left Side - Logo and Screenshots */}
+              <div className="project-modal-screenshots">
+                {/* Logo */}
+                <div className="project-modal-logo">
+                  <img 
+                    src={selectedProject.image} 
+                    alt={`${selectedProject.title} logo`}
+                    className="project-modal-logo-image"
+                  />
+                </div>
+                
+                {/* Screenshot Thumbnails */}
+                {selectedProject.screenshots && selectedProject.screenshots.length > 0 && (
+                  <div className="project-modal-thumbnails">
+                    {selectedProject.screenshots.map((screenshot: string, index: number) => (
+                      <div
+                        key={index}
+                        className={`project-modal-thumbnail ${selectedScreenshotIndex === index ? 'active' : ''}`}
+                        onClick={() => setEnlargedImage({ url: screenshot, project: selectedProject, index: index })}
+                      >
+                        <img 
+                          src={screenshot} 
+                          alt={`${selectedProject.title} thumbnail ${index + 1}`}
+                          className="project-modal-thumbnail-image"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Right Side - Details */}
+              <div className="project-modal-details">
+                <h2 className="project-modal-title">{selectedProject.title}</h2>
+                {selectedProject.startDate && selectedProject.endDate && (
+                  <div className="project-modal-date">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                      <line x1="16" y1="2" x2="16" y2="6"></line>
+                      <line x1="8" y1="2" x2="8" y2="6"></line>
+                      <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    <span>{selectedProject.startDate} - {selectedProject.endDate}</span>
+                  </div>
+                )}
+                <p className="project-modal-description">{selectedProject.description}</p>
+                
+                <div className="project-modal-technologies">
+                  <h3 className="project-modal-technologies-title">TECHNOLOGIES</h3>
+                  <div className="project-modal-tags">
+                    {selectedProject.tags.map((tag: string, index: number) => (
+                      <span key={index} className="project-modal-tag">{tag}</span>
+                    ))}
+                  </div>
+                </div>
+
+                {(selectedProject as any).collaborators && (selectedProject as any).collaborators.length > 0 && (
+                  <div className="project-modal-collaborators">
+                    <h3 className="project-modal-section-title">COLLABORATORS</h3>
+                    <div className="project-modal-collaborators-list">
+                      {(selectedProject as any).collaborators.map((collaborator: { name: string; image: string }, index: number) => (
+                        <div 
+                          key={index} 
+                          className="project-modal-collaborator-item" 
+                          title={collaborator.name}
+                          onClick={() => setEnlargedImage({ url: collaborator.image, project: null, index: -1 })}
+                        >
+                          <img 
+                            src={collaborator.image} 
+                            alt={collaborator.name}
+                            className="project-modal-collaborator-image"
+                            loading="lazy"
+                          />
+                          <span className="project-modal-collaborator-name">{collaborator.name}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {(selectedProject as any).clients && (selectedProject as any).clients.length > 0 && (
+                  <div className="project-modal-clients">
+                    <h3 className="project-modal-section-title">CLIENTS</h3>
+                    <div className="project-modal-clients-list">
+                      {(selectedProject as any).clients.map((client: { name: string; image: string }, index: number) => (
+                        <div 
+                          key={index}
+                          className="project-modal-client-item" 
+                          title={client.name}
+                          onClick={() => setEnlargedImage({ url: client.image, project: null, index: -1 })}
+                        >
+                          <img 
+                            src={client.image} 
+                            alt={client.name}
+                            className="project-modal-client-image"
+                            loading="lazy"
+                          />
+                          <span className="project-modal-client-name">{client.name}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                <div className="project-modal-actions">
+                  {selectedProject.liveUrl && (
+                    <a 
+                      href={selectedProject.liveUrl} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="project-modal-btn project-modal-btn-primary"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                        <polyline points="15 3 21 3 21 9"></polyline>
+                        <line x1="10" y1="14" x2="21" y2="3"></line>
+                      </svg>
+                      Visit Live Site
+                    </a>
+                  )}
+                  {selectedProject.github && (
+                    <a 
+                      href={selectedProject.github} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="project-modal-btn project-modal-btn-secondary"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                      </svg>
+                      View on GitHub
+                    </a>
+                  )}
+                  <button 
+                    className="project-modal-btn project-modal-btn-close"
+                    onClick={closeProjectModal}
+                  >
+                    Close Project
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Enlarged Image Modal */}
       {enlargedImage && (
         <div 
@@ -1455,12 +1424,49 @@ function App() {
                 <line x1="6" y1="6" x2="18" y2="18"></line>
               </svg>
             </button>
+            {enlargedImage.project && enlargedImage.project.screenshots && enlargedImage.index >= 0 && enlargedImage.index > 0 && (
+              <button 
+                className="image-modal-nav image-modal-prev"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  const prevIndex = enlargedImage.index - 1
+                  setEnlargedImage({ 
+                    url: enlargedImage.project.screenshots[prevIndex], 
+                    project: enlargedImage.project, 
+                    index: prevIndex 
+                  })
+                }}
+                aria-label="Previous image"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+              </button>
+            )}
+            {enlargedImage.project && enlargedImage.project.screenshots && enlargedImage.index >= 0 && enlargedImage.index < enlargedImage.project.screenshots.length - 1 && (
+              <button 
+                className="image-modal-nav image-modal-next"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  const nextIndex = enlargedImage.index + 1
+                  setEnlargedImage({ 
+                    url: enlargedImage.project.screenshots[nextIndex], 
+                    project: enlargedImage.project, 
+                    index: nextIndex 
+                  })
+                }}
+                aria-label="Next image"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
+            )}
             <img 
               src={enlargedImage.url} 
-              alt={enlargedImage.name}
+              alt={enlargedImage.project ? `${enlargedImage.project.title} screenshot ${enlargedImage.index + 1}` : 'Enlarged image'}
               className="enlarged-image"
             />
-            <p className="enlarged-image-name">{enlargedImage.name}</p>
           </div>
         </div>
       )}
