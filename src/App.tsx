@@ -63,6 +63,7 @@ function App() {
   const [enlargedImage, setEnlargedImage] = useState<{ url: string; project: any; index: number } | null>(null)
   const [selectedProject, setSelectedProject] = useState<any>(null)
   const [selectedScreenshotIndex, setSelectedScreenshotIndex] = useState<number>(0)
+  const [isModalClosing, setIsModalClosing] = useState(false)
   const canvasContainerRef = useRef<HTMLDivElement>(null)
   const [typewriterName, setTypewriterName] = useState('')
   const [typewriterTitle, setTypewriterTitle] = useState('')
@@ -473,11 +474,15 @@ function App() {
   // Handle browser back button for modal
   useEffect(() => {
     const handlePopState = () => {
-      // If modal is open and back button is pressed, close it
-      if (selectedProject) {
-        setSelectedProject(null)
-        setSelectedScreenshotIndex(0)
-        document.body.style.overflow = ''
+      // If modal is open and back button is pressed, close it smoothly
+      if (selectedProject && !isModalClosing) {
+        setIsModalClosing(true)
+        setTimeout(() => {
+          setSelectedProject(null)
+          setSelectedScreenshotIndex(0)
+          setIsModalClosing(false)
+          document.body.style.overflow = ''
+        }, 300) // Match animation duration
       }
     }
 
@@ -486,7 +491,7 @@ function App() {
     return () => {
       window.removeEventListener('popstate', handlePopState)
     }
-  }, [selectedProject])
+  }, [selectedProject, isModalClosing])
 
 
   const openProjectModal = (project: any) => {
@@ -498,13 +503,17 @@ function App() {
   }
 
   const closeProjectModal = () => {
-    setSelectedProject(null)
-    setSelectedScreenshotIndex(0)
-    document.body.style.overflow = ''
-    // Go back in history if we pushed a state
-    if (window.history.state && window.history.state.modalOpen) {
-      window.history.back()
-    }
+    setIsModalClosing(true)
+    setTimeout(() => {
+      setSelectedProject(null)
+      setSelectedScreenshotIndex(0)
+      setIsModalClosing(false)
+      document.body.style.overflow = ''
+      // Go back in history if we pushed a state
+      if (window.history.state && window.history.state.modalOpen) {
+        window.history.back()
+      }
+    }, 300) // Match animation duration
   }
 
   const truncateDescription = (text: string, maxLength: number = 100): string => {
@@ -1278,11 +1287,11 @@ function App() {
       {/* Project Detail Modal */}
       {selectedProject && (
         <div 
-          className="project-modal-overlay" 
+          className={`project-modal-overlay ${isModalClosing ? 'closing' : ''}`}
           onClick={closeProjectModal}
           aria-label="Close project details"
         >
-          <div className="project-modal-content" onClick={(e) => e.stopPropagation()}>
+          <div className={`project-modal-content ${isModalClosing ? 'closing' : ''}`} onClick={(e) => e.stopPropagation()}>
             <div className="project-modal-body">
               {/* Left Side - Logo and Screenshots */}
               <div className="project-modal-screenshots">

@@ -1828,6 +1828,34 @@ section::before {
   }
 }
 
+@keyframes slideDown {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.project-modal-overlay.closing {
+  animation: fadeOut 0.3s ease forwards;
+}
+
+.project-modal-content.closing {
+  animation: slideDown 0.3s ease forwards;
+}
+
 /* Project Card Category Tag */
 .project-image {
   position: relative;
