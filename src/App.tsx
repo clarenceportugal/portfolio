@@ -1162,16 +1162,16 @@ function App() {
         <div className="container">
           <h2 className="section-title">Certificates</h2>
           <div className="certificates-grid">
-            <div className="certificate-card" onClick={() => openCertificate('/certificates/CERTIFICATE.pdf')}>
+            <div className="certificate-card" onClick={() => openCertificate('/certificates/TOPCIT Certificate.pdf')}>
               <div className="certificate-preview">
                 <object 
-                  data="/certificates/CERTIFICATE.pdf#toolbar=0&navpanes=0&scrollbar=0"
+                  data="/certificates/TOPCIT Certificate.pdf#toolbar=0&navpanes=0&scrollbar=0"
                   type="application/pdf"
                   className="certificate-preview-pdf"
                   aria-label="TOPCIT Certificate Preview"
                 >
                   <embed 
-                    src="/certificates/CERTIFICATE.pdf#toolbar=0&navpanes=0&scrollbar=0"
+                    src="/certificates/TOPCIT Certificate.pdf#toolbar=0&navpanes=0&scrollbar=0"
                     type="application/pdf"
                     className="certificate-preview-pdf"
                   />
@@ -1183,7 +1183,7 @@ function App() {
               <div className="certificate-info">
                 <h3>TOPCIT Certificate</h3>
                 <p>Institute for Information & Communications Technology Promotion (IITP)</p>
-                <p className="certificate-date">Date: June 2025</p>
+                <p className="certificate-date">Date: June 2, 2025</p>
               </div>
             </div>
             <div className="certificate-card" onClick={() => openCertificate(tesdaImage)}>

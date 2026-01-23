@@ -2422,6 +2422,38 @@ section::before {
 }
 
 /* Hide any divs or elements that contain permission text */
+
+/* Mobile Certificate Display - Auto show PDF, no overlay */
+@media (max-width: 768px) {
+  .certificate-preview-pdf {
+    pointer-events: auto !important;
+  }
+  
+  .certificate-overlay {
+    display: none !important;
+  }
+  
+  .certificate-card:hover .certificate-overlay {
+    display: none !important;
+  }
+  
+  /* Ensure PDF is visible and interactive on mobile */
+  .certificate-preview {
+    height: 400px;
+  }
+  
+  .certificate-preview-pdf {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+  
+  /* Hide any browser PDF open buttons or controls on mobile */
+  .certificate-preview object::after,
+  .certificate-preview embed::after {
+    display: none !important;
+  }
+}
 .certificate-modal-content > *:not(.certificate-pdf-container):not(.certificate-modal-close) {
   position: relative;
 }
