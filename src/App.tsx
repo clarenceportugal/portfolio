@@ -1211,7 +1211,7 @@ function App() {
                   data="/certificates/CLARENCE PORTUGAL(clarence.portugal12@gmail.com).pdf#toolbar=0&navpanes=0&scrollbar=0"
                   type="application/pdf"
                   className="certificate-preview-pdf"
-                  aria-label="Certificate Preview"
+                  aria-label="Certificate of Attendance Preview"
                 >
                   <embed 
                     src="/certificates/CLARENCE PORTUGAL(clarence.portugal12@gmail.com).pdf#toolbar=0&navpanes=0&scrollbar=0"
@@ -1224,9 +1224,9 @@ function App() {
                 </div>
               </div>
               <div className="certificate-info">
-                <h3>Certificate</h3>
-                <p>Clarence Portugal</p>
-                <p className="certificate-date">Date: TBD</p>
+                <h3>Certificate of Attendance</h3>
+                <p>Camarines Norte State College - Institute of Computer Studies</p>
+                <p className="certificate-date">Date: September 16, 2022</p>
               </div>
             </div>
             <div className="certificate-card" onClick={() => openCertificate('/certificates/clarence.portugal12@gmail.com.pdf')}>
@@ -1235,7 +1235,7 @@ function App() {
                   data="/certificates/clarence.portugal12@gmail.com.pdf#toolbar=0&navpanes=0&scrollbar=0"
                   type="application/pdf"
                   className="certificate-preview-pdf"
-                  aria-label="Certificate Preview"
+                  aria-label="Certificate of Appreciation Preview"
                 >
                   <embed 
                     src="/certificates/clarence.portugal12@gmail.com.pdf#toolbar=0&navpanes=0&scrollbar=0"
@@ -1248,9 +1248,9 @@ function App() {
                 </div>
               </div>
               <div className="certificate-info">
-                <h3>Certificate</h3>
-                <p>Clarence Portugal</p>
-                <p className="certificate-date">Date: TBD</p>
+                <h3>Certificate of Appreciation</h3>
+                <p>Council of Deans for Information Technology Education, Inc. - CHED Region V</p>
+                <p className="certificate-date">Date: April 26, 2024</p>
               </div>
             </div>
           </div>
