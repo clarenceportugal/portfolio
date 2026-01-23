@@ -65,6 +65,9 @@ function App() {
   const [selectedScreenshotIndex, setSelectedScreenshotIndex] = useState<number>(0)
   const [isModalClosing, setIsModalClosing] = useState(false)
   const canvasContainerRef = useRef<HTMLDivElement>(null)
+  const topcitPreviewRef = useRef<HTMLDivElement>(null)
+  const attendancePreviewRef = useRef<HTMLDivElement>(null)
+  const appreciationPreviewRef = useRef<HTMLDivElement>(null)
   const [typewriterName, setTypewriterName] = useState('')
   const [typewriterTitle, setTypewriterTitle] = useState('')
   const [typewriterDescription, setTypewriterDescription] = useState('')
@@ -448,6 +451,56 @@ function App() {
       canvasContainerRef.current.innerHTML = ''
     }
   }
+
+  // Render PDF previews as canvas on mobile to hide filename
+  useEffect(() => {
+    const isMobile = window.innerWidth <= 768
+    if (!isMobile) return
+
+    const renderPDFPreview = async (pdfUrl: string, containerRef: React.RefObject<HTMLDivElement | null>) => {
+      if (!containerRef.current) return
+      
+      try {
+        const response = await fetch(pdfUrl)
+        const arrayBuffer = await response.arrayBuffer()
+        const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer, verbosity: 0 })
+        const pdf = await loadingTask.promise
+        
+        // Clear container
+        containerRef.current.innerHTML = ''
+        
+        // Render first page only for preview
+        const page = await pdf.getPage(1)
+        const viewport = page.getViewport({ scale: 1.5 })
+        
+        const canvas = document.createElement('canvas')
+        canvas.width = viewport.width
+        canvas.height = viewport.height
+        canvas.className = 'certificate-preview-canvas'
+        canvas.style.width = '100%'
+        canvas.style.height = 'auto'
+        canvas.style.display = 'block'
+        
+        const context = canvas.getContext('2d')
+        if (context) {
+          await page.render({
+            canvas: canvas,
+            canvasContext: context,
+            viewport: viewport
+          }).promise
+        }
+        
+        containerRef.current.appendChild(canvas)
+      } catch (error) {
+        console.error('Error rendering PDF preview:', error)
+      }
+    }
+
+    // Render all certificate previews
+    renderPDFPreview('/certificates/TOPCIT Certificate.pdf', topcitPreviewRef)
+    renderPDFPreview('/certificates/Certificate of Attendance.pdf', attendancePreviewRef)
+    renderPDFPreview('/certificates/Certificate of Appreciation.pdf', appreciationPreviewRef)
+  }, [])
 
   // Close enlarged image on ESC key
   useEffect(() => {
@@ -1164,10 +1217,17 @@ function App() {
           <div className="certificates-grid">
             <div className="certificate-card" onClick={() => openCertificate('/certificates/TOPCIT Certificate.pdf')}>
               <div className="certificate-preview">
+                <div ref={topcitPreviewRef} className="certificate-preview-canvas-container"></div>
+                <iframe 
+                  src="/certificates/TOPCIT Certificate.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH"
+                  className="certificate-preview-pdf certificate-preview-iframe"
+                  aria-label="TOPCIT Certificate Preview"
+                  title="TOPCIT Certificate"
+                />
                 <object 
                   data="/certificates/TOPCIT Certificate.pdf#toolbar=0&navpanes=0&scrollbar=0"
                   type="application/pdf"
-                  className="certificate-preview-pdf"
+                  className="certificate-preview-pdf certificate-preview-object"
                   aria-label="TOPCIT Certificate Preview"
                 >
                   <embed 
@@ -1176,9 +1236,6 @@ function App() {
                     className="certificate-preview-pdf"
                   />
                 </object>
-                <div className="certificate-overlay">
-                  <span className="certificate-view-text">Click to view full size</span>
-                </div>
               </div>
               <div className="certificate-info">
                 <h3>TOPCIT Certificate</h3>
@@ -1205,23 +1262,27 @@ function App() {
                 <p className="certificate-date">Date: September 5, 2025</p>
               </div>
             </div>
-            <div className="certificate-card" onClick={() => openCertificate('/certificates/CLARENCE PORTUGAL(clarence.portugal12@gmail.com).pdf')}>
+            <div className="certificate-card" onClick={() => openCertificate('/certificates/Certificate of Attendance.pdf')}>
               <div className="certificate-preview">
+                <div ref={attendancePreviewRef} className="certificate-preview-canvas-container"></div>
+                <iframe 
+                  src="/certificates/Certificate of Attendance.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH"
+                  className="certificate-preview-pdf certificate-preview-iframe"
+                  aria-label="Certificate of Attendance Preview"
+                  title="Certificate of Attendance"
+                />
                 <object 
-                  data="/certificates/CLARENCE PORTUGAL(clarence.portugal12@gmail.com).pdf#toolbar=0&navpanes=0&scrollbar=0"
+                  data="/certificates/Certificate of Attendance.pdf#toolbar=0&navpanes=0&scrollbar=0"
                   type="application/pdf"
-                  className="certificate-preview-pdf"
+                  className="certificate-preview-pdf certificate-preview-object"
                   aria-label="Certificate of Attendance Preview"
                 >
                   <embed 
-                    src="/certificates/CLARENCE PORTUGAL(clarence.portugal12@gmail.com).pdf#toolbar=0&navpanes=0&scrollbar=0"
+                    src="/certificates/Certificate of Attendance.pdf#toolbar=0&navpanes=0&scrollbar=0"
                     type="application/pdf"
                     className="certificate-preview-pdf"
                   />
                 </object>
-                <div className="certificate-overlay">
-                  <span className="certificate-view-text">Click to view full size</span>
-                </div>
               </div>
               <div className="certificate-info">
                 <h3>Certificate of Attendance</h3>
@@ -1229,23 +1290,27 @@ function App() {
                 <p className="certificate-date">Date: September 16, 2022</p>
               </div>
             </div>
-            <div className="certificate-card" onClick={() => openCertificate('/certificates/clarence.portugal12@gmail.com.pdf')}>
+            <div className="certificate-card" onClick={() => openCertificate('/certificates/Certificate of Appreciation.pdf')}>
               <div className="certificate-preview">
+                <div ref={appreciationPreviewRef} className="certificate-preview-canvas-container"></div>
+                <iframe 
+                  src="/certificates/Certificate of Appreciation.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH"
+                  className="certificate-preview-pdf certificate-preview-iframe"
+                  aria-label="Certificate of Appreciation Preview"
+                  title="Certificate of Appreciation"
+                />
                 <object 
-                  data="/certificates/clarence.portugal12@gmail.com.pdf#toolbar=0&navpanes=0&scrollbar=0"
+                  data="/certificates/Certificate of Appreciation.pdf#toolbar=0&navpanes=0&scrollbar=0"
                   type="application/pdf"
-                  className="certificate-preview-pdf"
+                  className="certificate-preview-pdf certificate-preview-object"
                   aria-label="Certificate of Appreciation Preview"
                 >
                   <embed 
-                    src="/certificates/clarence.portugal12@gmail.com.pdf#toolbar=0&navpanes=0&scrollbar=0"
+                    src="/certificates/Certificate of Appreciation.pdf#toolbar=0&navpanes=0&scrollbar=0"
                     type="application/pdf"
                     className="certificate-preview-pdf"
                   />
                 </object>
-                <div className="certificate-overlay">
-                  <span className="certificate-view-text">Click to view full size</span>
-                </div>
               </div>
               <div className="certificate-info">
                 <h3>Certificate of Appreciation</h3>
