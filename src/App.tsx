@@ -1205,6 +1205,54 @@ function App() {
                 <p className="certificate-date">Date: September 5, 2025</p>
               </div>
             </div>
+            <div className="certificate-card" onClick={() => openCertificate('/certificates/CLARENCE PORTUGAL(clarence.portugal12@gmail.com).pdf')}>
+              <div className="certificate-preview">
+                <object 
+                  data="/certificates/CLARENCE PORTUGAL(clarence.portugal12@gmail.com).pdf#toolbar=0&navpanes=0&scrollbar=0"
+                  type="application/pdf"
+                  className="certificate-preview-pdf"
+                  aria-label="Certificate Preview"
+                >
+                  <embed 
+                    src="/certificates/CLARENCE PORTUGAL(clarence.portugal12@gmail.com).pdf#toolbar=0&navpanes=0&scrollbar=0"
+                    type="application/pdf"
+                    className="certificate-preview-pdf"
+                  />
+                </object>
+                <div className="certificate-overlay">
+                  <span className="certificate-view-text">Click to view full size</span>
+                </div>
+              </div>
+              <div className="certificate-info">
+                <h3>Certificate</h3>
+                <p>Clarence Portugal</p>
+                <p className="certificate-date">Date: TBD</p>
+              </div>
+            </div>
+            <div className="certificate-card" onClick={() => openCertificate('/certificates/clarence.portugal12@gmail.com.pdf')}>
+              <div className="certificate-preview">
+                <object 
+                  data="/certificates/clarence.portugal12@gmail.com.pdf#toolbar=0&navpanes=0&scrollbar=0"
+                  type="application/pdf"
+                  className="certificate-preview-pdf"
+                  aria-label="Certificate Preview"
+                >
+                  <embed 
+                    src="/certificates/clarence.portugal12@gmail.com.pdf#toolbar=0&navpanes=0&scrollbar=0"
+                    type="application/pdf"
+                    className="certificate-preview-pdf"
+                  />
+                </object>
+                <div className="certificate-overlay">
+                  <span className="certificate-view-text">Click to view full size</span>
+                </div>
+              </div>
+              <div className="certificate-info">
+                <h3>Certificate</h3>
+                <p>Clarence Portugal</p>
+                <p className="certificate-date">Date: TBD</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
