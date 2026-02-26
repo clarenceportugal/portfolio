@@ -8,19 +8,19 @@ export default defineConfig({
     react(),
     ViteImageOptimizer({
       png: {
-        quality: 70,
+        quality: 60,
       },
       jpeg: {
-        quality: 70,
+        quality: 60,
       },
       jpg: {
-        quality: 70,
+        quality: 60,
       },
       webp: {
-        quality: 70,
+        quality: 60,
       },
       avif: {
-        quality: 60,
+        quality: 55,
       },
       svg: {
         multipass: true,

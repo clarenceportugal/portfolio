@@ -1025,6 +1025,8 @@ function App() {
                         className="project-img" 
                         loading="lazy"
                         decoding="async"
+                        width={320}
+                        height={180}
                       />
                     </div>
                     <div className="project-info">
@@ -1296,6 +1298,8 @@ function App() {
                   className="certificate-preview-image"
                   loading="lazy"
                   decoding="async"
+                  width={400}
+                  height={300}
                 />
                 <div className="certificate-overlay">
                   <span className="certificate-view-text">Click to view full size</span>
