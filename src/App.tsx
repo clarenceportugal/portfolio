@@ -614,7 +614,7 @@ function App() {
   return (
     <div className={`portfolio ${darkMode ? 'dark-mode' : ''}`} key="main-portfolio">
       {/* Skip to main content for accessibility */}
-      <a href="#home" className="skip-to-main" aria-label="Skip to main content">
+      <a href="#main-content" className="skip-to-main" aria-label="Skip to main content">
         Skip to main content
       </a>
       {/* Navigation */}
@@ -649,6 +649,7 @@ function App() {
         </div>
       </nav>
 
+      <main id="main-content" role="main">
       {/* Hero Section */}
       <section id="home" className="hero fade-in" aria-label="Home section">
         <div className="hero-content">
@@ -1367,6 +1368,7 @@ function App() {
           </div>
         </div>
       </section>
+      </main>
 
       {/* Certificate Modal */}
       {selectedCertificate && (
