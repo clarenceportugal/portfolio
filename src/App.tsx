@@ -680,7 +680,7 @@ function App() {
               <a href="#projects" className="btn btn-primary" aria-label="View my projects">View My Work</a>
               <a href="#contact" className="btn btn-outline" aria-label="Get in touch">Get In Touch</a>
               <a href="/resume.pdf" download className="btn btn-outline" aria-label="Download resume">
-                <svg className="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg className="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">
                   <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                   <polyline points="7 10 12 15 17 10"></polyline>
                   <line x1="12" y1="15" x2="12" y2="3"></line>
@@ -1057,7 +1057,7 @@ function App() {
               <h3>Frontend & Mobile</h3>
               <div className="skill-items">
                 <span className="skill-item">
-                  <svg className="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                  <svg className="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
                     <circle cx="12" cy="12" r="2" fill="currentColor"/>
                     <ellipse cx="12" cy="12" rx="11" ry="4.2" fill="none" stroke="currentColor" strokeWidth="1.5"/>
                     <ellipse cx="12" cy="12" rx="11" ry="4.2" fill="none" stroke="currentColor" strokeWidth="1.5" transform="rotate(60 12 12)"/>
@@ -1066,46 +1066,46 @@ function App() {
                   React
                 </span>
                 <span className="skill-item">
-                  <svg className="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                  <svg className="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
                     <rect x="2" y="2" width="20" height="20" rx="2" fill="currentColor" opacity="0.2"/>
                     <path d="M8 8h8v2h-3v6h3v2H8V8zm9 0h2v8h-2V8z" fill="currentColor"/>
                   </svg>
                   TypeScript
                 </span>
                 <span className="skill-item">
-                  <svg className="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                  <svg className="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
                     <path d="M14.314 0L2.3 12 6 15.7 21.684 0zm-8.128 12L13.542 24l8.142-8.3L14.314 3.7z" fill="currentColor"/>
                   </svg>
                   Flutter
                 </span>
                 <span className="skill-item">
-                  <svg className="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                  <svg className="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
                     <path d="M4.105 4.105S9.158 1.58 11.684 1.58c2.525 0 7.579 2.525 7.579 2.525l-7.579 7.579-7.579-7.579zm0 0L1.58 6.658v10.526l2.525 2.525 7.579-7.579-7.579-7.579zm14.316 0L24 6.658v10.526l-2.525 2.525-5.474-5.474 5.474-5.474zM9.158 19.737l-2.525 2.525L1.58 19.737v-2.525l5.053-5.053 2.525 2.525v5.053z" fill="currentColor"/>
                   </svg>
                   Dart
                 </span>
                 <span className="skill-item">
-                  <svg className="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                  <svg className="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
                     <path d="M8.851 18.56s-.908.602.778.851c1.562.24 2.441.24 4.285.12 1.845-.12 3.125-.24 4.285-.24 1.562 0 2.281.24 2.281.24l-1.562-1.08s-1.08-.24-2.281-.24c-1.2 0-2.521.12-3.965.12-1.443 0-2.762-.12-3.841-.36zm-.24-2.521s-1.08.72.72.96c1.562.24 2.881.36 4.525.36 1.443 0 3.125-.12 4.525-.36 1.2-.24 2.281-.48 2.881-.48l-1.443-1.08s-1.08-.24-2.281-.24c-1.2 0-2.521.12-3.965.12-1.443 0-2.762-.12-3.841-.36zm1.443-2.641s-1.08.72.72.96c1.562.24 2.881.36 4.525.36 1.443 0 3.125-.12 4.525-.36 1.2-.24 2.281-.48 2.881-.48l-1.443-1.08s-1.08-.24-2.281-.24c-1.2 0-2.521.12-3.965.12-1.443 0-2.762-.12-3.841-.36z" fill="currentColor"/>
                     <path d="M15.236 2.4c-1.443 0-2.521.24-3.125.72l-.48.36s.36-.24 1.08-.48c1.08-.36 2.281-.36 3.125-.24.72.12 1.443.24 1.443.24l-.48-.36c-.36-.24-1.2-.48-1.924-.48z" fill="currentColor"/>
                   </svg>
                   Java
                 </span>
                 <span className="skill-item">
-                  <svg className="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                  <svg className="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
                     <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     <path d="M6 8l2 2-2 2M18 8l-2 2 2 2M13 7l-2 5 2 5" fill="currentColor"/>
                   </svg>
                   XML
                 </span>
                 <span className="skill-item">
-                  <svg className="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                  <svg className="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
                     <path d="M13.5 2L2 7l11.5 5L25 7 13.5 2zm0 10L2 17l11.5 5L25 17l-11.5-5z" fill="currentColor"/>
                   </svg>
                   React Native
                 </span>
                 <span className="skill-item">
-                  <svg className="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                  <svg className="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
                     <path d="M1.5 0h21l-1.91 21.563L11.977 24l-8.564-2.438L1.5 0zm17.09 4.413L5.41 4.41l.213 2.622h10.125l-.255 2.716h-6.64l.24 2.573h6.182l-.366 3.523-2.91.804-2.955-.81-.188-2.11h-2.61l.29 3.855L12 19.288l5.373-1.53L18.59 4.414z" fill="currentColor"/>
                   </svg>
                   HTML/CSS
@@ -1116,21 +1116,21 @@ function App() {
               <h3>Backend & Database</h3>
               <div className="skill-items">
                 <span className="skill-item">
-                  <svg className="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                  <svg className="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
                     <path d="M14.985 3.752v3.64c0 1.107-.896 2.005-2.005 2.005H7.995C5.76 9.397 3.752 7.39 3.752 5.155c0-1.107.896-2.005 2.005-2.005h9.228zm-1.337 0c.552 0 1 .448 1 1s-.448 1-1 1-1-.448-1-1 .448-1 1-1z" fill="currentColor"/>
                     <path d="M9.015 20.248v-3.64c0-1.107.896-2.005 2.005-2.005h4.985c2.235 0 4.243-2.007 4.243-4.243 0-1.107-.896-2.005-2.005-2.005H9.015zm1.337 0c-.552 0-1-.448-1-1s.448-1 1-1 1 .448 1 1-.448 1-1 1z" fill="currentColor"/>
                   </svg>
                   Python
                 </span>
                 <span className="skill-item">
-                  <svg className="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                  <svg className="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
                     <path d="M22.394 6c-.167-.29-.398-.543-.652-.69L12.926.92c-.508-.293-1.34-.293-1.848 0L2.26 5.31c-.508.293-.923 1.024-.923 1.616v9.148c0 .592.415 1.323.923 1.616l8.818 5.39c.508.293 1.34.293 1.848 0l8.818-5.39c.254-.147.485-.4.652-.69.167-.29.252-.618.252-.926V6.926c0-.308-.085-.636-.252-.926z" fill="currentColor"/>
                     <path d="M6.396 11.4v1.2H5.1v-1.2H3.9V9h1.2V7.8h1.296V9h1.2v2.4zm6.6 0h-1.2l1.8-2.4H12.6V9h2.4v.6h-1.8l1.8 2.4h-1.2zm5.304 0c-.6 0-1.2-.3-1.5-.9l1.2-.6c.15.3.45.45.75.3.3-.15.45-.45.3-.75-.15-.3-.45-.45-.75-.3l-1.2-.6c.3-.6.9-.9 1.5-.9.6 0 1.2.3 1.5.9l-1.2.6c-.15-.3-.45-.45-.75-.3-.3.15-.45.45-.3.75.15.3.45.45.75.3l1.2.6c-.3.6-.9.9-1.5.9z" fill="#fff"/>
                   </svg>
                   C++
                 </span>
                 <span className="skill-item">
-                  <svg className="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                  <svg className="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
                     <path d="M14.985 3.752v3.64c0 1.107-.896 2.005-2.005 2.005H7.995C5.76 9.397 3.752 7.39 3.752 5.155c0-1.107.896-2.005 2.005-2.005h9.228zm-1.337 0c.552 0 1 .448 1 1s-.448 1-1 1-1-.448-1-1 .448-1 1-1z" fill="currentColor"/>
                     <path d="M9.015 20.248v-3.64c0-1.107.896-2.005 2.005-2.005h4.985c2.235 0 4.243-2.007 4.243-4.243 0-1.107-.896-2.005-2.005-2.005H9.015zm1.337 0c-.552 0-1-.448-1-1s.448-1 1-1 1 .448 1 1-.448 1-1 1z" fill="currentColor"/>
                     <text x="12" y="16" fontSize="6" fill="currentColor" textAnchor="middle" fontWeight="bold">C</text>
@@ -1138,13 +1138,13 @@ function App() {
                   Cython
                 </span>
                 <span className="skill-item">
-                  <svg className="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                  <svg className="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
                     <path d="M3.89 15.672L6.255.461A.542.542 0 017.27.288l2.543 4.771zm16.794 3.696l-2.25-14a.54.54 0 00-.919-.295L3.316 19.365l7.856 4.427a1.621 1.621 0 001.588 0zM14.3 7.147l-1.82-3.482a.542.542 0 00-.96 0L3.53 17.984z" fill="currentColor"/>
                   </svg>
                   Firebase
                 </span>
                 <span className="skill-item">
-                  <svg className="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                  <svg className="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
                     <path d="M17.193 9.555c-1.264-5.58-4.252-7.414-4.823-8.96-.294-.776-.449-1.4-1.151-1.4-.701 0-.908.658-1.151 1.4-.572 1.546-3.559 3.38-4.823 8.96-1.264 5.58.242 9.689.937 10.999.694 1.31 2.545 1.855 4.037 1.855s3.342-.545 4.037-1.855c.695-1.31 2.201-5.419.937-10.999zm-5.597 8.034c-1.219 0-2.4-.616-2.4-2.4 0-1.784 1.181-2.4 2.4-2.4 1.219 0 2.4.616 2.4 2.4 0 1.784-1.181 2.4-2.4 2.4z" fill="currentColor"/>
                   </svg>
                   MongoDB
@@ -1155,7 +1155,7 @@ function App() {
               <h3>Tools & Technologies</h3>
               <div className="skill-items">
                 <span className="skill-item">
-                  <svg className="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                  <svg className="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
                     <path d="M23.15 2.587L18.21.21a1.494 1.494 0 0 0-1.705.29l-9.46 8.63-4.12-3.128a.999.999 0 0 0-1.276.057L.327 7.261A1 1 0 0 0 .326 8.74L3.899 12 .326 15.26a1 1 0 0 0 .001 1.479L1.65 17.94a.999.999 0 0 0 1.276.057l4.12-3.128 9.46 8.63a1.492 1.492 0 0 0 1.704.29l4.942-2.377A1.5 1.5 0 0 0 24 20.06V3.94a1.5 1.5 0 0 0-.85-1.353zm-5.146 14.861L10.826 12l7.178-5.448v10.896z" fill="currentColor"/>
                   </svg>
                   VS Code
@@ -1401,20 +1401,20 @@ function App() {
             </p>
             <div className="contact-info">
               <a href="mailto:clarence.portugal12@gmail.com?subject=Contact%20from%20Clarence%20Portugal%20Portfolio" className="contact-item">
-                <svg className="contact-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg className="contact-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">
                   <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2-2-2z"></path>
                   <polyline points="22,6 12,13 2,6"></polyline>
                 </svg>
                 <span>clarence.portugal12@gmail.com</span>
               </a>
               <a href="https://www.facebook.com/renz42gal" target="_blank" rel="noopener noreferrer" className="contact-item">
-                <svg className="contact-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <svg className="contact-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
                   <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                 </svg>
                 <span>Facebook</span>
               </a>
               <a href="https://www.linkedin.com/in/clarence-portugal-0984643a1?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" rel="noopener noreferrer" className="contact-item">
-                <svg className="contact-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg className="contact-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">
                   <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
                   <rect x="2" y="9" width="4" height="12"></rect>
                   <circle cx="4" cy="4" r="2"></circle>
