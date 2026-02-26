@@ -623,17 +623,17 @@ function App() {
           <div className="logo" role="banner">Clarence Portugal</div>
           <div className="nav-right">
             <ul className={`nav-menu ${mobileMenuOpen ? 'active' : ''}`} role="navigation" aria-label="Main navigation">
-              <div className="mobile-menu-header">
+              <li className="mobile-menu-header">
                 <button className="theme-toggle theme-toggle-mobile" onClick={toggleDarkMode} aria-label="Toggle dark mode">
                   {darkMode ? '☀️' : '🌙'}
                 </button>
-      </div>
-            <li><a href="#home" onClick={closeMobileMenu}>Home</a></li>
-            <li><a href="#about" onClick={closeMobileMenu}>About</a></li>
-            <li><a href="#projects" onClick={closeMobileMenu}>Projects</a></li>
-            <li><a href="#skills" onClick={closeMobileMenu}>Skills</a></li>
-            <li><a href="#certificates" onClick={closeMobileMenu}>Certificates</a></li>
-            <li><a href="#contact" onClick={closeMobileMenu}>Contact</a></li>
+              </li>
+              <li><a href="#home" onClick={closeMobileMenu}>Home</a></li>
+              <li><a href="#about" onClick={closeMobileMenu}>About</a></li>
+              <li><a href="#projects" onClick={closeMobileMenu}>Projects</a></li>
+              <li><a href="#skills" onClick={closeMobileMenu}>Skills</a></li>
+              <li><a href="#certificates" onClick={closeMobileMenu}>Certificates</a></li>
+              <li><a href="#contact" onClick={closeMobileMenu}>Contact</a></li>
             </ul>
             <button className="theme-toggle theme-toggle-desktop" onClick={toggleDarkMode} aria-label="Toggle dark mode">
               {darkMode ? '☀️' : '🌙'}
