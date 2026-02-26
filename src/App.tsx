@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from 'react'
-import * as pdfjsLib from 'pdfjs-dist'
 import './App.css'
 import profileImage from './assets/images/profile.jpg'
 import quizmeImage from './assets/images/quizme_logo.png'
@@ -42,9 +41,6 @@ import ancestralhouseJoe from './assets/images/collaborators/ancestralhouse/Joe.
 import ancestralhouseJohnLoyd from './assets/images/collaborators/ancestralhouse/John Loyd.jpg'
 import ancestralhouseLeah from './assets/images/collaborators/ancestralhouse/Leah.jpg'
 
-// Set up PDF.js worker - use local worker file
-pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs'
-
 function App() {
   const [darkMode, setDarkMode] = useState(() => {
     // Check localStorage first, then system preference
@@ -65,12 +61,14 @@ function App() {
   const [selectedScreenshotIndex, setSelectedScreenshotIndex] = useState<number>(0)
   const [isModalClosing, setIsModalClosing] = useState(false)
   const canvasContainerRef = useRef<HTMLDivElement>(null)
+  const certificatesSectionRef = useRef<HTMLElement | null>(null)
   const topcitPreviewRef = useRef<HTMLDivElement>(null)
   const attendancePreviewRef = useRef<HTMLDivElement>(null)
   const appreciationPreviewRef = useRef<HTMLDivElement>(null)
   const [typewriterName, setTypewriterName] = useState('')
   const [typewriterTitle, setTypewriterTitle] = useState('')
   const [typewriterDescription, setTypewriterDescription] = useState('')
+  const pdfJsLibRef = useRef<any | null>(null)
   const typewriterIndexRef = useRef(0)
   const currentTextRef = useRef<'name' | 'title' | 'description'>('name')
   const typewriterFullName = 'Hi, I am Clarence Portugal'
@@ -133,6 +131,16 @@ function App() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  const getPdfJsLib = async () => {
+    if (pdfJsLibRef.current) return pdfJsLibRef.current
+
+    const pdfjsLib = await import('pdfjs-dist')
+    // Set up PDF.js worker - use local worker file
+    pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs'
+    pdfJsLibRef.current = pdfjsLib
+    return pdfjsLib
+  }
+
   // Scroll animations with Intersection Observer
   useEffect(() => {
     // Immediately check and show elements already in viewport
@@ -183,7 +191,7 @@ function App() {
       elementsToObserve.forEach(el => observer.unobserve(el))
       window.removeEventListener('scroll', handleScroll)
     }
-  }, [projectFilter, projectSearch])
+  }, [])
 
 
   // Typewriter effect for name, title, and description
@@ -301,7 +309,9 @@ function App() {
           // Fetch PDF as array buffer to bypass restrictions
           const response = await fetch(selectedCertificate)
           const arrayBuffer = await response.arrayBuffer()
-          
+
+          const pdfjsLib = await getPdfJsLib()
+
           // Load PDF document from array buffer - this bypasses permission restrictions
           const loadingTask = pdfjsLib.getDocument({
             data: arrayBuffer,
@@ -463,6 +473,7 @@ function App() {
       try {
         const response = await fetch(pdfUrl)
         const arrayBuffer = await response.arrayBuffer()
+        const pdfjsLib = await getPdfJsLib()
         const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer, verbosity: 0 })
         const pdf = await loadingTask.promise
         
@@ -496,10 +507,35 @@ function App() {
       }
     }
 
-    // Render all certificate previews
-    renderPDFPreview('/certificates/TOPCIT Certificate.pdf', topcitPreviewRef)
-    renderPDFPreview('/certificates/Certificate of Attendance.pdf', attendancePreviewRef)
-    renderPDFPreview('/certificates/Certificate of Appreciation.pdf', appreciationPreviewRef)
+    // Lazily render certificate previews when the certificates section is near the viewport
+    if (!certificatesSectionRef.current) {
+      renderPDFPreview('/certificates/TOPCIT Certificate.pdf', topcitPreviewRef)
+      renderPDFPreview('/certificates/Certificate of Attendance.pdf', attendancePreviewRef)
+      renderPDFPreview('/certificates/Certificate of Appreciation.pdf', appreciationPreviewRef)
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            renderPDFPreview('/certificates/TOPCIT Certificate.pdf', topcitPreviewRef)
+            renderPDFPreview('/certificates/Certificate of Attendance.pdf', attendancePreviewRef)
+            renderPDFPreview('/certificates/Certificate of Appreciation.pdf', appreciationPreviewRef)
+            observer.disconnect()
+          }
+        })
+      },
+      {
+        root: null,
+        rootMargin: '200px 0px',
+        threshold: 0.1
+      }
+    )
+
+    observer.observe(certificatesSectionRef.current)
+
+    return () => observer.disconnect()
   }, [])
 
   // Close enlarged image on ESC key
@@ -622,8 +658,10 @@ function App() {
                 src={profileImage} 
                 alt="Clarence Portugal" 
                 className="profile-img" 
-                loading="lazy"
+                loading="eager"
                 decoding="async"
+                width={400}
+                height={400}
               />
             </div>
           </div>
@@ -1211,7 +1249,12 @@ function App() {
       </section>
 
       {/* Certificates Section */}
-      <section id="certificates" className="certificates fade-in" aria-label="Certificates section">
+      <section
+        id="certificates"
+        className="certificates fade-in"
+        aria-label="Certificates section"
+        ref={certificatesSectionRef as any}
+      >
         <div className="container">
           <h2 className="section-title">Certificates</h2>
           <div className="certificates-grid">
@@ -1223,6 +1266,7 @@ function App() {
                   className="certificate-preview-pdf certificate-preview-iframe"
                   aria-label="TOPCIT Certificate Preview"
                   title="TOPCIT Certificate"
+                  loading="lazy"
                 />
                 <object 
                   data="/certificates/TOPCIT Certificate.pdf#toolbar=0&navpanes=0&scrollbar=0"
@@ -1270,6 +1314,7 @@ function App() {
                   className="certificate-preview-pdf certificate-preview-iframe"
                   aria-label="Certificate of Attendance Preview"
                   title="Certificate of Attendance"
+                  loading="lazy"
                 />
                 <object 
                   data="/certificates/Certificate of Attendance.pdf#toolbar=0&navpanes=0&scrollbar=0"
@@ -1298,6 +1343,7 @@ function App() {
                   className="certificate-preview-pdf certificate-preview-iframe"
                   aria-label="Certificate of Appreciation Preview"
                   title="Certificate of Appreciation"
+                  loading="lazy"
                 />
                 <object 
                   data="/certificates/Certificate of Appreciation.pdf#toolbar=0&navpanes=0&scrollbar=0"
