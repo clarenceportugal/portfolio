@@ -63,6 +63,7 @@ function App() {
   const [isModalClosing, setIsModalClosing] = useState(false)
   const canvasContainerRef = useRef<HTMLDivElement>(null)
   const certificatesSectionRef = useRef<HTMLElement | null>(null)
+  const [certificatesSectionReady, setCertificatesSectionReady] = useState(false)
   const topcitPreviewRef = useRef<HTMLDivElement>(null)
   const attendancePreviewRef = useRef<HTMLDivElement>(null)
   const appreciationPreviewRef = useRef<HTMLDivElement>(null)
@@ -510,13 +511,9 @@ function App() {
       }
     }
 
-    // Lazily render certificate previews when the certificates section is near the viewport
-    if (!certificatesSectionRef.current) {
-      renderPDFPreview('/certificates/TOPCIT Certificate.pdf', topcitPreviewRef)
-      renderPDFPreview('/certificates/Certificate of Attendance.pdf', attendancePreviewRef)
-      renderPDFPreview('/certificates/Certificate of Appreciation.pdf', appreciationPreviewRef)
-      return
-    }
+    // Only run when section ref is available; never run PDF on initial load (saves ~300ms + unused JS)
+    const el = certificatesSectionRef.current
+    if (!el) return
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -536,10 +533,9 @@ function App() {
       }
     )
 
-    observer.observe(certificatesSectionRef.current)
-
+    observer.observe(el)
     return () => observer.disconnect()
-  }, [])
+  }, [certificatesSectionReady])
 
   // Close enlarged image on ESC key
   useEffect(() => {
@@ -1287,7 +1283,10 @@ function App() {
         id="certificates"
         className="certificates fade-in"
         aria-label="Certificates section"
-        ref={certificatesSectionRef as any}
+        ref={(el) => {
+          (certificatesSectionRef as React.MutableRefObject<HTMLElement | null>).current = el
+          if (el) setCertificatesSectionReady(true)
+        }}
       >
         <div className="container">
           <h2 className="section-title">Certificates</h2>
