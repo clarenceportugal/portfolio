@@ -266,13 +266,15 @@ function App() {
       timeoutId = setTimeout(typeNextChar, typingSpeed)
     }
     
-    // Start typing after a shorter delay
-    const startTimer = setTimeout(() => {
-      typeNextChar()
-    }, 300)
+    // Defer until after first paint to improve LCP/Speed Index
+    let startTimer: ReturnType<typeof setTimeout>
+    const rafId = requestAnimationFrame(() => {
+      startTimer = setTimeout(() => typeNextChar(), 300)
+    })
     
     return () => {
-      clearTimeout(startTimer)
+      cancelAnimationFrame(rafId)
+      if (startTimer) clearTimeout(startTimer)
       if (timeoutId) clearTimeout(timeoutId)
     }
   }, [])
@@ -657,7 +659,7 @@ function App() {
           <div className="hero-image">
             <div className="image-placeholder">
               <img 
-                src={profileImage} 
+                src="/profile.jpg" 
                 alt="Clarence Portugal" 
                 className="profile-img" 
                 fetchPriority="high"
