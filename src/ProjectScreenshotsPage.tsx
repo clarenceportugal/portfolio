@@ -19,9 +19,9 @@ function ProjectScreenshotsPage({ screenshots, title, onBack, darkMode }: Projec
       {/* Navigation */}
       <nav className="navbar">
         <div className="nav-container">
-          <div 
+          <button 
+            type="button"
             className="logo" 
-            role="banner" 
             onClick={onBack} 
             style={{ cursor: 'pointer' }}
             onKeyDown={(e) => {
@@ -34,7 +34,7 @@ function ProjectScreenshotsPage({ screenshots, title, onBack, darkMode }: Projec
             aria-label="Back to portfolio"
           >
             Clarence Portugal
-          </div>
+          </button>
           <div className="nav-right">
             <button 
               className="back-to-projects-btn"
@@ -75,6 +75,9 @@ function ProjectScreenshotsPage({ screenshots, title, onBack, darkMode }: Projec
                   alt={`${title} screenshot ${index + 1}`}
                   className="project-screenshot-full"
                   loading="lazy"
+                  decoding="async"
+                  width={400}
+                  height={300}
                 />
               </div>
             ))}

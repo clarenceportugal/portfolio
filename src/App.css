@@ -59,6 +59,7 @@ body.menu-open {
   font-weight: 800;
   letter-spacing: -0.5px;
   color: #0f172a;
+  text-decoration: none;
   background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -70,12 +71,20 @@ body.menu-open {
   cursor: pointer;
 }
 
-.logo[style*="pointer"]:hover {
+.logo:hover {
   background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   transform: translateX(-2px);
+}
+
+button.logo {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font: inherit;
+  padding: 0;
 }
 
 .nav-menu {

@@ -619,11 +619,11 @@ function App() {
         Skip to main content
       </a>
       {/* Navigation */}
-      <nav className="navbar">
+      <nav className="navbar" aria-label="Main navigation">
         <div className="nav-container">
-          <div className="logo" role="banner">Clarence Portugal</div>
+          <a href="#home" className="logo">Clarence Portugal</a>
           <div className="nav-right">
-            <ul className={`nav-menu ${mobileMenuOpen ? 'active' : ''}`} role="navigation" aria-label="Main navigation">
+            <ul className={`nav-menu ${mobileMenuOpen ? 'active' : ''}`} role="list">
               <li className="mobile-menu-header">
                 <button className="theme-toggle theme-toggle-mobile" onClick={toggleDarkMode} aria-label="Toggle dark mode">
                   {darkMode ? '☀️' : '🌙'}
@@ -660,6 +660,7 @@ function App() {
                 src={profileImage} 
                 alt="Clarence Portugal" 
                 className="profile-img" 
+                fetchPriority="high"
                 loading="eager"
                 decoding="async"
                 width={400}
@@ -1412,11 +1413,15 @@ function App() {
                 {/* PDF will be rendered here via canvas - no permission messages */}
               </div>
             ) : (
-              <img 
-                src={selectedCertificate} 
-                alt="Certificate" 
-                className="certificate-image"
-              />
+<img 
+                  src={selectedCertificate} 
+                  alt="Certificate" 
+                  className="certificate-image"
+                  loading="lazy"
+                  decoding="async"
+                  width={800}
+                  height={600}
+                />
             )}
           </div>
         </div>
@@ -1494,6 +1499,10 @@ function App() {
                     src={selectedProject.image} 
                     alt={`${selectedProject.title} logo`}
                     className="project-modal-logo-image"
+                    loading="lazy"
+                    decoding="async"
+                    width={320}
+                    height={180}
                   />
                 </div>
                 
@@ -1510,6 +1519,10 @@ function App() {
                           src={screenshot} 
                           alt={`${selectedProject.title} thumbnail ${index + 1}`}
                           className="project-modal-thumbnail-image"
+                          loading="lazy"
+                          decoding="async"
+                          width={160}
+                          height={90}
                         />
                       </div>
                     ))}
@@ -1558,6 +1571,9 @@ function App() {
                             alt={collaborator.name}
                             className="project-modal-collaborator-image"
                             loading="lazy"
+                            decoding="async"
+                            width={48}
+                            height={48}
                           />
                           <span className="project-modal-collaborator-name">{collaborator.name}</span>
                         </div>
@@ -1582,6 +1598,9 @@ function App() {
                             alt={client.name}
                             className="project-modal-client-image"
                             loading="lazy"
+                            decoding="async"
+                            width={48}
+                            height={48}
                           />
                           <span className="project-modal-client-name">{client.name}</span>
                         </div>
@@ -1690,10 +1709,12 @@ function App() {
                 </svg>
               </button>
             )}
-            <img 
-              src={enlargedImage.url} 
+<img
+              src={enlargedImage.url}
               alt={enlargedImage.project ? `${enlargedImage.project.title} screenshot ${enlargedImage.index + 1}` : 'Enlarged image'}
               className="enlarged-image"
+              loading="lazy"
+              decoding="async"
             />
           </div>
         </div>
