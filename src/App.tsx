@@ -24,6 +24,7 @@ import motowashImage from './assets/images/motrorwash_logo.jpg'
 import rccarImage from './assets/images/rccar_logo.jpg'
 import ancestralhouseImage from './assets/images/ancestralhouse_logo.jpg'
 import chessImage from './assets/images/chess_logo.jpg'
+import pinyacureImage from './assets/images/PinyaCure/pinyacure_logo.png'
 import tesdaImage from './assets/images/tesda.jpg'
 import jannaProfileImage from './assets/images/clients/emuklat/janna_profile.png'
 import lykaProfileImage from './assets/images/clients/emuklat/lyka_profile.png'
@@ -811,6 +812,7 @@ function App() {
                 tags: ['Python', 'React', 'TypeScript', 'C++', 'Cython', 'IoT', 'Website', 'System', 'AI', 'Facial Recognition'],
                 category: 'website',
                 github: 'https://github.com/clarenceportugal/facerecog',
+                screenshots: [eduvisionImage],
                 startDate: 'April 2025',
                 endDate: 'December 2025',
                 collaborators: [
@@ -859,6 +861,7 @@ function App() {
                 tags: ['React', 'TypeScript', 'Firebase', 'Website', 'VS Code'],
                 category: 'website',
                 github: 'https://github.com/clarenceportugal/Likhain',
+                screenshots: [likhainImage],
                 startDate: 'December 2025',
                 endDate: 'Present',
                 collaborators: [
@@ -887,9 +890,11 @@ function App() {
                 id: 'trinova',
                 image: trinovaImage,
                 title: 'Trinova',
+                github: '#',
                 description: 'Trinova is an innovative educational device designed to help students learn mathematical functions and topics, with a special focus on trigonometry. This Arduino-based IoT device features an interactive keypad interface and LCD display showing trigonometric functions, laws of sines and cosines, and the SOH CAH TOA mnemonic. Offers hands-on, tactile learning experience. Built with Arduino and C++.',
                 tags: ['Arduino', 'IoT', 'Educational', 'Embedded System', 'C++'],
                 category: 'robotics',
+                screenshots: [trinovaImage],
                 startDate: 'November 1, 2025',
                 endDate: 'November 3, 2025',
                 collaborators: [
@@ -900,9 +905,11 @@ function App() {
                 id: 'motowash',
                 image: motowashImage,
                 title: 'Motowash 360',
+                github: '#',
                 description: 'Motowash 360 is a radically innovative vendo machine solution for automating motor cleaning. This IoT-enabled system uses Arduino Uno with sensors and motors for vehicle detection and automated cleaning operations. Features coin-operated and mobile payment systems, React Native app for remote control and monitoring, and Firebase for data management. Combines hardware automation with modern mobile technology.',
                 tags: ['Arduino', 'IoT', 'React Native', 'Firebase', 'Sensors', 'Mobile App', 'Automation', 'Robotics'],
                 category: ['app', 'iot'],
+                screenshots: [motowashImage],
                 startDate: 'March 2024',
                 endDate: 'July 2024',
                 collaborators: [
@@ -916,9 +923,11 @@ function App() {
                 id: 'rccar',
                 image: rccarImage,
                 title: 'RC Car Robot',
+                github: '#',
                 description: 'An Arduino-based robotics project featuring a remote-controlled car with advanced autonomous capabilities. Can be controlled remotely via Bluetooth and includes line following with infrared sensors, obstacle avoidance with ultrasonic sensors, and environmental detection with light sensors. Built with Arduino Uno, L298N Motor Driver, HC-05 Bluetooth module, and various sensors.',
                 tags: ['Arduino', 'Robotics', 'IoT', 'Bluetooth', 'Sensors', 'Line Following', 'Obstacle Avoidance', 'Automation', 'C++'],
                 category: 'iot',
+                screenshots: [rccarImage],
                 startDate: 'March 13, 2024',
                 endDate: 'March 13, 2024',
                 collaborators: [
@@ -932,9 +941,11 @@ function App() {
                 id: 'ancestralhouse',
                 image: ancestralhouseImage,
                 title: 'Rufino Pabico Ancestral House',
+                github: '#',
                 description: 'An IoT smart home automation system for the Rufino Pabico Ancestral House model. Features a React Native mobile application for remote control and monitoring of fountain, lighting systems, motion sensors, and light sensors. Enables automated and manual control through mobile app interface. Built with Arduino, IoT sensors, React Native, and Firebase.',
                 tags: ['Arduino', 'IoT', 'React Native', 'Firebase', 'Sensors', 'Motion Sensor', 'Light Sensor', 'Smart Home', 'Mobile App', 'Automation'],
                 category: 'iot',
+                screenshots: [ancestralhouseImage],
                 startDate: 'September 2024',
                 endDate: 'October 2024',
                 collaborators: [
@@ -948,11 +959,28 @@ function App() {
                 id: 'chess',
                 image: chessImage,
                 title: 'Learn with Heinz Chess Beginners Guide',
+                github: '#',
                 description: 'Mobile application designed to teach chess fundamentals to beginners. Features step-by-step guides, tutorials, practice exercises, and detailed explanations of chess pieces and strategies. Built with Java, XML, and Android Studio.',
                 tags: ['Java', 'XML', 'Android Studio', 'Mobile App', 'Educational'],
                 category: 'app',
+                screenshots: [chessImage],
                 startDate: 'October 2023',
                 endDate: 'November 2023',
+                collaborators: [
+                  { name: 'Clarence Portugal', image: profileImage }
+                ]
+              },
+              {
+                id: 'pinyacure',
+                image: pinyacureImage,
+                title: 'PinyaCure',
+                github: '#',
+                description: 'PinyaCure is an AI-powered mobile app that identifies pineapple diseases using image processing and a trained machine learning model. The model is trained to detect a wide range of pineapple diseases. Users tap Scan to capture a photo; the app processes the image and displays the detected disease(s) along with brief recommendations. Designed for farmers and growers to quickly diagnose plant health in the field.',
+                tags: ['AI', 'Machine Learning', 'Image Processing', 'Mobile App', 'Image Recognition', 'Plant Disease', 'Pineapple'],
+                category: 'app',
+                screenshots: [pinyacureImage],
+                startDate: '2025',
+                endDate: 'Present',
                 collaborators: [
                   { name: 'Clarence Portugal', image: profileImage }
                 ]
@@ -1583,7 +1611,9 @@ function App() {
                       href={selectedProject.github} 
                       target="_blank" 
                       rel="noopener noreferrer" 
-                      className="project-modal-btn project-modal-btn-secondary"
+                      className="project-modal-btn project-modal-btn-secondary project-modal-btn-disabled"
+                      aria-disabled="true"
+                      onClick={(e) => e.preventDefault()}
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
